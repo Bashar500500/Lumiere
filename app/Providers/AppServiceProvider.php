@@ -10,6 +10,9 @@ use App\Models\Message\Message;
 use App\Repositories\Reply\ReplyRepositoryInterface;
 use App\Repositories\Reply\ReplyRepository;
 use App\Models\Reply\Reply;
+use App\Repositories\Course\CourseRepositoryInterface;
+use App\Repositories\Course\CourseRepository;
+use App\Models\Course\Course;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ReplyRepositoryInterface::class, function (Container $app) {
             return new ReplyRepository($app->make(Reply::class),
+            );
+        });
+
+        $this->app->bind(CourseRepositoryInterface::class, function (Container $app) {
+            return new CourseRepository($app->make(Course::class),
             );
         });
     }

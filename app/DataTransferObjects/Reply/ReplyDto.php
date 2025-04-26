@@ -7,7 +7,7 @@ use App\Http\Requests\Reply\ReplyRequest;
 class ReplyDto
 {
     public function __construct(
-        public readonly int $messageId,
+        public readonly ?int $messageId,
         public readonly string $reply,
     ) {}
 
@@ -22,7 +22,7 @@ class ReplyDto
     public static function fromUpdateRequest(ReplyRequest $request): ReplyDto
     {
         return new self(
-            messageId: 0,
+            messageId: null,
             reply: $request->validated('reply'),
         );
     }
