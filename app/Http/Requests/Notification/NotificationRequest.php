@@ -5,7 +5,6 @@ namespace App\Http\Requests\Notification;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 use App\Enums\Notification\NotificationType;
-use Illuminate\Validation\Rule;
 use App\Enums\Request\ValidationType;
 use App\Enums\Request\FieldName;
 
@@ -29,10 +28,10 @@ class NotificationRequest extends FormRequest
             'issuer_id' => [
                 'required',
                 ($this->request->get('type') == NotificationType::User->getType() ?
-                    Rule::exists('users', 'id') :
+                    'exists:users,id' :
                     $this->request->get('type') == NotificationType::Version->getType()) ?
-                    Rule::exists('versions', 'id') :
-                    Rule::exists('websites', 'id'),
+                    'exists:versions,id' :
+                    'exists:websites,id',
             ],
             'title' => ['required', 'string'],
             'body' => ['required', 'string'],

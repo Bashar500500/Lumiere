@@ -6,6 +6,7 @@ use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Message\MessageController;
 use App\Http\Controllers\Reply\ReplyController;
 use App\Http\Controllers\Notification\NotificationController;
+use App\Http\Controllers\Course\CourseController;
 // use App\Http\Controllers\User\UserController;
 
 Route::get('/user', function (Request $request) {
@@ -25,4 +26,5 @@ Route::apiResource('chat', ChatController::class)->except(['update']);
 Route::apiResource('message', MessageController::class)->except(['show']);
 Route::apiResource('reply', ReplyController::class)->except(['show', 'index']);
 Route::apiResource('notification', NotificationController::class)->except(['show', 'update']);
+Route::apiResource('course', CourseController::class);
 // Route::apiResource('user', UserController::class)->only(['index']);

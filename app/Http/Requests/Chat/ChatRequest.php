@@ -5,7 +5,6 @@ namespace App\Http\Requests\Chat;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 use App\Enums\Chat\ChatType;
-use Illuminate\Validation\Rule;
 use App\Enums\Request\ValidationType;
 use App\Enums\Request\FieldName;
 
@@ -30,8 +29,8 @@ class ChatRequest extends FormRequest
             'issuer_id' => [
                 'required',
                 $this->request->get('type') == ChatType::Direct->getType() ?
-                    Rule::exists('users', 'id') :
-                    Rule::exists('lessons', 'id'),
+                    'exists:users,id' :
+                    'exists:lessons,id',
             ]
         ];
     }

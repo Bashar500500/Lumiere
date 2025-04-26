@@ -10,6 +10,7 @@ enum ModelName: string
     case Notification = 'notification';
     case Route = 'route';
     case Website = 'website';
+    case Course = 'course';
     case NoName = '';
 
     public static function getEnum(string $value): self
@@ -21,6 +22,7 @@ enum ModelName: string
             $value =='Notification' => self::Notification,
             $value =='Route' => self::Route,
             $value =='Website' => self::Website,
+            $value =='Course' => self::Course,
         };
     }
 
@@ -33,6 +35,7 @@ enum ModelName: string
             self::Notification => 'Notification',
             self::Route => 'Route',
             self::Website => 'Website',
+            self::Course => 'Course',
         };
     }
 

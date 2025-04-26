@@ -10,6 +10,13 @@ enum ValidationType: string
     case Integer = 'integer';
     case String = 'string';
     case Boolean = 'boolean';
+    case Regex = 'regex';
+    case Date = 'date';
+    case DateFormat = 'date_format';
+    case Image = 'image';
+    case Decimal = 'decimal';
+    case RequiredIf = 'required_if';
+    case MissingIf = 'missing_if';
 
     public function getMessage(): string
     {
