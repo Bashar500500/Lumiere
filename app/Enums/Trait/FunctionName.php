@@ -9,6 +9,7 @@ enum FunctionName: string
     case Store = 'store';
     case Update = 'update';
     case Delete = 'delete';
+    case Register = 'register';
 
     public function getMessage(): string
     {

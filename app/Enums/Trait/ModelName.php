@@ -11,6 +11,9 @@ enum ModelName: string
     case Route = 'route';
     case Website = 'website';
     case Course = 'course';
+    case User = 'user';
+    case Category = 'category';
+    case SubCategory = 'sub_category';
     case NoName = '';
 
     public static function getEnum(string $value): self
@@ -23,6 +26,9 @@ enum ModelName: string
             $value =='Route' => self::Route,
             $value =='Website' => self::Website,
             $value =='Course' => self::Course,
+            $value =='User' => self::User,
+            $value =='Category' => self::Category,
+            $value =='SubCategory' => self::SubCategory,
         };
     }
 
@@ -36,6 +42,9 @@ enum ModelName: string
             self::Route => 'Route',
             self::Website => 'Website',
             self::Course => 'Course',
+            self::User => 'User',
+            self::Category => 'Category',
+            self::SubCategory => 'SubCategory',
         };
     }
 

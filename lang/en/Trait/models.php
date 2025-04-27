@@ -22,4 +22,13 @@ return [
     'course' => [
         'message' => 'Course'
     ],
+    'user' => [
+        'message' => 'User'
+    ],
+    'category' => [
+        'message' => 'Category'
+    ],
+    'sub_category' => [
+        'message' => 'SubCategory'
+    ],
 ];
