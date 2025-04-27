@@ -16,4 +16,7 @@ return [
     'delete' => [
         'message' => ' deleted successfully.'
     ],
+    'register' => [
+        'message' => ' registered successfully.'
+    ],
 ];
