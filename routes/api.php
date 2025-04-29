@@ -15,10 +15,6 @@ use App\Http\Controllers\SubCategory\SubCategoryController;
 
 // use App\Http\Controllers\User\UserController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [LoginController::class, 'login']);
 Route::middleware('auth:api')->group(function () {

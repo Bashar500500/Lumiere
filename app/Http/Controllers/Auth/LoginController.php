@@ -2,58 +2,45 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Auth\BaseController as BaseController;
+use App\Enums\Trait\FunctionName;
+use App\Enums\Trait\ModelName;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use App\Models\User\User;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Response\ResponseController;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\Auth\AuthResource;
+use App\Services\Auth\AuthService;
+use Illuminate\Http\JsonResponse;
 
-class LoginController extends BaseController
+class LoginController extends Controller
 {
-    public function login(Request $request)
-    {
-        $fields = $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string'
-        ]);
-
-        $user = User::where('email', $fields['email'])->first();
-
-        if (!$user || !Hash::check($fields['password'], $user->password)) {
-            throw ValidationException::withMessages(['email' => 'Invalid credentials']);
-        }
-
-        $success['token'] =  $user->createToken('MyApp')->accessToken;
-        $success['user'] =  $user;
-        return $this->sendResponse($success, 'User login successfully.');
+    public function __construct(
+        ResponseController $controller,
+        protected AuthService $service,
+    ) {
+        parent::__construct($controller);
     }
-    
-    public function logout(Request $request)
+
+    public function login(LoginRequest $request): JsonResponse
     {
-        $request->user()->tokens()->delete();
+        $data = AuthResource::make(
+            $this->service->login($request)
+        );
 
-        return response()->json(['message' => 'Logged out']);
+        return $this->controller
+            ->setFunctionName(FunctionName::Login)
+            ->setModelName(ModelName::User)
+            ->setData($data)
+            ->successResponse();
     }
-    // public function login(Request $request)
-    // {
-    //     $validator = FacadesValidator::make($request->all(), [
-    //         'email' => 'required|email',
-    //         'password' => 'required',
-    //     ]);
 
-    //     if($validator->fails()){
-    //         return $this->sendError('Validation Error.', $validator->errors());       
-    //     }
-    //     if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
-    //         $user = Auth::user(); 
-    //         $success['token'] =  $user->createToken('MyApp')-> accessToken; 
-    //         $success['name'] =  $user->name;
+    public function logout(): JsonResponse
+    {
+        $this->service->logout();
 
-    //         return $this->sendResponse($success, 'User login successfully.');
-    //     } 
-    //     else{ 
-    //         return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
-    //     } 
-    // }
+        return $this->controller
+            ->setFunctionName(FunctionName::Logout)
+            ->setModelName(ModelName::User)
+            ->setData((object) [])
+            ->successResponse();
+    }
 }

@@ -15,10 +15,13 @@ use App\Repositories\Course\CourseRepositoryInterface;
 use App\Repositories\Course\CourseRepository;
 use App\Models\Course\Course;
 use App\Models\SubCategory\SubCategory;
+use App\Models\User\User;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\SubCategory\SubCategoryRepositoryInterface;
 use App\Repositories\SubCategory\SubCategoryRepository;
+use App\Repositories\User\UserRepository;
+use App\Repositories\User\UserRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -49,6 +52,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(SubCategoryRepositoryInterface::class, function (Container $app) {
             return new SubCategoryRepository($app->make(SubCategory::class),
+            );
+        });
+        $this->app->bind(UserRepositoryInterface::class, function (Container $app) {
+            return new UserRepository($app->make(User::class),
             );
         });
     }

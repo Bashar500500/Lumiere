@@ -19,4 +19,7 @@ return [
     'register' => [
         'message' => ' registered successfully.'
     ],
+    'login' => [
+        'message' => ' logined successfully.'
+    ],
 ];
