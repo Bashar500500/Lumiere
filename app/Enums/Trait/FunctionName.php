@@ -10,6 +10,8 @@ enum FunctionName: string
     case Update = 'update';
     case Delete = 'delete';
     case Register = 'register';
+    case Login = 'login';
+    case Logout = 'Logout';
 
     public function getMessage(): string
     {

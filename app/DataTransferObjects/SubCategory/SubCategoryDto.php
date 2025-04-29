@@ -12,9 +12,9 @@ class SubCategoryDto
      * Create a new class instance.
      */
     public function __construct(
-        public readonly ?int $name,
+        public readonly ?string $name,
         public readonly ?CategoryStatus $status,
-        public readonly ?int $description,
+        public readonly ?string $description,
         public readonly ?int $categoryId,
         public readonly ?UploadedFile $SubCategoryImage,
         public readonly ?int $currentPage,

@@ -12,9 +12,9 @@ class CategoryDto
      * Create a new class instance.
      */
     public function __construct(
-        public readonly ?int $name,
+        public readonly ?string $name,
         public readonly ?CategoryStatus $status,
-        public readonly ?int $description,
+        public readonly ?string $description,
         public readonly ?UploadedFile $categoryImage,
         public readonly ?int $currentPage,
         public readonly ?int $pageSize,
