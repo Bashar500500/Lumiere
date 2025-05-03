@@ -16,12 +16,15 @@ use App\Repositories\Course\CourseRepository;
 use App\Models\Course\Course;
 use App\Models\SubCategory\SubCategory;
 use App\Models\User\User;
+use App\Models\User\UserProfile;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\SubCategory\SubCategoryRepositoryInterface;
 use App\Repositories\SubCategory\SubCategoryRepository;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\UserProfile\UserProfileRepository;
+use App\Repositories\UserProfile\UserProfileRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -56,6 +59,11 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(UserRepositoryInterface::class, function (Container $app) {
             return new UserRepository($app->make(User::class),
+            );
+        });
+
+        $this->app->bind(UserProfileRepositoryInterface::class, function (Container $app) {
+            return new UserProfileRepository($app->make(UserProfile::class),
             );
         });
     }

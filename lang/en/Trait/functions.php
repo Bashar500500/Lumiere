@@ -22,4 +22,13 @@ return [
     'login' => [
         'message' => ' logined successfully.'
     ],
+    'logout' => [
+        'message' => ' logout successfully.'
+    ],
+    'SendCode' => [
+        'message' => ' send code to email successfully.'
+    ],
+    'VerifyCode' => [
+        'message' => ' Chang password successfully.'
+    ],
 ];

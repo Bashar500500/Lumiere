@@ -1,63 +1,49 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Auth;
 
+use App\Enums\Trait\FunctionName;
+use App\Enums\Trait\ModelName;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\PasswordResetCode;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
-use App\Models\User\User;
+use App\Http\Controllers\Response\ResponseController;
+use App\Http\Requests\Auth\SendResetCodeRequest;
+use App\Http\Requests\Auth\VerifyResetCodeRequest;
+use App\Http\Resources\Auth\PasswordResetResource;
+use App\Services\Auth\PasswordResetService;
+use Illuminate\Http\JsonResponse;
 
 class CustomPasswordResetController extends Controller
 {
-    public function sendResetCode(Request $request)
-{
-    $request->validate(['email' => 'required|email']);
-
-    $user = User::where('email', $request->email)->first();
-    if (!$user) {
-        return response()->json(['message' => 'Email not found'], 404);
+    public function __construct(
+        ResponseController $controller,
+        protected PasswordResetService $service
+    ) {
+        parent::__construct($controller);
     }
 
-    $code = rand(100000, 999999);
+    public function verifyResetCode(VerifyResetCodeRequest $request): JsonResponse
+    {
+        $data=PasswordResetResource::make(
+            $this->service->verifyCode($request),
+        );
 
-    PasswordResetCode::updateOrCreate(
-        ['email' => $request->email],
-        ['code' => $code, 'created_at' => now()]
-    );
-
-    // أرسل الإيميل (يمكنك تخصيصه لاحقًا)
-    Mail::raw("Your password reset code is: $code", function ($message) use ($request) {
-        $message->to($request->email)->subject('Password Reset Code');
-    });
-
-    return response()->json(['message' => 'Reset code sent.']);
-}
-
-public function verifyResetCode(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'code' => 'required|string',
-        'password' => 'required|confirmed|min:6'
-    ]);
-
-    $reset = PasswordResetCode::where('email', $request->email)
-                              ->where('code', $request->code)
-                              ->first();
-
-    if (!$reset || Carbon::parse($reset->created_at)->addDay()->isPast()) {
-        return response()->json(['message' => 'Invalid or expired code'], 400);
+        return $this->controller
+            ->setFunctionName(FunctionName::VerifyCode)
+            ->setModelName(ModelName::PasswordReset)
+            ->setData($data)
+            ->successResponse();
     }
+    
+    public function sendResetCode(SendResetCodeRequest $request): JsonResponse
+    {
+        $data=PasswordResetResource::make(
+            $this->service->sendCode($request),
+        );
 
-    $user = User::where('email', $request->email)->first();
-    $user->update(['password' => bcrypt($request->password)]);
-
-    // حذف الكود بعد الاستخدام
-    $reset->delete();
-
-    return response()->json(['message' => 'Password reset successful']);
-}
+        return $this->controller
+            ->setFunctionName(FunctionName::SendCode)
+            ->setModelName(ModelName::PasswordReset)
+            ->setData($data)
+            ->successResponse();
+    }
 }

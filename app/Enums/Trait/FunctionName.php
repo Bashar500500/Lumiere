@@ -12,6 +12,8 @@ enum FunctionName: string
     case Register = 'register';
     case Login = 'login';
     case Logout = 'Logout';
+    case SendCode = 'sendCode';
+    case VerifyCode = 'verifyCode';
 
     public function getMessage(): string
     {

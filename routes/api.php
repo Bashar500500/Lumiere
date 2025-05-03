@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\CustomPasswordResetController;
+use App\Http\Controllers\Auth\CustomPasswordResetController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Category\CategoryController;
@@ -12,6 +12,7 @@ use App\Http\Controllers\Reply\ReplyController;
 use App\Http\Controllers\Notification\NotificationController;
 use App\Http\Controllers\Course\CourseController;
 use App\Http\Controllers\SubCategory\SubCategoryController;
+use App\Http\Controllers\User\UserProfileController;
 
 // use App\Http\Controllers\User\UserController;
 
@@ -25,7 +26,12 @@ Route::middleware('auth:api')->group(function () {
 Route::post('/forgot-password-code', [CustomPasswordResetController::class, 'sendResetCode']);
 Route::post('/reset-password-code', [CustomPasswordResetController::class, 'verifyResetCode']);
 
-
+//////profile
+Route::middleware('auth:api')->prefix('user_profile')->group(function () {
+    Route::get('/', [UserProfileController::class, 'show']);
+    Route::post('/', [UserProfileController::class, 'store']);
+    Route::put('/', [UserProfileController::class, 'update']);
+});
 // Route::middleware('auth:sanctum')->group(function () {
 
 //     Route::apiResource('chat', ChatController::class)->only(['index', 'show', 'store']);

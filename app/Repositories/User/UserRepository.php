@@ -5,8 +5,10 @@ namespace App\Repositories\User;
 use App\Repositories\BaseRepository;
 use App\Models\User\User;
 use App\DataTransferObjects\Auth\RegisterDto;
+use App\DataTransferObjects\Auth\SocialLoginDto;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -46,4 +48,26 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         return (object) $user;
     }
+
+    public function findByEmail(string $email): ?User
+{
+    return User::where('email', $email)->first();
+}
+
+public function createFromSocial(array $data): User
+{
+    return User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => bcrypt($data['password']),
+        'role' => $data['role'],
+    ]);
+}
+
+public function updatePassword(string $email, string $newPassword): object
+{
+    $user = User::where('email', $email)->firstOrFail();
+    $user->update(['password' => Hash::make($newPassword)]);
+    return (object) $user;
+}
 }
