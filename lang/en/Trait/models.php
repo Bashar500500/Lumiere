@@ -31,4 +31,10 @@ return [
     'sub_category' => [
         'message' => 'SubCategory'
     ],
+    'Password_Reset' => [
+        'message' => 'PasswordReset'
+    ],
+    'user_profile' => [
+        'message' => 'UserProfile'
+    ],
 ];

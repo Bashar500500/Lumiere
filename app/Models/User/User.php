@@ -57,6 +57,12 @@ class User extends Authenticatable
         ];
     }
 
+    ////profile
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
     public function directChats(): HasMany
     {
         return $this->hasMany(DirectChat::class, 'user_id');

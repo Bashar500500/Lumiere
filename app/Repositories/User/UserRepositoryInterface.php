@@ -11,4 +11,6 @@ interface UserRepositoryInterface
     public function find(int $id): object;
 
     public function update(array $data, int $id): object;
+
+    public function updatePassword(string $email, string $newPassword): object;
 }
