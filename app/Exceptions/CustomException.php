@@ -60,4 +60,28 @@ class CustomException extends InternalException
             ModelName::Website,
         );
     }
+
+    public static function unauthorized(ModelName $model): self
+    {
+        return static::new(
+            ExceptionCode::Unauthorized,
+            $model,
+        );
+    }
+
+    public static function NotFoundEmail(ModelName $model): self
+    {
+        return static::new(
+            ExceptionCode::NotFound,
+            $model,
+        );
+    }
+    public static function BadRequest(ModelName $model): self
+    {
+        return static::new(
+            ExceptionCode::BadRequest,
+            $model,
+        );
+    }
+    
 }

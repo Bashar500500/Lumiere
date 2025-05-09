@@ -5,10 +5,10 @@ namespace App\Repositories\User;
 use App\Repositories\BaseRepository;
 use App\Models\User\User;
 use App\DataTransferObjects\Auth\RegisterDto;
-use App\DataTransferObjects\Auth\SocialLoginDto;
+use App\DataTransferObjects\User\AssignRoleDto;
+use App\DataTransferObjects\User\UserDto;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -17,20 +17,32 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         parent::__construct($user);
     }
 
-    public function create(RegisterDto $dto): object
+    public function all(UserDto $dto): object
+    {
+        return (object) $this->model
+            ->simplePaginate(
+                $dto->pageSize,
+                ['*'],
+                'page',
+                $dto->currentPage,
+            );
+    }
+
+    public function create(RegisterDto $dto): User
     {
         $user = DB::transaction(function () use ($dto) {
-            $user = (object) $this->model->create([
-                'name' => $dto->name,
+            $user = $this->model->create([
+                'first_name' => $dto->first_name,
+                'last_name' => $dto->last_name,
                 'email' => $dto->email,
-                'role' => $dto->role,
                 'password' => Hash::make($dto->password),
+                
             ]);
-
+            $user['role'] = $user->assignRole($dto->role);
             return $user;
         });
 
-        return (object) $user;
+        return $user;
     }
 
     public function find(int $id): object
@@ -50,24 +62,24 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     public function findByEmail(string $email): ?User
-{
-    return User::where('email', $email)->first();
-}
+    {
+        return User::where('email', $email)->first();
+    }
+    
+    public function createFromSocial(array $data): User
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'role' => $data['role'],
+        ]);
+    }
 
-public function createFromSocial(array $data): User
-{
-    return User::create([
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'password' => bcrypt($data['password']),
-        'role' => $data['role'],
-    ]);
-}
-
-public function updatePassword(string $email, string $newPassword): object
-{
-    $user = User::where('email', $email)->firstOrFail();
-    $user->update(['password' => Hash::make($newPassword)]);
-    return (object) $user;
-}
+    public function updatePassword(string $email, string $newPassword): object
+    {
+        $user = User::where('email', $email)->firstOrFail();
+        $user->update(['password' => Hash::make($newPassword)]);
+        return (object) $user;
+    }
 }

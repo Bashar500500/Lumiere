@@ -11,31 +11,31 @@ use App\Repositories\User\UserRepository;
 
 class SocialLoginService
 {
-//     public function __construct(
-//         protected UserRepository $userRepository
-//     ) {}
+    public function __construct(
+        protected UserRepository $userRepository
+    ) {}
 
-//     public function handle(SocialLoginRequest $request): object
-// {
-//     $dto = SocialLoginDto::fromSocialLoginRequest($request);
-//     $socialUser = Socialite::driver($dto->provider)->userFromToken($dto->token);
+    public function handle(SocialLoginRequest $request): object
+{
+    // $dto = SocialLoginDto::fromSocialLoginRequest($request);
+    // $socialUser = Socialite::driver($dto->provider)->userFromToken($dto->token);
 
-//     $user = $this->userRepository->findByEmail($socialUser->getEmail());
+    // $user = $this->userRepository->findByEmail($socialUser->getEmail());
 
-//     if (! $user) {
-//         $user = $this->userRepository->createFromSocial([
-//             'name' => $socialUser->getName(),
-//             'email' => $socialUser->getEmail(),
-//             'password' => Str::random(12),
-//             'role' => $dto->role,
-//         ]);
-//     }
+    // if (! $user) {
+    //     $user = $this->userRepository->createFromSocial([
+    //         'name' => $socialUser->getName(),
+    //         'email' => $socialUser->getEmail(),
+    //         'password' => Str::random(12),
+    //         'role' => $dto->role,
+    //     ]);
+    // }
 
-//     $token = $user->createToken('api_token')->accessToken;
+    // $token = $user->createToken('api_token')->accessToken;
 
-//     return (object)[
-//         'user' => $user,
-//         'token' => $token,
-//     ];
-// }
+    return (object)[
+        'user' ,
+        'token',
+    ];
+}
 }

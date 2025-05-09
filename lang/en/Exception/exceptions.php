@@ -5,6 +5,10 @@ return [
         'message, :Model' => 'Forbidden.',
         'description, :Model' => 'Received data conflicts with data stored in database. Try again with correct data.'
     ],
+    '401' => [
+        'message, :Model' => 'Unauthorized.',
+        'description, :Model' => 'Invalid credentials. Try again later.'
+    ],
     '402' => [
         'message, :Model' => 'Something went wrong.',
         'description, :Model' => 'Got an error from firebase. Try again later.'

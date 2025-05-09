@@ -19,12 +19,15 @@ use App\Models\User\User;
 use App\Models\User\UserProfile;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Permission\PermissionRepository;
+use App\Repositories\Permission\PermissionRepositoryInterface;
 use App\Repositories\SubCategory\SubCategoryRepositoryInterface;
 use App\Repositories\SubCategory\SubCategoryRepository;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\UserProfile\UserProfileRepository;
 use App\Repositories\UserProfile\UserProfileRepositoryInterface;
+use Spatie\Permission\Models\Permission;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -64,6 +67,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(UserProfileRepositoryInterface::class, function (Container $app) {
             return new UserProfileRepository($app->make(UserProfile::class),
+            );
+        });
+        $this->app->bind(PermissionRepositoryInterface::class, function (Container $app) {
+            return new PermissionRepository($app->make(Permission::class),
             );
         });
     }

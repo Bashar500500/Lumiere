@@ -25,10 +25,16 @@ return [
     'logout' => [
         'message' => ' logout successfully.'
     ],
-    'SendCode' => [
+    'sendCode' => [
         'message' => ' send code to email successfully.'
     ],
-    'VerifyCode' => [
+    'verifyCode' => [
         'message' => ' Chang password successfully.'
+    ],
+    'assign' => [
+        'message' => ' Assign permission to user successfully.'
+    ],
+    'revoke' => [
+        'message' => ' Revoke permission to user successfully.'
     ],
 ];

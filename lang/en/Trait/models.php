@@ -37,4 +37,7 @@ return [
     'user_profile' => [
         'message' => 'UserProfile'
     ],
+    'permission' => [
+        'message' => 'Permission'
+    ],
 ];

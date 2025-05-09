@@ -22,6 +22,7 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request): JsonResponse
     {
+        // dd($this->service->register($request));
         $data = AuthResource::make(
             $this->service->register($request)
         );

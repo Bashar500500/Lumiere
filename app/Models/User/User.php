@@ -13,25 +13,27 @@ use App\Models\Message\Message;
 use App\Models\Reply\Reply;
 use App\Models\Chat\DirectChat;
 use App\Models\Notification\Notification;
-// use Laravel\Sanctum\HasApiTokens;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     //use HasFactory, Notifiable;
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
+    protected $guard_name = 'api';
+
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
-        'role',
     ];
 
     /**
