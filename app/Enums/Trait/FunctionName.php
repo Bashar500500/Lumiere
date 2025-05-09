@@ -11,9 +11,11 @@ enum FunctionName: string
     case Delete = 'delete';
     case Register = 'register';
     case Login = 'login';
-    case Logout = 'Logout';
+    case Logout = 'logout';
     case SendCode = 'sendCode';
     case VerifyCode = 'verifyCode';
+    case Assign = 'assign';
+    case Revoke = 'revoke';
 
     public function getMessage(): string
     {

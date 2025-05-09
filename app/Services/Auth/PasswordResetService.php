@@ -3,6 +3,8 @@
 namespace App\Services\Auth;
 
 use App\DataTransferObjects\Auth\SendResetCodeDto;
+use App\Enums\Trait\ModelName;
+use App\Exceptions\CustomException;
 use App\Exceptions\InternalException;
 use App\Http\Requests\Auth\SendResetCodeRequest;
 use App\Http\Requests\Auth\VerifyResetCodeRequest;
@@ -23,7 +25,7 @@ class PasswordResetService
         $dto = SendResetCodeDto::fromSendResetRequest($request);
         $code = rand(100000, 999999);
         if (! User::where('email', $dto->email)->first()) {
-            throw new InternalException('Email', 'Not found');
+            throw CustomException::NotFoundEmail(ModelName::User);
         }
         PasswordResetCode::updateOrCreate(
             ['email' => $dto->email],
@@ -43,7 +45,7 @@ class PasswordResetService
             ->first();
 
         if (!$reset || Carbon::parse($reset->created_at)->addDay()->isPast()) {
-            throw new \Exception('Invalid or expired code');
+            throw CustomException::BadRequest(ModelName::User);
         }
 
         $this->userRepository->updatePassword($dto->email, $dto->password);

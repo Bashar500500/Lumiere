@@ -3,6 +3,8 @@
 namespace App\Services\User;
 
 use App\DataTransferObjects\UserProfile\UserProfileDto;
+use App\Enums\Trait\ModelName;
+use App\Exceptions\CustomException;
 use App\Http\Requests\UserProfile\UserProfileRequest;
 use App\Repositories\UserProfile\UserProfileRepositoryInterface;
 use Illuminate\Auth\Access\Response;
@@ -19,9 +21,7 @@ class UserProfileService
 
         $existingProfile = $this->repository->findByUserId($userId);
         if ($existingProfile) {
-            abort(response()->json([
-                'message' => 'User profile already exists.'
-            ], 422));
+            throw CustomException::alreadyExists(ModelName::User);
         }
         return $this->repository->create($userId, $dto);
     }

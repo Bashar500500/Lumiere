@@ -9,6 +9,7 @@ use App\Http\Controllers\Response\ResponseController;
 use App\Http\Requests\Auth\SendResetCodeRequest;
 use App\Http\Requests\Auth\VerifyResetCodeRequest;
 use App\Http\Resources\Auth\PasswordResetResource;
+use App\Jobs\MailJob;
 use App\Services\Auth\PasswordResetService;
 use Illuminate\Http\JsonResponse;
 
@@ -36,9 +37,12 @@ class CustomPasswordResetController extends Controller
     
     public function sendResetCode(SendResetCodeRequest $request): JsonResponse
     {
-        $data=PasswordResetResource::make(
-            $this->service->sendCode($request),
+        $mail = $this->service->sendCode($request);
+        $data = PasswordResetResource::make(
+            $mail,
         );
+        
+        // MailJob::dispatch($mail);
 
         return $this->controller
             ->setFunctionName(FunctionName::SendCode)

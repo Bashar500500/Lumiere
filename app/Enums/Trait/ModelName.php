@@ -16,6 +16,7 @@ enum ModelName: string
     case SubCategory = 'sub_category';
     case PasswordReset = 'password_Reset';
     case UserProfile = 'user_profile';
+    case Permission = 'permission';
     case NoName = '';
 
     public static function getEnum(string $value): self
@@ -33,6 +34,7 @@ enum ModelName: string
             $value =='SubCategory' => self::SubCategory,
             $value =='PasswordReset' => self::PasswordReset,
             $value =='UserProfile' => self::UserProfile,
+            $value =='Permission' => self::Permission,
         };
     }
 
@@ -51,6 +53,7 @@ enum ModelName: string
             self::SubCategory => 'SubCategory',
             self::PasswordReset => 'PasswordReset',
             self::UserProfile => 'UserProfile',
+            self::Permission => 'Permission',
         };
     }
 
