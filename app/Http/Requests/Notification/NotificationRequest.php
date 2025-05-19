@@ -46,29 +46,29 @@ class NotificationRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'page.required' => (ValidationType::Required)->getMessage(),
-            'page.integer' => (ValidationType::Integer)->getMessage(),
-            'page_size.integer' => (ValidationType::Integer)->getMessage(),
-            'type.required' => (ValidationType::Required)->getMessage(),
-            'type.Illuminate\Validation\Rules\Enum' => (ValidationType::Enum)->getMessage(),
-            'issuer_id.required' => (ValidationType::Required)->getMessage(),
-            'issuer_id.exists' => (ValidationType::Exists)->getMessage(),
-            'title.required' => (ValidationType::Required)->getMessage(),
-            'title.string' => (ValidationType::String)->getMessage(),
-            'body.required' => (ValidationType::Required)->getMessage(),
-            'body.string' => (ValidationType::String)->getMessage(),
+            'page.required' => ValidationType::Required->getMessage(),
+            'page.integer' => ValidationType::Integer->getMessage(),
+            'page_size.integer' => ValidationType::Integer->getMessage(),
+            'type.required' => ValidationType::Required->getMessage(),
+            'type.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+            'issuer_id.required' => ValidationType::Required->getMessage(),
+            'issuer_id.exists' => ValidationType::Exists->getMessage(),
+            'title.required' => ValidationType::Required->getMessage(),
+            'title.string' => ValidationType::String->getMessage(),
+            'body.required' => ValidationType::Required->getMessage(),
+            'body.string' => ValidationType::String->getMessage(),
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'page' => (FieldName::Page)->getMessage(),
-            'page_size' => (FieldName::PageSize)->getMessage(),
-            'type' => (FieldName::Type)->getMessage(),
-            'issuer_id' => (FieldName::IssuerId)->getMessage(),
-            'title' => (FieldName::Title)->getMessage(),
-            'body' => (FieldName::Body)->getMessage(),
+            'page' => FieldName::Page->getMessage(),
+            'page_size' => FieldName::PageSize->getMessage(),
+            'type' => FieldName::Type->getMessage(),
+            'issuer_id' => FieldName::IssuerId->getMessage(),
+            'title' => FieldName::Title->getMessage(),
+            'body' => FieldName::Body->getMessage(),
         ];
     }
 }

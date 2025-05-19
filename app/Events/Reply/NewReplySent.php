@@ -48,7 +48,6 @@ class NewReplySent implements ShouldBroadcastNow, ShouldQueue
     public function broadcastWith(): array
     {
         return [
-            // 'message' => $this->message->toArray(),
             'message' => ReplyResource::make($this->reply),
         ];
     }

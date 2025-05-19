@@ -37,82 +37,238 @@ return [
     'body' => [
         'message' => 'body',
     ],
+    'instructor_id' => [
+        'message' => 'instructor id',
+    ],
     'name' => [
-        'message'=> 'name',
+        'message' => 'name',
     ],
     'description' => [
-        'message'=> 'description',
+        'message' => 'description',
     ],
     'category_id' => [
-        'message'=> 'category id',
+        'message' => 'category id',
     ],
     'language' => [
-        'message'=> 'language',
+        'message' => 'language',
+    ],
+    'url' => [
+        'message' => 'url',
     ],
     'level' => [
-        'message'=> 'level',
+        'message' => 'level',
     ],
     'timezone' => [
-        'message'=> 'timezone',
+        'message' => 'timezone',
     ],
     'start_date' => [
-        'message'=> 'start date',
+        'message' => 'start date',
     ],
     'end_date' => [
-        'message'=> 'end date',
+        'message' => 'end date',
     ],
     'cover_image' => [
-        'message'=> 'cover image',
+        'message' => 'cover image',
     ],
     'status' => [
-        'message'=> 'status',
+        'message' => 'status',
     ],
     'duration' => [
-        'message'=> 'duration',
+        'message' => 'duration',
     ],
     'price' => [
-        'message'=> 'price',
+        'message' => 'price',
+    ],
+    'access_settings' => [
+        'message' => 'access settings',
     ],
     'access_type' => [
-        'message'=> 'access type',
+        'message' => 'access type',
     ],
     'price_hidden' => [
-        'message'=> 'price hidden',
+        'message' => 'price hidden',
     ],
     'is_secret' => [
-        'message'=> 'is secret',
+        'message' => 'is secret',
     ],
-    'enrollment_limit_enabled' => [
-        'message'=> 'enrollment limit enabled',
+    'enrollment_limit' => [
+        'message' => 'enrollment limit',
     ],
-    'enrollment_limit_limit' => [
-        'message'=> 'enrollment limit limit',
+    'enabled' => [
+        'message' => 'enabled',
+    ],
+    'limit' => [
+        'message' => 'limit',
+    ],
+    'features' => [
+        'message' => 'features',
     ],
     'personalized_learning_paths' => [
-        'message'=> 'personalized learning paths',
+        'message' => 'personalized learning paths',
     ],
     'certificate_requires_submission' => [
-        'message'=> 'certificate requires submission',
+        'message' => 'certificate requires submission',
+    ],
+    'discussion_features' => [
+        'message' => 'discussion features',
     ],
     'attach_files' => [
-        'message'=> 'attach files',
+        'message' => 'attach files',
     ],
     'create_topics' => [
-        'message'=> 'create topics',
+        'message' => 'create topics',
     ],
     'edit_replies' => [
-        'message'=> 'edit replies',
+        'message' => 'edit replies',
     ],
     'student_groups' => [
-        'message'=> 'student groups',
+        'message' => 'student groups',
     ],
     'is_featured' => [
-        'message'=> 'is featured',
+        'message' => 'is featured',
     ],
     'show_progress_screen' => [
-        'message'=> 'show progress screen',
+        'message' => 'show progress screen',
     ],
     'hide_grade_totals' => [
-        'message'=> 'hide grade totals',
+        'message' => 'hide grade totals',
+    ],
+    'course_id' => [
+        'message' => 'course id',
+    ],
+    'access' => [
+        'message' => 'access',
+    ],
+    'release_date' => [
+        'message' => 'release date',
+    ],
+    'has_prerequest' => [
+        'message' => 'has prerequest',
+    ],
+    'prerequisite_section_ids' => [
+        'message' => 'prerequisite section ids',
+    ],
+    'is_password_protected' => [
+        'message' => 'is_password protected',
+    ],
+    'password' => [
+        'message' => 'password',
+    ],
+    'groups' => [
+        'message' => 'groups',
+    ],
+    'activities' => [
+        'message' => 'activities',
+    ],
+    'resources' => [
+        'message' => 'resources',
+    ],
+    'files' => [
+        'message' => 'files',
+    ],
+    'links' => [
+        'message' => 'links',
+    ],
+    'image' => [
+        'message' => 'image',
+    ],
+    'capacity' => [
+        'message' => 'capacity',
+    ],
+    'min' => [
+        'message' => 'min',
+    ],
+    'max' => [
+        'message' => 'max',
+    ],
+    'current' => [
+        'message' => 'current',
+    ],
+    'students' => [
+        'message' => 'students',
+    ],
+    'section_id' => [
+        'message' => 'section id',
+    ],
+    'flags' => [
+        'message' => 'flags',
+    ],
+    'is_free_preview' => [
+        'message' => 'is free preview',
+    ],
+    'is_compulsory' => [
+        'message' => 'is compulsory',
+    ],
+    'requires_enrollment' => [
+        'message' => 'requires enrollment',
+    ],
+    'content' => [
+        'message' => 'content',
+    ],
+    'data' => [
+        'message' => 'data',
+    ],
+    'pdf' => [
+        'message' => 'pdf',
+    ],
+    'size_mb' => [
+        'message' => 'size mb',
+    ],
+    'pages' => [
+        'message' => 'pages',
+    ],
+    'watermark' => [
+        'message' => 'watermark',
+    ],
+    'video' => [
+        'message' => 'video',
+    ],
+    'captions' => [
+        'message' => 'captions',
+    ],
+    'thumbnail_url' => [
+        'message' => 'thumbnail url',
+    ],
+    'completion' => [
+        'message' => 'completion',
+    ],
+    'min_duration' => [
+        'message' => 'min duration',
+    ],
+    'passing_score' => [
+        'message' => 'passing score',
+    ],
+    'rules' => [
+        'message' => 'rules',
+    ],
+    'availability' => [
+        'message' => 'availability',
+    ],
+    'start' => [
+        'message' => 'start',
+    ],
+    'end' => [
+        'message' => 'end',
+    ],
+    'discussion' => [
+        'message' => 'discussion',
+    ],
+    'moderated' => [
+        'message' => 'moderated',
+    ],
+    'metadata' => [
+        'message' => 'metadata',
+    ],
+    'difficulty' => [
+        'message' => 'difficulty',
+    ],
+    'keywords' => [
+        'message' => 'keywords',
+    ],
+    'dz_chunk_index' => [
+        'message' => 'dz chunk index',
+    ],
+    'dz_total_chunk_count' => [
+        'message' => 'dz total chunk count',
     ],
 ];

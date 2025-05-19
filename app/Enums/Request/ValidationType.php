@@ -8,15 +8,27 @@ enum ValidationType: string
     case Enum = 'enum';
     case Exists = 'exists';
     case Integer = 'integer';
+    case GreaterThanZero = 'gt_0';
+    case GreaterThan = 'gt';
+    case GreaterThanOrEqualZero = 'gte_0';
     case String = 'string';
     case Boolean = 'boolean';
     case Regex = 'regex';
     case Date = 'date';
     case DateFormat = 'date_format';
+    case AfterOrEqual = 'after_or_equal';
     case Image = 'image';
+    case ImageMimes = 'image_mimes';
     case Decimal = 'decimal';
     case RequiredIf = 'required_if';
     case MissingIf = 'missing_if';
+    case Array = 'array';
+    case File = 'file';
+    case Same = 'same';
+    case PdfMimes = 'pdf_mimes';
+    case VideoMimes = 'video_mimes';
+    case RequiredWith = 'required_with';
+    case Url = 'url';
 
     public function getMessage(): string
     {

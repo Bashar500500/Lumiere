@@ -3,6 +3,7 @@
 namespace App\Repositories\Course;
 
 use App\DataTransferObjects\Course\CourseDto;
+use App\Enums\Upload\UploadMessage;
 
 interface CourseRepositoryInterface
 {
@@ -15,4 +16,12 @@ interface CourseRepositoryInterface
     public function update(CourseDto $dto, int $id): object;
 
     public function delete(int $id): object;
+
+    public function view(int $id): string;
+
+    public function download(int $id): string;
+
+    public function upload(int $id, array $data): UploadMessage;
+
+    public function deleteAttachment(int $id): void;
 }

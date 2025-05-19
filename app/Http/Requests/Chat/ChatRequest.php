@@ -43,23 +43,23 @@ class ChatRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'type.required' => (ValidationType::Required)->getMessage(),
-            'type.Illuminate\Validation\Rules\Enum' => (ValidationType::Enum)->getMessage(),
-            'page.required' => (ValidationType::Required)->getMessage(),
-            'page.integer' => (ValidationType::Integer)->getMessage(),
-            'page_size.integer' => (ValidationType::Integer)->getMessage(),
-            'issuer_id.required' => (ValidationType::Required)->getMessage(),
-            'issuer_id.exists' => (ValidationType::Exists)->getMessage(),
+            'type.required' => ValidationType::Required->getMessage(),
+            'type.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+            'page.required' => ValidationType::Required->getMessage(),
+            'page.integer' => ValidationType::Integer->getMessage(),
+            'page_size.integer' => ValidationType::Integer->getMessage(),
+            'issuer_id.required' => ValidationType::Required->getMessage(),
+            'issuer_id.exists' => ValidationType::Exists->getMessage(),
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'type' => (FieldName::Type)->getMessage(),
-            'page' => (FieldName::Page)->getMessage(),
-            'page_size' => (FieldName::PageSize)->getMessage(),
-            'issuer_id' => (FieldName::IssuerId)->getMessage(),
+            'type' => FieldName::Type->getMessage(),
+            'page' => FieldName::Page->getMessage(),
+            'page_size' => FieldName::PageSize->getMessage(),
+            'issuer_id' => FieldName::IssuerId->getMessage(),
         ];
     }
 }

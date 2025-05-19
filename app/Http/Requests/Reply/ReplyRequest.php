@@ -34,19 +34,19 @@ class ReplyRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'message_id.required' => (ValidationType::Required)->getMessage(),
-            'message_id.integer' => (ValidationType::Integer)->getMessage(),
-            'message_id.exists' => (ValidationType::Exists)->getMessage(),
-            'reply.required' => (ValidationType::Required)->getMessage(),
-            'reply.string' => (ValidationType::String)->getMessage(),
+            'message_id.required' => ValidationType::Required->getMessage(),
+            'message_id.integer' => ValidationType::Integer->getMessage(),
+            'message_id.exists' => ValidationType::Exists->getMessage(),
+            'reply.required' => ValidationType::Required->getMessage(),
+            'reply.string' => ValidationType::String->getMessage(),
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'message_id' => (FieldName::MessageId)->getMessage(),
-            'reply' => (FieldName::Reply)->getMessage(),
+            'message_id' => FieldName::MessageId->getMessage(),
+            'reply' => FieldName::Reply->getMessage(),
         ];
     }
 }

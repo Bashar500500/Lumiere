@@ -54,26 +54,26 @@ class MessageRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'chat_id.required' => (ValidationType::Required)->getMessage(),
-            'chat_id.integer' => (ValidationType::Integer)->getMessage(),
-            'chat_id.exists' => (ValidationType::Exists)->getMessage(),
-            'page.required' => (ValidationType::Required)->getMessage(),
-            'page.integer' => (ValidationType::Integer)->getMessage(),
-            'page_size.integer' => (ValidationType::Integer)->getMessage(),
-            'message.required' => (ValidationType::Required)->getMessage(),
-            'message.string' => (ValidationType::String)->getMessage(),
-            'is_read.boolean' => (ValidationType::Boolean)->getMessage(),
+            'chat_id.required' => ValidationType::Required->getMessage(),
+            'chat_id.integer' => ValidationType::Integer->getMessage(),
+            'chat_id.exists' => ValidationType::Exists->getMessage(),
+            'page.required' => ValidationType::Required->getMessage(),
+            'page.integer' => ValidationType::Integer->getMessage(),
+            'page_size.integer' => ValidationType::Integer->getMessage(),
+            'message.required' => ValidationType::Required->getMessage(),
+            'message.string' => ValidationType::String->getMessage(),
+            'is_read.boolean' => ValidationType::Boolean->getMessage(),
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'chat_id' => (FieldName::ChatId)->getMessage(),
-            'page' => (FieldName::Page)->getMessage(),
-            'page_size' => (FieldName::PageSize)->getMessage(),
-            'message' => (FieldName::Message)->getMessage(),
-            'is_read' => (FieldName::IsRead)->getMessage(),
+            'chat_id' => FieldName::ChatId->getMessage(),
+            'page' => FieldName::Page->getMessage(),
+            'page_size' => FieldName::PageSize->getMessage(),
+            'message' => FieldName::Message->getMessage(),
+            'is_read' => FieldName::IsRead->getMessage(),
         ];
     }
 }
