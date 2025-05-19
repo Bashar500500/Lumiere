@@ -27,6 +27,8 @@ enum FieldName: string
     case StartDate = 'start_date';
     case EndDate = 'end_date';
     case CoverImage = 'cover_image';
+    case CategoryImage = 'category_image';
+    case SubCategoryImage = 'sub_category_image';
     case Status = 'status';
     case Duration = 'duration';
     case Price = 'price';

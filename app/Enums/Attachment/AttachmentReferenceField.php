@@ -10,4 +10,7 @@ enum AttachmentReferenceField: string
     case LearningActivityVideoContentFile = 'learning_activity_video_content_file';
     case SectionResourcesFile = 'section_resources_file';
     case SectionResourcesLink = 'section_resources_link';
+    case CoverImage = 'cover_image';
+    case SubCategoryImage = 'sub_category_image';
+    case CategoryImage = 'category_image';
 }

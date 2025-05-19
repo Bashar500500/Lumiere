@@ -49,4 +49,22 @@ return [
     'chunk' => [
         'message' => 'Chunk'
     ],
+    'user' => [
+        'message' => 'User'
+    ],
+    'category' => [
+        'message' => 'Category'
+    ],
+    'sub_category' => [
+        'message' => 'SubCategory'
+    ],
+    'Password_Reset' => [
+        'message' => 'PasswordReset'
+    ],
+    'user_profile' => [
+        'message' => 'UserProfile'
+    ],
+    'permission' => [
+        'message' => 'Permission'
+    ],
 ];

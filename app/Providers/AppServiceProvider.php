@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Category\Category;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Container\Container;
 use App\Repositories\Message\MessageRepositoryInterface;
@@ -22,6 +23,20 @@ use App\Models\LearningActivity\LearningActivity;
 use App\Repositories\Section\SectionRepositoryInterface;
 use App\Repositories\Section\SectionRepository;
 use App\Models\Section\Section;
+use App\Models\SubCategory\SubCategory;
+use App\Models\User\User;
+use App\Models\User\UserProfile;
+use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Permission\PermissionRepository;
+use App\Repositories\Permission\PermissionRepositoryInterface;
+use App\Repositories\SubCategory\SubCategoryRepositoryInterface;
+use App\Repositories\SubCategory\SubCategoryRepository;
+use App\Repositories\User\UserRepository;
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\UserProfile\UserProfileRepository;
+use App\Repositories\UserProfile\UserProfileRepositoryInterface;
+use Spatie\Permission\Models\Permission;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -57,6 +72,29 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(SectionRepositoryInterface::class, function (Container $app) {
             return new SectionRepository($app->make(Section::class),
+            );
+        });
+
+        $this->app->bind(CategoryRepositoryInterface::class, function (Container $app) {
+            return new CategoryRepository($app->make(Category::class),
+            );
+        });
+
+        $this->app->bind(SubCategoryRepositoryInterface::class, function (Container $app) {
+            return new SubCategoryRepository($app->make(SubCategory::class),
+            );
+        });
+        $this->app->bind(UserRepositoryInterface::class, function (Container $app) {
+            return new UserRepository($app->make(User::class),
+            );
+        });
+
+        $this->app->bind(UserProfileRepositoryInterface::class, function (Container $app) {
+            return new UserProfileRepository($app->make(UserProfile::class),
+            );
+        });
+        $this->app->bind(PermissionRepositoryInterface::class, function (Container $app) {
+            return new PermissionRepository($app->make(Permission::class),
             );
         });
     }

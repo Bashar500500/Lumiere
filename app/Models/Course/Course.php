@@ -18,6 +18,7 @@ use App\Models\LearningActivity\LearningActivity;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use App\Models\Attachment\Attachment;
+use App\Models\Category\Category;
 
 class Course extends Model
 {
@@ -62,10 +63,10 @@ class Course extends Model
         return $this->belongsTo(User::class, 'instructor_id');
     }
 
-    // public function category(): BelongsTo
-    // {
-    //     return $this->belongsTo(Category::class, 'category_id');
-    // }
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 
     public function groups(): HasMany
     {

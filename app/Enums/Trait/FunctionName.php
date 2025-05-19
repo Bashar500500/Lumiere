@@ -14,6 +14,13 @@ enum FunctionName: string
     case Join = 'join';
     case Leave = 'leave';
     case Upload = 'upload';
+    case Register = 'register';
+    case Login = 'login';
+    case Logout = 'logout';
+    case SendCode = 'sendCode';
+    case VerifyCode = 'verifyCode';
+    case Assign = 'assign';
+    case Revoke = 'revoke';
 
     public function getMessage(): string
     {

@@ -20,6 +20,12 @@ enum ModelName: string
     case File = 'file';
     case Files = 'files';
     case Chunk = 'chunk';
+    case User = 'user';
+    case Category = 'category';
+    case SubCategory = 'sub_category';
+    case PasswordReset = 'password_Reset';
+    case UserProfile = 'user_profile';
+    case Permission = 'permission';
     case NoName = '';
 
     public static function getEnum(string $value): self
@@ -41,6 +47,12 @@ enum ModelName: string
             $value =='File' => self::File,
             $value =='Files' => self::Files,
             $value =='Chunk' => self::Chunk,
+            $value =='User' => self::User,
+            $value =='Category' => self::Category,
+            $value =='SubCategory' => self::SubCategory,
+            $value =='PasswordReset' => self::PasswordReset,
+            $value =='UserProfile' => self::UserProfile,
+            $value =='Permission' => self::Permission,
         };
     }
 
@@ -63,6 +75,12 @@ enum ModelName: string
             self::File => 'File',
             self::Files => 'Files',
             self::Chunk => 'Chunk',
+            self::User => 'User',
+            self::Category => 'Category',
+            self::SubCategory => 'SubCategory',
+            self::PasswordReset => 'PasswordReset',
+            self::UserProfile => 'UserProfile',
+            self::Permission => 'Permission',
         };
     }
 
