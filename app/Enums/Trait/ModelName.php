@@ -11,6 +11,15 @@ enum ModelName: string
     case Route = 'route';
     case Website = 'website';
     case Course = 'course';
+    case Section = 'section';
+    case Group = 'group';
+    case LearningActivity = 'learning activity';
+    case Image = 'image';
+    case Pdf = 'pdf';
+    case Video = 'video';
+    case File = 'file';
+    case Files = 'files';
+    case Chunk = 'chunk';
     case User = 'user';
     case Category = 'category';
     case SubCategory = 'sub_category';
@@ -29,6 +38,15 @@ enum ModelName: string
             $value =='Route' => self::Route,
             $value =='Website' => self::Website,
             $value =='Course' => self::Course,
+            $value =='Section' => self::Section,
+            $value =='Group' => self::Group,
+            $value =='LearningActivity' => self::LearningActivity,
+            $value =='Image' => self::Image,
+            $value =='Pdf' => self::Pdf,
+            $value =='Video' => self::Video,
+            $value =='File' => self::File,
+            $value =='Files' => self::Files,
+            $value =='Chunk' => self::Chunk,
             $value =='User' => self::User,
             $value =='Category' => self::Category,
             $value =='SubCategory' => self::SubCategory,
@@ -48,6 +66,15 @@ enum ModelName: string
             self::Route => 'Route',
             self::Website => 'Website',
             self::Course => 'Course',
+            self::Section => 'Section',
+            self::Group => 'Group',
+            self::LearningActivity => 'LearningActivity',
+            self::Image => 'Image',
+            self::Pdf => 'Pdf',
+            self::Video => 'Video',
+            self::File => 'File',
+            self::Files => 'Files',
+            self::Chunk => 'Chunk',
             self::User => 'User',
             self::Category => 'Category',
             self::SubCategory => 'SubCategory',

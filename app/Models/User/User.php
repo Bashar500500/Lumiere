@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use App\Models\Message\Message;
 use App\Models\Reply\Reply;
 use App\Models\Chat\DirectChat;
+use App\Models\UserCourseGroup\UserCourseGroup;
 use App\Models\Notification\Notification;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -78,6 +79,16 @@ class User extends Authenticatable
     public function replies(): HasMany
     {
         return $this->hasMany(Reply::class, 'user_id');
+    }
+
+    public function courses(): HasMany
+    {
+        return $this->hasMany(UserCourseGroup::class, 'student_id');
+    }
+
+    public function groups(): HasMany
+    {
+        return $this->hasMany(UserCourseGroup::class, 'student_id');
     }
 
     public function notifications(): MorphMany

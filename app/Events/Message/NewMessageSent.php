@@ -46,7 +46,6 @@ class NewMessageSent implements ShouldBroadcastNow
     public function broadcastWith(): array
     {
         return [
-            // 'message' => $this->message->toArray(),
             'message' => MessageResource::make($this->message),
         ];
     }

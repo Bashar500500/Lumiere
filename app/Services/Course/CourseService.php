@@ -42,11 +42,26 @@ class CourseService
         return $this->repository->delete($course->id);
     }
 
+    public function view(Course $course): string
+    {
+        return $this->repository->view($course->id);
+    }
+
+    public function download(Course $course): string
+    {
+        return $this->repository->download($course->id);
+    }
+
+    public function destroyAttachment(Course $course): void
+    {
+        $this->repository->deleteAttachment($course->id);
+    }
+
     private function prepareStoreData(): array
     {
         return [
-            // 'userId' => auth()->user()->id
-            'userId' => 1,
+            // 'instructorId' => auth()->user()->id
+            'instructorId' => 1,
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Enums\Trait\ModelName;
 use App\Enums\Trait\FunctionName;
 use App\Enums\Trait\ResponseStatus;
 use App\Exceptions\InternalException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 trait ResponseTrait
 {
@@ -13,6 +14,8 @@ trait ResponseTrait
     public ModelName $modelName;
     public FunctionName $functionName;
     public InternalException $internalException;
+    public string $file;
+    public string $zip;
 
     public function setData(object $data)
     {
@@ -38,6 +41,18 @@ trait ResponseTrait
         return $this;
     }
 
+    public function setFile(string $file)
+    {
+        $this->file = $file;
+        return $this;
+    }
+
+    public function setZip(string $zip)
+    {
+        $this->zip = $zip;
+        return $this;
+    }
+
     public function successResponse(): JsonResponse
     {
         return response()->json([
@@ -58,5 +73,31 @@ trait ResponseTrait
             'description' => $this->internalException->getDescription(),
             'link' => $code->getLink(),
         ], $this->internalException->getCode());
+    }
+
+    public function viewFileResponse(): BinaryFileResponse
+    {
+        return response()->file($this->file, [
+            'X-Sendfile' => $this->file,
+            'Content-Type' => mime_content_type($this->file),
+        ]);
+    }
+
+    public function downloadFileResponse(): BinaryFileResponse
+    {
+        return response()->file($this->file, [
+            'X-Sendfile' => $this->file,
+            'Content-Type' => mime_content_type($this->file),
+            'Content-Disposition' => 'attachment; filename="' . basename($this->file) . '"',
+        ]);
+    }
+
+    public function downloadZipResponse(): BinaryFileResponse
+    {
+        return response()->file($this->zip, [
+            'X-Sendfile' => $this->zip,
+            'Content-Type' => mime_content_type($this->zip),
+            'Content-Disposition' => 'attachment; filename="' . basename($this->zip) . '"',
+        ])->deleteFileAfterSend(true);
     }
 }

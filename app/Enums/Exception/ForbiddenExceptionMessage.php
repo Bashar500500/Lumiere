@@ -6,6 +6,10 @@ enum ForbiddenExceptionMessage: string
 {
     case Chat = 'chat';
     case Notification = 'notification';
+    case GroupJoinTwice = 'group_join_twice';
+    case GroupCapacityMax = 'group_capacity_max';
+    case GroupNotJoined = 'group_not_joined';
+    case LearningActivity = 'learning_activity';
 
     public function getDescription(): string
     {

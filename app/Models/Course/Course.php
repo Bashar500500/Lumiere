@@ -8,7 +8,13 @@ use App\Enums\Course\CourseLevel;
 use App\Enums\Course\CourseStatus;
 use App\Enums\Course\CourseAccessType;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\User\User;
+use App\Models\Group\Group;
+use App\Models\Section\Section;
+use App\Models\UserCourseGroup\UserCourseGroup;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use App\Models\LearningActivity\LearningActivity;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use App\Models\Attachment\Attachment;
@@ -17,7 +23,7 @@ use App\Models\Category\Category;
 class Course extends Model
 {
     protected $fillable = [
-        'user_id',
+        'instructor_id',
         'name',
         'description',
         'category_id',
@@ -52,14 +58,39 @@ class Course extends Model
         'access_type' => CourseAccessType::class,
     ];
 
-    public function user(): BelongsTo
+    public function instructor(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'instructor_id');
     }
 
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function groups(): HasMany
+    {
+        return $this->hasMany(Group::class, 'course_id');
+    }
+
+    public function sections(): HasMany
+    {
+        return $this->hasMany(Section::class, 'course_id');
+    }
+
+    public function students(): HasMany
+    {
+        return $this->hasMany(UserCourseGroup::class, 'course_id');
+    }
+
+    public function learningActivities(): HasManyThrough
+    {
+        return $this->hasManyThrough(LearningActivity::class, Section::class,
+            'course_id',
+            'section_id',
+            'id',
+            'id'
+        );
     }
 
     public function attachments(): MorphMany
