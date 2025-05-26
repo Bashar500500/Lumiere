@@ -17,7 +17,9 @@ class CourseAccessSettingsDto
     public static function from(CourseRequest $request): CourseAccessSettingsDto
     {
         return new self(
-            accessType: CourseAccessType::from($request->validated('access_settings.access_type')),
+            accessType: $request->validated('access_settings.access_type') ?
+                CourseAccessType::from($request->validated('access_settings.access_type')) :
+                null,
             priceHidden: $request->validated('access_settings.price_hidden'),
             isSecret: $request->validated('access_settings.is_secret'),
             enrollmentLimit: CourseEnrollmentLimitDto::from($request),

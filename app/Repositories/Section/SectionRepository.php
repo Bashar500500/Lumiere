@@ -6,6 +6,7 @@ use App\Repositories\BaseRepository;
 use App\Models\Section\Section;
 use App\DataTransferObjects\Section\SectionDto;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Enums\Attachment\AttachmentReferenceField;
 use App\Enums\Attachment\AttachmentType;
@@ -49,7 +50,9 @@ class SectionRepository extends BaseRepository implements SectionRepositoryInter
                 'access_release_date' => $dto->sectionAccessDto->releaseDate,
                 'access_has_prerequest' => $dto->sectionAccessDto->hasPrerequest,
                 'access_is_password_protected' => $dto->sectionAccessDto->isPasswordProtected,
-                'access_password' => $dto->sectionAccessDto->password,
+                'access_password' => $dto->sectionAccessDto->isPasswordProtected ?
+                    Hash::make($dto->sectionAccessDto->password) :
+                    $dto->sectionAccessDto->password,
             ]);
 
             if ($dto->groups)
@@ -107,13 +110,15 @@ class SectionRepository extends BaseRepository implements SectionRepositoryInter
 
         $section = DB::transaction(function () use ($dto, $model) {
             $section = tap($model)->update([
-                'title' => $dto->title,
-                'description' => $dto->description,
-                'status' => $dto->status,
-                'access_release_date' => $dto->sectionAccessDto->releaseDate,
-                'access_has_prerequest' => $dto->sectionAccessDto->hasPrerequest,
-                'access_is_password_protected' => $dto->sectionAccessDto->isPasswordProtected,
-                'access_password' => $dto->sectionAccessDto->password,
+                'title' => $dto->title ? $dto->title : $model->title,
+                'description' => $dto->description ? $dto->description : $model->description,
+                'status' => $dto->status ? $dto->status : $model->status,
+                'access_release_date' => $dto->sectionAccessDto->releaseDate ? $dto->sectionAccessDto->releaseDate : $model->access_release_date,
+                'access_has_prerequest' => $dto->sectionAccessDto->hasPrerequest ? $dto->sectionAccessDto->hasPrerequest : $model->access_has_prerequest,
+                'access_is_password_protected' => $dto->sectionAccessDto->isPasswordProtected ? $dto->sectionAccessDto->isPasswordProtected : $model->access_is_password_protected,
+                'access_password' => $dto->sectionAccessDto->password ? ($dto->sectionAccessDto->isPasswordProtected ?
+                    Hash::make($dto->sectionAccessDto->password) :
+                    $dto->sectionAccessDto->password) : $model->access_password,
             ]);
 
             if ($dto->groups)

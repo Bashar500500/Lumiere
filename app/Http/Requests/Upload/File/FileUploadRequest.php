@@ -17,6 +17,7 @@ class FileUploadRequest extends FormRequest
     {
         return [
             'file' => ['required', 'file'],
+            'dz_uuid' => ['required', 'string', 'uuid'],
             'dz_chunk_index' => ['required', 'integer', 'gte:0'],
             'dz_total_chunk_count' => ['required', 'integer', 'gt:dz_chunk_index'],
         ];
@@ -27,6 +28,9 @@ class FileUploadRequest extends FormRequest
         return [
             'file.required' => ValidationType::Required->getMessage(),
             'file.file' => ValidationType::File->getMessage(),
+            'dz_uuid.required' => ValidationType::Required->getMessage(),
+            'dz_uuid.string' => ValidationType::Integer->getMessage(),
+            'dz_uuid.uuid' => ValidationType::Uuid->getMessage(),
             'dz_chunk_index.required' => ValidationType::Required->getMessage(),
             'dz_chunk_index.integer' => ValidationType::Integer->getMessage(),
             'dz_chunk_index.gte' => ValidationType::GreaterThanOrEqualZero->getMessage(),

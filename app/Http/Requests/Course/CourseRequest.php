@@ -20,7 +20,7 @@ class CourseRequest extends FormRequest
 
     protected function onIndex() {
         return [
-            'instructor_id' => ['required', 'exists:users,id'],
+            'access_type' => ['sometimes', new Enum(CourseAccessType::class)],
             'page' => ['required', 'integer', 'gt:0'],
             'page_size' => ['sometimes', 'integer', 'gt:0'],
         ];
@@ -64,37 +64,37 @@ class CourseRequest extends FormRequest
 
     protected function onUpdate() {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['sometimes', 'string'],
             'description' => ['sometimes', 'string'],
             // 'category_id' => ['required', 'exists:categories,id'],
-            'category_id' => ['required', 'integer'],
-            'language' => ['required', new Enum(CourseLanguage::class)],
-            'level' => ['required', new Enum(CourseLevel::class)],
-            'timezone' => ['required', 'regex:^(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])$^'],
-            'start_date' => ['required', 'date', 'date_format:Y-m-d'],
-            'end_date' => ['required', 'date', 'date_format:Y-m-d', 'after_or_equal:start_date'],
+            'category_id' => ['sometimes', 'integer'],
+            'language' => ['sometimes', new Enum(CourseLanguage::class)],
+            'level' => ['sometimes', new Enum(CourseLevel::class)],
+            'timezone' => ['sometimes', 'regex:^(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])$^'],
+            'start_date' => ['sometimes', 'date', 'date_format:Y-m-d'],
+            'end_date' => ['required_with:start_date', 'date', 'date_format:Y-m-d', 'after_or_equal:start_date'],
             'cover_image' => ['sometimes', 'image', 'mimes:jpg,jpeg,png,bmp,gif,svg,webp'],
-            'status' => ['required', new Enum(CourseStatus::class)],
-            'duration' => ['required', 'integer', 'gt:0'],
-            'price' => ['required', 'decimal:0,2'],
-            'access_settings' => ['required', 'array'],
-            'access_settings.access_type' => ['required', new Enum(CourseAccessType::class)],
-            'access_settings.price_hidden' => ['required', 'boolean'],
-            'access_settings.is_secret' => ['required', 'boolean'],
-            'access_settings.enrollment_limit' => ['required', 'array'],
-            'access_settings.enrollment_limit.enabled' => ['required', 'boolean'],
-            'access_settings.enrollment_limit.limit' => ['required_if:access_settings.enrollment_limit.enabled,==,true', 'missing_if:access_settings.enrollment_limit.enabled,==,false', 'integer', 'gt:0'],
-            'features' => ['required', 'array'],
-            'features.personalized_learning_paths' => ['required', 'boolean'],
-            'features.certificate_requires_submission' => ['required', 'boolean'],
-            'features.discussion_features' => ['required', 'array'],
-            'features.discussion_features.attach_files' => ['required', 'boolean'],
-            'features.discussion_features.create_topics' => ['required', 'boolean'],
-            'features.discussion_features.edit_replies' => ['required', 'boolean'],
-            'features.student_groups' => ['required', 'boolean'],
-            'features.is_featured' => ['required', 'boolean'],
-            'features.show_progress_screen' => ['required', 'boolean'],
-            'features.hide_grade_totals' => ['required', 'boolean'],
+            'status' => ['sometimes', new Enum(CourseStatus::class)],
+            'duration' => ['sometimes', 'integer', 'gt:0'],
+            'price' => ['sometimes', 'decimal:0,2'],
+            'access_settings' => ['sometimes', 'array'],
+            'access_settings.access_type' => ['sometimes', new Enum(CourseAccessType::class)],
+            'access_settings.price_hidden' => ['sometimes', 'boolean'],
+            'access_settings.is_secret' => ['sometimes', 'boolean'],
+            'access_settings.enrollment_limit' => ['sometimes', 'array'],
+            'access_settings.enrollment_limit.enabled' => ['sometimes', 'boolean'],
+            'access_settings.enrollment_limit.limit' => ['required_if:access_settings.enrollment_limit.enabled,==,true', 'missing_if:access_settings.enrollment_limit.enabled,==,false', 'missing_if:access_settings.enrollment_limit.enabled,==,null', 'integer', 'gt:0'],
+            'features' => ['sometimes', 'array'],
+            'features.personalized_learning_paths' => ['sometimes', 'boolean'],
+            'features.certificate_requires_submission' => ['sometimes', 'boolean'],
+            'features.discussion_features' => ['sometimes', 'array'],
+            'features.discussion_features.attach_files' => ['sometimes', 'boolean'],
+            'features.discussion_features.create_topics' => ['sometimes', 'boolean'],
+            'features.discussion_features.edit_replies' => ['sometimes', 'boolean'],
+            'features.student_groups' => ['sometimes', 'boolean'],
+            'features.is_featured' => ['sometimes', 'boolean'],
+            'features.show_progress_screen' => ['sometimes', 'boolean'],
+            'features.hide_grade_totals' => ['sometimes', 'boolean'],
         ];
     }
 
@@ -117,8 +117,6 @@ class CourseRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'instructor_id.required' => ValidationType::Required->getMessage(),
-            'instructor_id.exists' => ValidationType::Exists->getMessage(),
             'page.required' => ValidationType::Required->getMessage(),
             'page.integer' => ValidationType::Integer->getMessage(),
             'page.gt' => ValidationType::GreaterThanZero->getMessage(),
@@ -139,6 +137,7 @@ class CourseRequest extends FormRequest
             'start_date.date' => ValidationType::Date->getMessage(),
             'start_date.date_format' => ValidationType::DateFormat->getMessage(),
             'end_date.required' => ValidationType::Required->getMessage(),
+            'end_date.required_with' => ValidationType::RequiredWith->getMessage(),
             'end_date.date' => ValidationType::Date->getMessage(),
             'end_date.date_format' => ValidationType::DateFormat->getMessage(),
             'end_date.after_or_equal' => ValidationType::AfterOrEqual->getMessage(),
@@ -195,7 +194,6 @@ class CourseRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'instructor_id' => FieldName::InstructorId->getMessage(),
             'page' => FieldName::Page->getMessage(),
             'page_size' => FieldName::PageSize->getMessage(),
             'name' => FieldName::Name->getMessage(),

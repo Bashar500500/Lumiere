@@ -21,6 +21,7 @@ enum FunctionName: string
     case VerifyCode = 'verifyCode';
     case Assign = 'assign';
     case Revoke = 'revoke';
+    case AddStudentToCourse = 'student_added_to_course';
 
     public function getMessage(): string
     {

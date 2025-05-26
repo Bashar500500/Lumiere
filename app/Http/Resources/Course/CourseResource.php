@@ -4,6 +4,8 @@ namespace App\Http\Resources\Course;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
+use App\Exceptions\CustomException;
 
 class CourseResource extends JsonResource
 {
@@ -18,14 +20,33 @@ class CourseResource extends JsonResource
             'language' => $this->language,
             'level' => $this->level,
             'timezone' => $this->timezone,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'cover_image' => $this->whenLoaded('attachment') ? $this->whenLoaded('attachment')->url : null,
+            'startDate' => $this->start_date,
+            'endDate' => $this->end_date,
+            // 'cover_image' => $this->whenLoaded('attachment') ? $this->whenLoaded('attachment')->url : null,
+            'coverImage' => $this->whenLoaded('attachment') ?
+                $this->prepareAttachmentData($this->id, $this->whenLoaded('attachment')->url)
+                : null,
             'status' => $this->status,
+            'enrollments' => $this->whenLoaded('students')->count(),
             'duration' => $this->duration,
             'price' => $this->price,
-            'access_settings' => CourseAccessSettingResource::makeJson($this),
+            'accessSettings' => CourseAccessSettingResource::makeJson($this),
             'features' => CourseFeatureResource::makeJson($this),
         ];
+    }
+
+    private function prepareAttachmentData(int $id, string $url): string
+    {
+        $file = Storage::disk('local')->path('Course/' . $id . '/Images/' . $url);
+
+        if (!file_exists($file))
+        {
+            throw CustomException::notFound('Image');
+        }
+
+        $data = base64_encode(file_get_contents($file));
+        $metadata = mime_content_type($file);
+
+        return 'data:' . $metadata . ';base64,' . $data;
     }
 }

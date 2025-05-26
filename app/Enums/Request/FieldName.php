@@ -95,6 +95,43 @@ enum FieldName: string
     case Keywords = 'keywords';
     case DzChunkIndex = 'dz_chunk_index';
     case DzTotalChunkCount = 'dz_total_chunk_count';
+    case Date = 'date';
+    case Day = 'day';
+    case From = 'from';
+    case To = 'to';
+    case NumberOfDays = 'number_of_days';
+    case Reason = 'reason';
+    case Category = 'category';
+    case TotalHours = 'total_hours';
+    case CompletedHours = 'completed_hours';
+    case Upcoming = 'upcoming';
+    case Break = 'break';
+    case InstructorAvailableTimings = 'instructor_available_timings';
+    case StartTime = 'start_time';
+    case EndTime = 'end_time';
+    case Recurrence = 'recurrence';
+    case Attachments = 'attachments';
+    case AssignmentId = 'assignment_id';
+    case StudentId = 'student_id';
+    case DueDate = 'due_date';
+    case ExtendedDueDate = 'extended_due_date';
+    case PointsEarned = 'points_earned';
+    case MaxPoints = 'max_points';
+    case Percentage = 'percentage';
+    case ClassAverage = 'class_average';
+    case Trend = 'trend';
+    case TrendData = 'trend_data';
+    case Feedback = 'feedback';
+    case Resubmission = 'resubmission';
+    case ResubmissionDue = 'resubmission_due';
+    case Progress = 'progress';
+    case Modules = 'modules';
+    case Time = 'time';
+    case LastActive = 'last_active';
+    case Streak = 'streak';
+    case SkillLevel = 'skill_level';
+    case Upcomig = 'upcomig';
+    case IsPresent = 'is_present';
 
     public function getMessage(): string
     {

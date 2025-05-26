@@ -76,10 +76,10 @@ class GroupRepository extends BaseRepository implements GroupRepositoryInterface
 
         $group = DB::transaction(function () use ($dto, $model) {
             $group = tap($model)->update([
-                'name' => $dto->name,
-                'description' => $dto->description,
-                'capacity_min' => $dto->groupCapacityDto->min,
-                'capacity_max' => $dto->groupCapacityDto->max,
+                'name' => $dto->name ? $dto->name : $model->name,
+                'description' => $dto->description ? $dto->description : $model->description,
+                'capacity_min' => $dto->groupCapacityDto->min ? $dto->groupCapacityDto->min : $model->capacity_min,
+                'capacity_max' => $dto->groupCapacityDto->max ? $dto->groupCapacityDto->max : $model->capacity_max,
             ]);
 
             if ($dto->image)

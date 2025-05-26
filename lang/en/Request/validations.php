@@ -22,6 +22,12 @@ return [
     'gte_0' => [
         'message' => 'The :attribute field must be greater than or equal to 0.',
     ],
+    'gte' => [
+        'message' => 'The :attribute field must be greater than or equal to previous data.',
+    ],
+    'lte' => [
+        'message' => 'The :attribute field must be less than or equalto previous data.',
+    ],
     'string' => [
         'message' => 'The :attribute field must be a string.',
     ],
@@ -75,5 +81,20 @@ return [
     ],
     'url' => [
         'message' => 'The :attribute field must be a valid URL.',
+    ],
+    'time_format' => [
+        'message' => 'The :attribute field must match the format H:i A.',
+    ],
+    'min' => [
+        'message' => 'The :attribute field is not correct',
+    ],
+    'max' => [
+        'message' => 'The :attribute fieldis not correct',
+    ],
+    'uuid' => [
+        'message' => 'The :attribute field must be a valid UUID.',
+    ],
+    'after' => [
+        'message' => 'The :attribute field must be a date after previous data.',
     ],
 ];

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete();
             $table->string('type');
             $table->string('title');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('status');
             $table->boolean('flags_is_free_preview');
             $table->boolean('flags_is_compulsory');

@@ -32,8 +32,13 @@ class UserProfileService
         return $this->repository->update($userId, $dto);
     }
 
-    public function show(int $userId): ?object
+    // public function show(int $userId): ?object
+    // {
+    //     return $this->repository->findByUserId($userId);
+    // }
+
+    public function show(int $id): object
     {
-        return $this->repository->findByUserId($userId);
+        return $this->repository->find($id);
     }
 }

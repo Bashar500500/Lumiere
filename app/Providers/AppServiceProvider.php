@@ -11,9 +11,9 @@ use App\Models\Message\Message;
 use App\Repositories\Reply\ReplyRepositoryInterface;
 use App\Repositories\Reply\ReplyRepository;
 use App\Models\Reply\Reply;
-use App\Repositories\Course\CourseRepositoryInterface;
-use App\Repositories\Course\CourseRepository;
-use App\Models\Course\Course;
+// use App\Repositories\Course\CourseRepositoryInterface;
+// use App\Repositories\Course\CourseRepository;
+// use App\Models\Course\Course;
 use App\Repositories\Group\GroupRepositoryInterface;
 use App\Repositories\Group\GroupRepository;
 use App\Models\Group\Group;
@@ -37,6 +37,33 @@ use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\UserProfile\UserProfileRepository;
 use App\Repositories\UserProfile\UserProfileRepositoryInterface;
 use Spatie\Permission\Models\Permission;
+use App\Repositories\Holiday\HolidayRepositoryInterface;
+use App\Repositories\Holiday\HolidayRepository;
+use App\Models\Holiday\Holiday;
+use App\Repositories\Leave\LeaveRepositoryInterface;
+use App\Repositories\Leave\LeaveRepository;
+use App\Models\Leave\Leave;
+use App\Repositories\Policy\PolicyRepositoryInterface;
+use App\Repositories\Policy\PolicyRepository;
+use App\Models\Policy\Policy;
+use App\Repositories\TeachingHour\TeachingHourRepositoryInterface;
+use App\Repositories\TeachingHour\TeachingHourRepository;
+use App\Models\TeachingHour\TeachingHour;
+use App\Repositories\ScheduleTiming\ScheduleTimingRepositoryInterface;
+use App\Repositories\ScheduleTiming\ScheduleTimingRepository;
+use App\Models\ScheduleTiming\ScheduleTiming;
+use App\Repositories\Event\EventRepositoryInterface;
+use App\Repositories\Event\EventRepository;
+use App\Models\Event\Event;
+use App\Repositories\Grade\GradeRepositoryInterface;
+use App\Repositories\Grade\GradeRepository;
+use App\Models\Grade\Grade;
+use App\Repositories\Progress\ProgressRepositoryInterface;
+use App\Repositories\Progress\ProgressRepository;
+use App\Models\Progress\Progress;
+use App\Repositories\Attendance\AttendanceRepositoryInterface;
+use App\Repositories\Attendance\AttendanceRepository;
+use App\Models\Attendance\Attendance;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -55,10 +82,10 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind(CourseRepositoryInterface::class, function (Container $app) {
-            return new CourseRepository($app->make(Course::class),
-            );
-        });
+        // $this->app->bind(CourseRepositoryInterface::class, function (Container $app) {
+        //     return new CourseRepository($app->make(Course::class),
+        //     );
+        // });
 
         $this->app->bind(GroupRepositoryInterface::class, function (Container $app) {
             return new GroupRepository($app->make(Group::class),
@@ -84,6 +111,7 @@ class AppServiceProvider extends ServiceProvider
             return new SubCategoryRepository($app->make(SubCategory::class),
             );
         });
+
         $this->app->bind(UserRepositoryInterface::class, function (Container $app) {
             return new UserRepository($app->make(User::class),
             );
@@ -93,8 +121,54 @@ class AppServiceProvider extends ServiceProvider
             return new UserProfileRepository($app->make(UserProfile::class),
             );
         });
+
         $this->app->bind(PermissionRepositoryInterface::class, function (Container $app) {
             return new PermissionRepository($app->make(Permission::class),
+            );
+        });
+
+        $this->app->bind(HolidayRepositoryInterface::class, function (Container $app) {
+            return new HolidayRepository($app->make(Holiday::class),
+            );
+        });
+
+        $this->app->bind(LeaveRepositoryInterface::class, function (Container $app) {
+            return new LeaveRepository($app->make(Leave::class),
+            );
+        });
+
+        $this->app->bind(PolicyRepositoryInterface::class, function (Container $app) {
+            return new PolicyRepository($app->make(Policy::class),
+            );
+        });
+
+        $this->app->bind(TeachingHourRepositoryInterface::class, function (Container $app) {
+            return new TeachingHourRepository($app->make(TeachingHour::class),
+            );
+        });
+
+        $this->app->bind(ScheduleTimingRepositoryInterface::class, function (Container $app) {
+            return new ScheduleTimingRepository($app->make(ScheduleTiming::class),
+            );
+        });
+
+        $this->app->bind(EventRepositoryInterface::class, function (Container $app) {
+            return new EventRepository($app->make(Event::class),
+            );
+        });
+
+        $this->app->bind(GradeRepositoryInterface::class, function (Container $app) {
+            return new GradeRepository($app->make(Grade::class),
+            );
+        });
+
+        $this->app->bind(ProgressRepositoryInterface::class, function (Container $app) {
+            return new ProgressRepository($app->make(Progress::class),
+            );
+        });
+
+        $this->app->bind(AttendanceRepositoryInterface::class, function (Container $app) {
+            return new AttendanceRepository($app->make(Attendance::class),
             );
         });
     }

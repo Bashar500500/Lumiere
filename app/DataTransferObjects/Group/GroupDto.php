@@ -38,7 +38,9 @@ class GroupDto
             pageSize: null,
             name: $request->validated('name'),
             description: $request->validated('description'),
-            image: $request->validated('image') ? UploadedFile::createFromBase($request->validated('image')) : null,
+            image: $request->validated('image') ?
+                UploadedFile::createFromBase($request->validated('image')) :
+                null,
             groupCapacityDto: GroupCapacityDto::from($request),
         );
     }
@@ -51,7 +53,9 @@ class GroupDto
             pageSize: null,
             name: $request->validated('name'),
             description: $request->validated('description'),
-            image: $request->validated('image') ? UploadedFile::createFromBase($request->validated('image')) : null,
+            image: $request->validated('image') ?
+                UploadedFile::createFromBase($request->validated('image')) :
+                null,
             groupCapacityDto: GroupCapacityDto::from($request),
         );
     }

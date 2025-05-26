@@ -3,16 +3,26 @@
 namespace App\Models\User;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use App\Models\Message\Message;
 use App\Models\Reply\Reply;
 use App\Models\Chat\DirectChat;
 use App\Models\UserCourseGroup\UserCourseGroup;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use App\Models\Course\Course;
+use App\Models\Group\Group;
+use App\Models\TeachingHour\TeachingHour;
+use App\Models\ScheduleTiming\ScheduleTiming;
+use App\Models\Grade\Grade;
+use App\Models\Progress\Progress;
+use App\Models\Attendance\Attendance;
 use App\Models\Notification\Notification;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -20,7 +30,6 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    //use HasFactory, Notifiable;
     use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
     /**
@@ -81,14 +90,54 @@ class User extends Authenticatable
         return $this->hasMany(Reply::class, 'user_id');
     }
 
-    public function courses(): HasMany
+    public function userCourseGroups(): HasMany
     {
         return $this->hasMany(UserCourseGroup::class, 'student_id');
     }
 
-    public function groups(): HasMany
+    public function courses(): HasManyThrough
     {
-        return $this->hasMany(UserCourseGroup::class, 'student_id');
+        return $this->hasManyThrough(Course::class, UserCourseGroup::class,
+            'student_id',
+            'id',
+            'id',
+            'course_id'
+        );
+    }
+
+    public function groups(): HasManyThrough
+    {
+        return $this->hasManyThrough(Group::class, UserCourseGroup::class,
+            'student_id',
+            'id',
+            'id',
+            'group_id'
+        );
+    }
+
+    public function teachingHours(): HasOne
+    {
+        return $this->hasOne(TeachingHour::class, 'instructor_id');
+    }
+
+    public function scheduleTimings(): HasMany
+    {
+        return $this->hasMany(ScheduleTiming::class, 'instructor_id');
+    }
+
+    public function grades(): HasMany
+    {
+        return $this->hasMany(Grade::class, 'student_id');
+    }
+
+    public function progresses(): HasMany
+    {
+        return $this->hasMany(Progress::class, 'student_id');
+    }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class, 'student_id');
     }
 
     public function notifications(): MorphMany

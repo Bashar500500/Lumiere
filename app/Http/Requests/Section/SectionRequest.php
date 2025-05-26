@@ -46,12 +46,12 @@ class SectionRequest extends FormRequest
 
     protected function onUpdate() {
         return [
-            'title' => ['required', 'string'],
+            'title' => ['sometimes', 'string'],
             'description' => ['sometimes', 'string'],
-            'status' => ['required', new Enum(SectionStatus::class)],
-            'access' => ['required', 'array'],
+            'status' => ['sometimes', new Enum(SectionStatus::class)],
+            'access' => ['sometimes', 'array'],
             'access.release_date' => ['sometimes', 'date', 'date_format:Y-m-d'],
-            'access.has_prerequest' => ['required_with:access', 'boolean'],
+            'access.has_prerequest' => ['sometimes', 'boolean'],
             'access.is_password_protected' => ['sometimes', 'boolean'],
             'access.password' => ['sometimes', 'string'],
             'groups' => ['sometimes', 'array'],

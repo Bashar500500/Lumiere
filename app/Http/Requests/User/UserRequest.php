@@ -22,6 +22,15 @@ class UserRequest extends FormRequest
             'page_size' => ['nullable', 'integer'],
         ];
     }
+
+    protected function onStore() {
+        return [
+            'email' => 'required|string|email',
+            'course_id' => ['required', 'exists:courses,id'],
+            'student_code' => ['required', 'string', 'min:3', 'max:3'],
+        ];
+    }
+
     protected function onUpdate() {
         return [
             'first_name' => 'required|string|max:255',
@@ -46,6 +55,10 @@ class UserRequest extends FormRequest
         else if (request()->isMethod('put'))
         {
             return $this->onUpdate();
+        }
+        else
+        {
+            return $this->onStore();
         }
     }
 }

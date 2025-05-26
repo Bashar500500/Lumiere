@@ -57,7 +57,9 @@ class SectionDto
             pageSize: null,
             title: $request->validated('title'),
             description: $request->validated('description'),
-            status: SectionStatus::from($request->validated('status')),
+            status: $request->validated('status') ?
+                SectionStatus::from($request->validated('status')) :
+                null,
             sectionAccessDto: SectionAccessDto::from($request),
             groups: $request->validated('groups'),
             sectionResourcesDto: SectionResourcesDto::from($request),

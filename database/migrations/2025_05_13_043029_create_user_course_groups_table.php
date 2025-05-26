@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('student_code');
             $table->unique(['student_id', 'course_id', 'group_id']);
             $table->unique(['student_id', 'course_id']);
-            $table->unique(['student_id', 'group_id']);
             $table->timestamps();
         });
     }
