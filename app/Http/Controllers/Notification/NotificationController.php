@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Notification;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Response\ResponseController;
 use App\Services\Notification\NotificationService;
-use App\Jobs\HandleRealtimeAndNotificationJob;
+use App\Jobs\GlobalServiceHandlerJob;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\Notification\NotificationRequest;
 use App\Http\Resources\Notification\NotificationResource;
@@ -41,7 +41,7 @@ class NotificationController extends Controller
             $notification,
         );
 
-        HandleRealtimeAndNotificationJob::dispatch($notification);
+        GlobalServiceHandlerJob::dispatch($notification);
 
         return $this->controller->setFunctionName(FunctionName::Store)
             ->setModelName(ModelName::Notification)

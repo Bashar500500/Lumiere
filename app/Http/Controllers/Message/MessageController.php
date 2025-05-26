@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Message;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Response\ResponseController;
 use App\Services\Message\MessageService;
-use App\Jobs\HandleRealtimeAndNotificationJob;
+use App\Jobs\GlobalServiceHandlerJob;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\Message\MessageRequest;
 use App\Http\Resources\Message\MessageResource;
@@ -41,7 +41,7 @@ class MessageController extends Controller
             $message,
         );
 
-        HandleRealtimeAndNotificationJob::dispatch($message);
+        GlobalServiceHandlerJob::dispatch($message);
 
         return $this->controller->setFunctionName(FunctionName::Store)
             ->setModelName(ModelName::Message)

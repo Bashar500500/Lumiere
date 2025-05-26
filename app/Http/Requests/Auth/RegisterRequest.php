@@ -4,6 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use App\Enums\Auth\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Enum;
 
 class RegisterRequest extends FormRequest
@@ -29,6 +30,12 @@ class RegisterRequest extends FormRequest
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'role' => ['required', new Enum(UserRole::class)],
+            'role' => [
+                'required',
+                Auth::user()->getRoleNames() == 'admin' ?
+                    new Enum(UserRole::class) :
+                    new Enum(UserRole::class),
+            ]
         ];
     }
 }
