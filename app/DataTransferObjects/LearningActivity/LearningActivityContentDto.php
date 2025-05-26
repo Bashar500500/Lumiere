@@ -31,8 +31,12 @@ class LearningActivityContentDto
     private static function fromPdfType(LearningActivityRequest $request): LearningActivityContentDto
     {
         return new self(
-            type: LearningActivityContentType::from($request->validated('content.type')),
-            pdf: $request->validated('content.data.pdf') ? UploadedFile::createFromBase($request->validated('content.data.pdf')) : null,
+            type: $request->validated('content.type') ?
+                LearningActivityContentType::from($request->validated('content.type')) :
+                null,
+            pdf: $request->validated('content.data.pdf') ?
+                UploadedFile::createFromBase($request->validated('content.data.pdf')) :
+                null,
             sizeMB: $request->validated('content.data.sizeMB'),
             pages: $request->validated('content.data.pages'),
             watermark: $request->validated('content.data.watermark'),
@@ -45,12 +49,16 @@ class LearningActivityContentDto
     private static function fromVideoType(LearningActivityRequest $request): LearningActivityContentDto
     {
         return new self(
-            type: LearningActivityContentType::from($request->validated('content.type')),
+            type: $request->validated('content.type') ?
+                LearningActivityContentType::from($request->validated('content.type')) :
+                null,
             pdf: null,
             sizeMB: null,
             pages: null,
             watermark: null,
-            video: $request->validated('content.data.video') ? UploadedFile::createFromBase($request->validated('content.data.video')) : null,
+            video: $request->validated('content.data.video') ?
+                UploadedFile::createFromBase($request->validated('content.data.video')) :
+                null,
             duration: $request->validated('content.data.duration'),
             learningActivityContentCaptionsDto: LearningActivityContentCaptionsDto::from($request),
         );

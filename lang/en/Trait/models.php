@@ -67,4 +67,34 @@ return [
     'permission' => [
         'message' => 'Permission'
     ],
+    'student' => [
+        'message' => 'Student'
+    ],
+    'holiday' => [
+        'message' => 'Holiday'
+    ],
+    'leave' => [
+        'message' => 'Leave'
+    ],
+    'policy' => [
+        'message' => 'Policy'
+    ],
+    'teaching hour' => [
+        'message' => 'Teaching hour'
+    ],
+    'schedule timing' => [
+        'message' => 'Schedule timing'
+    ],
+    'event' => [
+        'message' => 'Event'
+    ],
+    'grade' => [
+        'message' => 'Grade'
+    ],
+    'progress' => [
+        'message' => 'Progress'
+    ],
+    'attendance' => [
+        'message' => 'Attendance'
+    ],
 ];

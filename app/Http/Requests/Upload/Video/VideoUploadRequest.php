@@ -17,6 +17,7 @@ class VideoUploadRequest extends FormRequest
     {
         return [
             'video' => ['required', 'file', 'mimes:mp4,mov,ogg,qt,ogx,oga,ogv,webm'],
+            'dz_uuid' => ['required', 'string', 'uuid'],
             'dz_chunk_index' => ['required', 'integer', 'gte:0'],
             'dz_total_chunk_count' => ['required', 'integer', 'gt:dz_chunk_index'],
         ];
@@ -28,6 +29,9 @@ class VideoUploadRequest extends FormRequest
             'video.required' => ValidationType::Required->getMessage(),
             'video.file' => ValidationType::File->getMessage(),
             'video.mimes' => ValidationType::VideoMimes->getMessage(),
+            'dz_uuid.required' => ValidationType::Required->getMessage(),
+            'dz_uuid.string' => ValidationType::Integer->getMessage(),
+            'dz_uuid.uuid' => ValidationType::Uuid->getMessage(),
             'dz_chunk_index.required' => ValidationType::Required->getMessage(),
             'dz_chunk_index.integer' => ValidationType::Integer->getMessage(),
             'dz_chunk_index.gte' => ValidationType::GreaterThanOrEqualZero->getMessage(),

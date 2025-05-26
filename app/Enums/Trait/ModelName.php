@@ -26,6 +26,16 @@ enum ModelName: string
     case PasswordReset = 'password_Reset';
     case UserProfile = 'user_profile';
     case Permission = 'permission';
+    case Student = 'student';
+    case Holiday = 'holiday';
+    case Leave = 'leave';
+    case Policy = 'policy';
+    case TeachingHour = 'teaching hour';
+    case ScheduleTiming = 'schedule timing';
+    case Event = 'event';
+    case Grade = 'grade';
+    case Progress = 'progress';
+    case Attendance = 'attendance';
     case NoName = '';
 
     public static function getEnum(string $value): self
@@ -53,6 +63,16 @@ enum ModelName: string
             $value =='PasswordReset' => self::PasswordReset,
             $value =='UserProfile' => self::UserProfile,
             $value =='Permission' => self::Permission,
+            $value =='Student' => self::Student,
+            $value =='Holiday' => self::Holiday,
+            $value =='Leave' => self::Leave,
+            $value =='Policy' => self::Policy,
+            $value =='TeachingHour' => self::TeachingHour,
+            $value =='ScheduleTiming' => self::ScheduleTiming,
+            $value =='Event' => self::Event,
+            $value =='Grade' => self::Grade,
+            $value =='Progress' => self::Progress,
+            $value =='Attendance' => self::Attendance,
         };
     }
 
@@ -81,6 +101,16 @@ enum ModelName: string
             self::PasswordReset => 'PasswordReset',
             self::UserProfile => 'UserProfile',
             self::Permission => 'Permission',
+            self::Student => 'Student',
+            self::Holiday => 'Holiday',
+            self::Leave => 'Leave',
+            self::Policy => 'Policy',
+            self::TeachingHour => 'TeachingHour',
+            self::ScheduleTiming => 'ScheduleTiming',
+            self::Event => 'Event',
+            self::Grade => 'Grade',
+            self::Progress => 'Progress',
+            self::Attendance => 'Attendance',
         };
     }
 

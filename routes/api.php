@@ -20,6 +20,15 @@ use App\Http\Controllers\SubCategory\SubCategoryController;
 use App\Http\Controllers\User\AssignRoleController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\UserProfileController;
+use App\Http\Controllers\Holiday\HolidayController;
+use App\Http\Controllers\Leave\LeaveController;
+use App\Http\Controllers\Policy\PolicyController;
+use App\Http\Controllers\TeachingHour\TeachingHourController;
+use App\Http\Controllers\ScheduleTiming\ScheduleTimingController;
+use App\Http\Controllers\Event\EventController;
+use App\Http\Controllers\Grade\GradeController;
+use App\Http\Controllers\Progress\ProgressController;
+use App\Http\Controllers\Attendance\AttendanceController;
 
 // use App\Http\Controllers\User\UserController;
 
@@ -32,6 +41,7 @@ Route::middleware('auth:api')->group(function () {
 Route::middleware('auth:api')->prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index']);
     Route::get('/{user}', [UserController::class, 'show']);
+    Route::post('/add-student-to-course', [UserController::class, 'addStudentToCourse']);
 });
 
 
@@ -79,29 +89,42 @@ Route::apiResource('message', MessageController::class)->except(['show']);
 Route::apiResource('reply', ReplyController::class)->except(['show', 'index']);
 Route::apiResource('notification', NotificationController::class)->except(['show', 'update']);
 Route::apiResource('course', CourseController::class);
-Route::get('view_course_image/{course}', [CourseController::class, 'view']);
-Route::get('download_course_image/{course}', [CourseController::class, 'download']);
-Route::post('upload_course_image/{course}', [CourseController::class, 'upload']);
-Route::delete('delete_course_image/{course}', [CourseController::class, 'destroyAttachment']);
+Route::get('view-course-image/{course}', [CourseController::class, 'view']);
+Route::get('download-course-image/{course}', [CourseController::class, 'download']);
+Route::post('upload-course-image/{course}', [CourseController::class, 'upload']);
+Route::delete('delete-course-image/{course}', [CourseController::class, 'destroyAttachment']);
 Route::apiResource('group', GroupController::class);
-Route::get('join_group/{group}', [GroupController::class, 'join']);
-Route::get('leave_group/{group}', [GroupController::class, 'leave']);
-Route::get('view_group_image/{group}', [GroupController::class, 'view']);
-Route::get('download_group_image/{group}', [GroupController::class, 'download']);
-Route::post('upload_group_image/{group}', [GroupController::class, 'upload']);
-Route::delete('delete_group_image/{group}', [GroupController::class, 'destroyAttachment']);
-Route::apiResource('learning_activity', LearningActivityController::class);
-Route::get('view_learning_activity_content/{learningActivity}', [LearningActivityController::class, 'view']);
-Route::get('download_learning_activity_content/{learningActivity}', [LearningActivityController::class, 'download']);
-Route::post('upload_learning_activity_content/{learningActivity}', [LearningActivityController::class, 'upload']);
-Route::delete('delete_learning_activity_content/{learningActivity}', [LearningActivityController::class, 'destroyAttachment']);
+Route::get('join-group/{group}', [GroupController::class, 'join']);
+Route::get('leave-group/{group}', [GroupController::class, 'leave']);
+Route::get('view-group-image/{group}', [GroupController::class, 'view']);
+Route::get('download-group-image/{group}', [GroupController::class, 'download']);
+Route::post('upload-group-image/{group}', [GroupController::class, 'upload']);
+Route::delete('delete-group-image/{group}', [GroupController::class, 'destroyAttachment']);
+Route::apiResource('learning-activity', LearningActivityController::class);
+Route::get('view-learning-activity-content/{learningActivity}', [LearningActivityController::class, 'view']);
+Route::get('download-learning-activity-content/{learningActivity}', [LearningActivityController::class, 'download']);
+Route::post('upload-learning-activity-content/{learningActivity}', [LearningActivityController::class, 'upload']);
+Route::delete('delete-learning-activity-content/{learningActivity}', [LearningActivityController::class, 'destroyAttachment']);
 Route::apiResource('section', SectionController::class);
-Route::get('view_section_file/{section}/{fileName}', [SectionController::class, 'view']);
-Route::get('download_section_file/{section}', [SectionController::class, 'download']);
-Route::post('upload_section_file/{section}', [SectionController::class, 'upload']);
-Route::delete('delete_section_file/{section}/{fileName}', [SectionController::class, 'destroyAttachment']);
+Route::get('view-section-file/{section}/{fileName}', [SectionController::class, 'view']);
+Route::get('download-section-file/{section}', [SectionController::class, 'download']);
+Route::post('upload-section-file/{section}', [SectionController::class, 'upload']);
+Route::delete('delete-section-file/{section}/{fileName}', [SectionController::class, 'destroyAttachment']);
 Route::apiResource('category', CategoryController::class);
 Route::apiResource('sub_category', SubCategoryController::class);
+Route::apiResource('holiday', HolidayController::class);
+Route::apiResource('leave', LeaveController::class);
+Route::apiResource('policy', PolicyController::class);
+Route::apiResource('teaching-hour', TeachingHourController::class);
+Route::apiResource('schedule-timing', ScheduleTimingController::class);
+Route::apiResource('event', EventController::class);
+Route::get('view-event-file/{event}/{fileName}', [EventController::class, 'view']);
+Route::get('download-event-file/{event}', [EventController::class, 'download']);
+Route::post('upload-event-file/{event}', [EventController::class, 'upload']);
+Route::delete('delete-event-file/{event}/{fileName}', [EventController::class, 'destroyAttachment']);
+Route::apiResource('grade', GradeController::class);
+Route::apiResource('progress', ProgressController::class);
+Route::apiResource('attendance', AttendanceController::class);
 // Route::apiResource('user', UserController::class)->only(['index']);
 
 

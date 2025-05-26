@@ -27,7 +27,9 @@ class LearningActivityCompletionDto
     public static function fromViewType(LearningActivityRequest $request): LearningActivityCompletionDto
     {
         return new self(
-            type: LearningActivityCompletionType::from($request->validated('completion.type')),
+            type: $request->validated('completion.type') ?
+                LearningActivityCompletionType::from($request->validated('completion.type')) :
+                null,
             minDuration: $request->validated('completion.minDuration'),
             passingScore: null,
             rules: null,
@@ -37,7 +39,9 @@ class LearningActivityCompletionDto
     public static function fromScoreType(LearningActivityRequest $request): LearningActivityCompletionDto
     {
         return new self(
-            type: LearningActivityCompletionType::from($request->validated('completion.type')),
+            type: $request->validated('completion.type') ?
+                LearningActivityCompletionType::from($request->validated('completion.type')) :
+                null,
             minDuration: null,
             passingScore: $request->validated('completion.passingScore'),
             rules: null,
@@ -47,7 +51,9 @@ class LearningActivityCompletionDto
     public static function fromCompositeType(LearningActivityRequest $request): LearningActivityCompletionDto
     {
         return new self(
-            type: LearningActivityCompletionType::from($request->validated('completion.type')),
+            type: $request->validated('completion.type') ?
+                LearningActivityCompletionType::from($request->validated('completion.type')) :
+                null,
             minDuration: null,
             passingScore: null,
             rules: $request->validated('completion.rules'),

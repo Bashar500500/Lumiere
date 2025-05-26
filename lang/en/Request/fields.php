@@ -271,4 +271,115 @@ return [
     'dz_total_chunk_count' => [
         'message' => 'dz total chunk count',
     ],
+    'date' => [
+        'message' => 'date',
+    ],
+    'day' => [
+        'message' => 'day',
+    ],
+    'from' => [
+        'message' => 'from',
+    ],
+    'to' => [
+        'message' => 'to',
+    ],
+    'number_of_days' => [
+        'message' => 'number of days',
+    ],
+    'reason' => [
+        'message' => 'reason',
+    ],
+    'category' => [
+        'message' => 'category',
+    ],
+    'total_hours' => [
+        'message' => 'total hours',
+    ],
+    'completed_hours' => [
+        'message' => 'completed hours',
+    ],
+    'upcoming' => [
+        'message' => 'upcoming',
+    ],
+    'break' => [
+        'message' => 'break',
+    ],
+    'instructor_available_timings' => [
+        'message' => 'instructor available timings',
+    ],
+    'start_time' => [
+        'message' => 'start time',
+    ],
+    'end_time' => [
+        'message' => 'end time',
+    ],
+    'recurrence' => [
+        'message' => 'recurrence',
+    ],
+    'attachments' => [
+        'message' => 'attachments',
+    ],
+    'assignment_id' => [
+        'message' => 'assignment id',
+    ],
+    'student_id' => [
+        'message' => 'student id',
+    ],
+    'due_date' => [
+        'message' => 'due date',
+    ],
+    'extended_due_date' => [
+        'message' => 'extended due date',
+    ],
+    'points_earned' => [
+        'message' => 'points earned',
+    ],
+    'max_points' => [
+        'message' => 'max points',
+    ],
+    'percentage' => [
+        'message' => 'percentage',
+    ],
+    'class_average' => [
+        'message' => 'class average',
+    ],
+    'trend' => [
+        'message' => 'trend',
+    ],
+    'trend_data' => [
+        'message' => 'trend data',
+    ],
+    'feedback' => [
+        'message' => 'feedback',
+    ],
+    'resubmission' => [
+        'message' => 'resubmission',
+    ],
+    'resubmission_due' => [
+        'message' => 'resubmission due',
+    ],
+    'progress' => [
+        'message' => 'progress',
+    ],
+    'modules' => [
+        'message' => 'modules',
+    ],
+    'time' => [
+        'message' => 'time',
+    ],
+    'last_active' => [
+        'message' => 'last active',
+    ],
+    'streak' => [
+        'message' => 'streak',
+    ],
+    'skill_level' => [
+        'message' => 'skill level',
+    ],
+    'upcomig' => [
+        'message' => 'upcomig',
+    ],
+    'is_present' => [
+        'message' => 'is present',
+    ],
 ];

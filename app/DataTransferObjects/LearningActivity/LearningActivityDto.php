@@ -71,10 +71,14 @@ class LearningActivityDto
             sectionId: null,
             currentPage: null,
             pageSize: null,
-            type: LearningActivityType::from($request->validated('type')),
+            type: $request->validated('type') ?
+                LearningActivityType::from($request->validated('type')) :
+                null,
             title: $request->validated('title'),
             description: $request->validated('description'),
-            status: LearningActivityStatus::from($request->validated('status')),
+            status: $request->validated('status') ?
+                LearningActivityStatus::from($request->validated('status')) :
+                null,
             learningActivityFlagsDto: LearningActivityFlagsDto::from($request),
             learningActivityContentDto: LearningActivityContentDto::from($request),
             thumbnailUrl: $request->validated('thumbnailUrl'),

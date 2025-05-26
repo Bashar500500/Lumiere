@@ -10,6 +10,7 @@ use App\Http\Requests\User\UserRequest;
 use Illuminate\Http\JsonResponse;
 use App\Models\User\User;
 use App\Services\User\UserService;
+use App\Enums\User\UserMessage;
 
 class UserController extends Controller
 {
@@ -40,5 +41,21 @@ class UserController extends Controller
             ->setModelName(ModelName::User)
             ->setData($user)
             ->successResponse();
+    }
+
+    public function addStudentToCourse(UserRequest $request): JsonResponse
+    {
+        $message = $this->service->addStudentToCourse($request);
+
+        return match ($message) {
+            UserMessage::StudentAddedToCourse => $this->controller->setFunctionName(FunctionName::AddStudentToCourse)
+                ->setModelName(ModelName::Student)
+                ->setData((object) [])
+                ->successResponse(),
+            UserMessage::StudentCreatedAccountAndAddedToCourse => $this->controller->setFunctionName(FunctionName::AddStudentToCourse)
+                ->setModelName(ModelName::Student)
+                ->setData((object) [])
+                ->successResponse(),
+        };
     }
 }

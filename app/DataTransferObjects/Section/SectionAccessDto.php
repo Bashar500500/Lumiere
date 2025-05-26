@@ -17,7 +17,9 @@ class SectionAccessDto
     public static function from(SectionRequest $request): SectionAccessDto
     {
         return new self(
-            releaseDate: Carbon::parse($request->validated('access.release_date')),
+            releaseDate: $request->validated('access.release_date') ?
+                Carbon::parse($request->validated('access.release_date')) :
+                null,
             hasPrerequest: $request->validated('access.has_prerequest'),
             isPasswordProtected: $request->validated('access.is_password_protected'),
             password: $request->validated('access.password'),

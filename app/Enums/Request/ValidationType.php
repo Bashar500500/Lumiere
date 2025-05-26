@@ -11,6 +11,8 @@ enum ValidationType: string
     case GreaterThanZero = 'gt_0';
     case GreaterThan = 'gt';
     case GreaterThanOrEqualZero = 'gte_0';
+    case GreaterThanOrEqual = 'gte';
+    case LessThanOrEqual = 'lte';
     case String = 'string';
     case Boolean = 'boolean';
     case Regex = 'regex';
@@ -29,6 +31,11 @@ enum ValidationType: string
     case VideoMimes = 'video_mimes';
     case RequiredWith = 'required_with';
     case Url = 'url';
+    case TimeFormat = 'time_format';
+    case Min = 'min';
+    case Max = 'max';
+    case Uuid = 'uuid';
+    case After = 'after';
 
     public function getMessage(): string
     {

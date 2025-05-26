@@ -19,6 +19,7 @@ class UploadDto
         public readonly ?UploadedFile $pdf,
         public readonly ?UploadedFile $video,
         public readonly ?UploadedFile $file,
+        public readonly ?string $dzuuid,
         public readonly ?int $dzChunkIndex,
         public readonly ?int $dzTotalChunkCount,
     ) {}
@@ -30,6 +31,7 @@ class UploadDto
             pdf: null,
             video: null,
             file: null,
+            dzuuid: $request->validated('dz_uuid'),
             dzChunkIndex: $request->validated('dz_chunk_index'),
             dzTotalChunkCount: $request->validated('dz_total_chunk_count'),
         );
@@ -47,6 +49,7 @@ class UploadDto
             pdf: $request->validated('pdf') ? UploadedFile::createFromBase($request->validated('pdf')) : null,
             video: null,
             file: null,
+            dzuuid: $request->validated('dz_uuid'),
             dzChunkIndex: $request->validated('dz_chunk_index'),
             dzTotalChunkCount: $request->validated('dz_total_chunk_count'),
         );
@@ -64,6 +67,7 @@ class UploadDto
             pdf: null,
             video: $request->validated('video') ? UploadedFile::createFromBase($request->validated('video')) : null,
             file: null,
+            dzuuid: $request->validated('dz_uuid'),
             dzChunkIndex: $request->validated('dz_chunk_index'),
             dzTotalChunkCount: $request->validated('dz_total_chunk_count'),
         );
@@ -76,6 +80,7 @@ class UploadDto
             pdf: null,
             video: null,
             file: $request->validated('file') ? UploadedFile::createFromBase($request->validated('file')) : null,
+            dzuuid: $request->validated('dz_uuid'),
             dzChunkIndex: $request->validated('dz_chunk_index'),
             dzTotalChunkCount: $request->validated('dz_total_chunk_count'),
         );

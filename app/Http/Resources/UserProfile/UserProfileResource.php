@@ -7,11 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserProfileResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
@@ -21,6 +16,8 @@ class UserProfileResource extends JsonResource
             'avatar' => $this->avatar,
             'gender' => $this->gender,
             'birthdate' => $this->birthdate,
+            'courses' => UserProfileCoursesResource::collection($this->whenLoaded('courses')),
+            'groups' => UserProfileGroupsResource::collection($this->whenLoaded('groups')),
         ];
     }
 }

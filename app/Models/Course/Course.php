@@ -10,15 +10,19 @@ use App\Enums\Course\CourseAccessType;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\User\User;
+use App\Models\Category\Category;
 use App\Models\Group\Group;
 use App\Models\Section\Section;
 use App\Models\UserCourseGroup\UserCourseGroup;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use App\Models\LearningActivity\LearningActivity;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\ScheduleTiming\ScheduleTiming;
+use App\Models\Event\Event;
+use App\Models\Progress\Progress;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use App\Models\Attachment\Attachment;
-use App\Models\Category\Category;
 
 class Course extends Model
 {
@@ -91,6 +95,28 @@ class Course extends Model
             'id',
             'id'
         );
+    }
+
+    public function getCourseStudentCode(int $courseId, int $studentId): UserCourseGroup
+    {
+        return UserCourseGroup::where('student_id', $studentId)
+            ->where('course_id', $courseId)
+            ->select('student_code')->first();
+    }
+
+    public function scheduleTiming(): HasOne
+    {
+        return $this->hasOne(ScheduleTiming::class, 'course_id');
+    }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class, 'course_id');
+    }
+
+    public function progresses(): HasMany
+    {
+        return $this->hasMany(Progress::class, 'course_id');
     }
 
     public function attachments(): MorphMany

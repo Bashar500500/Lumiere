@@ -19,4 +19,10 @@ return [
     'learning_activity' => [
         'description' => 'The request learning activity content type dose not match the type stored in database. Try again with correct data.'
     ],
+    'user' => [
+        'description' => 'The student is already registered in the course. Try again with correct data.'
+    ],
+    'attendance' => [
+        'description' => 'The student is registered in the session as a pre-attendee. Try again with correct data.'
+    ],
 ];

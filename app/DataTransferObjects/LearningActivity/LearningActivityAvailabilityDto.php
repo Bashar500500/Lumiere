@@ -16,8 +16,12 @@ class LearningActivityAvailabilityDto
     public static function from(LearningActivityRequest $request): LearningActivityAvailabilityDto
     {
         return new self(
-            start: Carbon::parse($request->validated('availability.start')),
-            end: Carbon::parse($request->validated('availability.end')),
+            start: $request->validated('availability.start') ?
+                Carbon::parse($request->validated('availability.start')) :
+                null,
+            end: $request->validated('availability.end') ?
+                Carbon::parse($request->validated('availability.end')) :
+                null,
             timezone: $request->validated('availability.timezone'),
         );
     }

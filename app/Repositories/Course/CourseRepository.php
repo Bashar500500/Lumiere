@@ -18,10 +18,23 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
         parent::__construct($course);
     }
 
-    public function all(CourseDto $dto): object
+    public function all(CourseDto $dto, array $data): object
     {
         return (object) $this->model->where('instructor_id', $dto->instructorId)
-            ->with('attachment')
+            ->with('attachment', 'students')
+            ->latest('created_at')
+            ->simplePaginate(
+                $dto->pageSize,
+                ['*'],
+                'page',
+                $dto->currentPage,
+            );
+    }
+
+    public function allWithFilter(CourseDto $dto, array $data): object
+    {
+        return (object) $this->model->where('access_settings_access_type', $dto->accessType)
+            ->with('attachment', 'students')
             ->latest('created_at')
             ->simplePaginate(
                 $dto->pageSize,
@@ -34,7 +47,7 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
     public function find(int $id): object
     {
         return (object) parent::find($id)
-            ->load('attachment');
+            ->load('attachment', 'students');
     }
 
     public function create(CourseDto $dto, array $data): object
@@ -85,7 +98,7 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
             return $course;
         });
 
-        return (object) $course->load('attachment');
+        return (object) $course->load('attachment', 'students');
     }
 
     public function update(CourseDto $dto, int $id): object
@@ -140,7 +153,7 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
             return $course;
         });
 
-        return (object) $course->load('attachment');
+        return (object) $course->load('attachment', 'students');
     }
 
     public function delete(int $id): object
@@ -151,6 +164,7 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
             $sections = $model->sections;
             $groups = $model->groups;
             $learningActivities = $model->learningActivities;
+            $events = $model->events;
 
             foreach ($learningActivities as $learningActivity)
             {
@@ -166,6 +180,11 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
             {
                 $group->attachments()->delete();
                 Storage::disk('local')->deleteDirectory('Group/' . $group->id);
+            }
+            foreach ($events as $event)
+            {
+                $event->attachments()->delete();
+                Storage::disk('local')->deleteDirectory('Event/' . $event->id);
             }
 
             $model->attachments()->delete();

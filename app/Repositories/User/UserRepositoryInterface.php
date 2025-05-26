@@ -6,6 +6,7 @@ use App\DataTransferObjects\Auth\RegisterDto;
 use App\DataTransferObjects\User\AssignRoleDto;
 use App\DataTransferObjects\User\UserDto;
 use App\Models\User\User;
+use App\Enums\User\UserMessage;
 
 interface UserRepositoryInterface
 {
@@ -18,5 +19,7 @@ interface UserRepositoryInterface
     public function update(array $data, int $id): object;
 
     public function updatePassword(string $email, string $newPassword): object;
+
+    public function addStudentToCourse(UserDto $dto): UserMessage;
 
 }

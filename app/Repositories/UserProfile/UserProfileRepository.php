@@ -15,6 +15,12 @@ class UserProfileRepository extends BaseRepository implements UserProfileReposit
         parent::__construct($user_profile);
     }
 
+    public function find(int $id): object
+    {
+        return (object) parent::find($id)
+            ->load('courses', 'groups');
+    }
+
     public function create(int $userId, UserProfileDto $dto): object
     {
         $user_profile = DB::transaction(function () use ($dto,$userId) {

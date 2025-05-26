@@ -15,7 +15,9 @@ class LearningActivityMetadataDto
     public static function from(LearningActivityRequest $request): LearningActivityMetadataDto
     {
         return new self(
-            difficulty: LearningActivityMetadataDifficulty::from($request->validated('metadata.difficulty')),
+            difficulty: $request->validated('metadata.difficulty') ?
+                LearningActivityMetadataDifficulty::from($request->validated('metadata.difficulty')) :
+                null,
             keywords: $request->validated('metadata.keywords'),
         );
     }

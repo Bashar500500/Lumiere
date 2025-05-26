@@ -10,6 +10,8 @@ enum ForbiddenExceptionMessage: string
     case GroupCapacityMax = 'group_capacity_max';
     case GroupNotJoined = 'group_not_joined';
     case LearningActivity = 'learning_activity';
+    case User = 'user';
+    case Attendance = 'attendance';
 
     public function getDescription(): string
     {

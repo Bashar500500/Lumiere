@@ -7,7 +7,9 @@ use App\Enums\Upload\UploadMessage;
 
 interface CourseRepositoryInterface
 {
-    public function all(CourseDto $dto): object;
+    public function all(CourseDto $dto, array $data): object;
+
+    public function allWithFilter(CourseDto $dto, array $data): object;
 
     public function find(int $id): object;
 

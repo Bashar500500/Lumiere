@@ -8,6 +8,8 @@ use App\Http\Requests\User\UserRequest;
 use App\Models\User\User;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Enums\User\UserMessage;
+use Illuminate\Support\Facades\Mail;
 
 class UserService
 {
@@ -37,4 +39,20 @@ class UserService
         ];
     }
 
+    public function addStudentToCourse(UserRequest $request): UserMessage
+    {
+        $dto = UserDto::fromAddStudentToCourseRequest($request);
+        $message = $this->repository->addStudentToCourse($dto);
+
+        switch ($message)
+        {
+            case UserMessage::StudentAddedToCourse:
+                return $message;
+            default:
+                Mail::raw("Your email is : $dto->email and Your password is: 12345", function ($message) use ($dto) {
+                    $message->to($dto->email)->subject('New Student Account Created');
+                });
+                return $message;
+        }
+    }
 }

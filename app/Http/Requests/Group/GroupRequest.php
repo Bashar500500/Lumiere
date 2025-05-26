@@ -35,12 +35,12 @@ class GroupRequest extends FormRequest
 
     protected function onUpdate() {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['sometimes', 'string'],
             'description' => ['sometimes', 'string'],
             'image' => ['sometimes', 'image', 'mimes:jpg,jpeg,png,bmp,gif,svg,webp'],
-            'capacity' => ['required', 'array'],
-            'capacity.min' => ['required', 'integer', 'gt:0'],
-            'capacity.max' => ['required', 'integer', 'gt:capacity.min'],
+            'capacity' => ['sometimes', 'array'],
+            'capacity.min' => ['sometimes', 'integer', 'gt:0'],
+            'capacity.max' => ['required_with:capacity.min', 'integer', 'gt:capacity.min'],
         ];
     }
 
@@ -81,6 +81,7 @@ class GroupRequest extends FormRequest
             'capacity.min.integer' => ValidationType::Integer->getMessage(),
             'capacity.min.gt' => ValidationType::GreaterThanZero->getMessage(),
             'capacity.max.required' => ValidationType::Required->getMessage(),
+            'capacity.max.required_with' => ValidationType::RequiredWith->getMessage(),
             'capacity.max.integer' => ValidationType::Integer->getMessage(),
             'capacity.max.gt' => ValidationType::GreaterThan->getMessage(),
         ];

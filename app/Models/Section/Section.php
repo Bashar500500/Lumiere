@@ -12,10 +12,11 @@ use App\Models\Course\Course;
 use App\Models\SectionGroup\SectionGroup;
 use App\Models\Group\Group;
 use App\Models\LearningActivity\LearningActivity;
+use Illuminate\Database\Eloquent\Collection;
+use App\Models\Attendance\Attendance;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use App\Models\Attachment\Attachment;
-use Illuminate\Database\Eloquent\Collection;
 
 class Section extends Model
 {
@@ -73,6 +74,11 @@ class Section extends Model
         return self::where('access_has_prerequest', 1)
             ->where('id', '<', $id)
             ->select('id')->get();
+    }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class, 'section_id');
     }
 
     public function attachments(): MorphMany

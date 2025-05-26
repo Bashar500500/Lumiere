@@ -21,6 +21,7 @@ class ContentUploadRequest extends FormRequest
             'content_type' => ['required', new Enum(LearningActivityContentType::class)],
             'pdf' => ['required_if:content_type,==,PDF', 'missing_if:content_type,==,' . implode(',', LearningActivityContentType::Pdf->getEnumsExceptValue()), 'file', 'mimes:pdf'],
             'video' => ['required_if:content_type,==,Video', 'missing_if:content_type,==,' . implode(',', LearningActivityContentType::Video->getEnumsExceptValue()), 'file', 'mimes:mp4,mov,ogg,qt,ogx,oga,ogv,webm'],
+            'dz_uuid' => ['required', 'string', 'uuid'],
             'dz_chunk_index' => ['required', 'integer', 'gte:0'],
             'dz_total_chunk_count' => ['required', 'integer', 'gt:dz_chunk_index'],
         ];
@@ -39,6 +40,9 @@ class ContentUploadRequest extends FormRequest
             'video.missing_if' => ValidationType::MissingIf->getMessage(),
             'video.file' => ValidationType::File->getMessage(),
             'video.mimes' => ValidationType::VideoMimes->getMessage(),
+            'dz_uuid.required' => ValidationType::Required->getMessage(),
+            'dz_uuid.string' => ValidationType::Integer->getMessage(),
+            'dz_uuid.uuid' => ValidationType::Uuid->getMessage(),
             'dz_chunk_index.required' => ValidationType::Required->getMessage(),
             'dz_chunk_index.integer' => ValidationType::Integer->getMessage(),
             'dz_chunk_index.gte' => ValidationType::GreaterThanOrEqualZero->getMessage(),

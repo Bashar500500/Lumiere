@@ -3,6 +3,7 @@
 namespace App\DataTransferObjects\Course;
 
 use App\Http\Requests\Course\CourseRequest;
+use App\Enums\Course\CourseAccessType;
 use App\Enums\Course\CourseLanguage;
 use App\Enums\Course\CourseLevel;
 use App\Enums\Course\CourseStatus;
@@ -13,6 +14,7 @@ class CourseDto
 {
     public function __construct(
         public readonly ?int $instructorId,
+        public readonly ?CourseAccessType $accessType,
         public readonly ?int $currentPage,
         public readonly ?int $pageSize,
         public readonly ?string $name,
@@ -35,6 +37,7 @@ class CourseDto
     {
         return new self(
             instructorId: $request->validated('instructor_id'),
+            accessType: $request->validated('access_type') ? CourseAccessType::from($request->validated('access_type')) : null,
             currentPage: $request->validated('page'),
             pageSize: $request->validated('page_size'),
             name: null,
@@ -58,6 +61,7 @@ class CourseDto
     {
         return new self(
             instructorId: null,
+            accessType: null,
             currentPage: null,
             pageSize: null,
             name: $request->validated('name'),
@@ -68,7 +72,9 @@ class CourseDto
             timezone: $request->validated('timezone'),
             startDate: Carbon::parse($request->validated('start_date')),
             endDate: Carbon::parse($request->validated('end_date')),
-            coverImage: $request->validated('cover_image') ? UploadedFile::createFromBase($request->validated('cover_image')) : null,
+            coverImage: $request->validated('cover_image') ?
+                UploadedFile::createFromBase($request->validated('cover_image')) :
+                null,
             status: CourseStatus::from($request->validated('status')),
             duration: $request->validated('duration'),
             price: $request->validated('price'),
@@ -81,18 +87,31 @@ class CourseDto
     {
         return new self(
             instructorId: null,
+            accessType: null,
             currentPage: null,
             pageSize: null,
             name: $request->validated('name'),
             description: $request->validated('description'),
             categoryId: $request->validated('category_id'),
-            language: CourseLanguage::from($request->validated('language')),
-            level: CourseLevel::from($request->validated('level')),
+            language: $request->validated('language') ?
+                CourseLanguage::from($request->validated('language')) :
+                null,
+            level: $request->validated('level') ?
+                CourseLevel::from($request->validated('level')) :
+                null,
             timezone: $request->validated('timezone'),
-            startDate: Carbon::parse($request->validated('start_date')),
-            endDate: Carbon::parse($request->validated('end_date')),
-            coverImage: $request->validated('cover_image') ? UploadedFile::createFromBase($request->validated('cover_image')) : null,
-            status: CourseStatus::from($request->validated('status')),
+            startDate: $request->validated('start_date') ?
+                Carbon::parse($request->validated('start_date')) :
+                null,
+            endDate: $request->validated('end_date') ?
+                Carbon::parse($request->validated('end_date')) :
+                null,
+            coverImage: $request->validated('cover_image') ?
+                UploadedFile::createFromBase($request->validated('cover_image')) :
+                null,
+            status: $request->validated('status') ?
+                CourseStatus::from($request->validated('status')) :
+                null,
             duration: $request->validated('duration'),
             price: $request->validated('price'),
             accessSettingsDto: CourseAccessSettingsDto::from($request),

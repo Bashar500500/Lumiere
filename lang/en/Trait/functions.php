@@ -52,4 +52,7 @@ return [
     'revoke' => [
         'message' => ' Revoke permission to user successfully.'
     ],
+    'student_added_to_course' => [
+        'message' => ' added to course successfully.'
+    ],
 ];
