@@ -11,12 +11,16 @@ use App\Enums\Notification\NotificationTopic;
 use App\Models\Message\Message;
 use App\Models\Reply\Reply;
 use App\Models\Notification\Notification;
+use App\DataTransferObjects\Auth\SendResetCodeDto;
+use App\Models\User\PasswordResetCode;
+use App\Services\Global\Email\EmailService;
 
-class HandleRealtimeAndNotificationService
+class GlobalServiceHandlerService
 {
     public function __construct(
         protected RealtimeService $realtimeService,
         protected NotificationService $notificationService,
+        protected EmailService $emailService,
     ) {}
 
     public function handleMessage(Message $message): void
@@ -93,6 +97,11 @@ class HandleRealtimeAndNotificationService
                 $this->notificationService->sendNotificationToTopic('course-notifications', $payload['data']);
                 return;
         }
+    }
+
+    public function handleEmail(PasswordResetCode $passwordResetCode): void
+    {
+        $this->emailService->sendEmail($passwordResetCode);
     }
 
     private function prepareMessageNotificationData(Message $message): mixed

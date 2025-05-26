@@ -8,6 +8,7 @@ use App\Exceptions\CustomException;
 use App\Exceptions\InternalException;
 use App\Http\Requests\Auth\SendResetCodeRequest;
 use App\Http\Requests\Auth\VerifyResetCodeRequest;
+use App\Jobs\GlobalServiceHandlerJob;
 use App\Models\User\PasswordResetCode;
 use App\Models\User\User;
 use App\Repositories\User\UserRepositoryInterface;
@@ -27,14 +28,16 @@ class PasswordResetService
         if (! User::where('email', $dto->email)->first()) {
             throw CustomException::NotFoundEmail(ModelName::User);
         }
-        PasswordResetCode::updateOrCreate(
+        $passwordResetCode = PasswordResetCode::updateOrCreate(
             ['email' => $dto->email],
             ['code' => $code, 'created_at' => now()]
         );
 
-        Mail::raw("Your password reset code is: $code", function ($message) use ($dto) {
-            $message->to($dto->email)->subject('Password Reset Code');
-        });
+        GlobalServiceHandlerJob::dispatch($passwordResetCode);
+
+        // Mail::raw("Your password reset code is: $code", function ($message) use ($dto) {
+        //     $message->to($dto->email)->subject('Password Reset Code');
+        // });
     }
 
     public function verifyCode(VerifyResetCodeRequest $request): void

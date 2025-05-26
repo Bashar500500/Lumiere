@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Reply;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Response\ResponseController;
 use App\Services\Reply\ReplyService;
-use App\Jobs\HandleRealtimeAndNotificationJob;
+use App\Jobs\GlobalServiceHandlerJob;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\Reply\ReplyRequest;
 use App\Http\Resources\Reply\ReplyResource;
@@ -29,7 +29,7 @@ class ReplyController extends Controller
             $reply,
         );
 
-        HandleRealtimeAndNotificationJob::dispatch($reply);
+        GlobalServiceHandlerJob::dispatch($reply);
 
         return $this->controller->setFunctionName(FunctionName::Store)
             ->setModelName(ModelName::Reply)
