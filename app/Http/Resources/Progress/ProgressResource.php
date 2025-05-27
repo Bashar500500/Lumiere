@@ -12,7 +12,8 @@ class ProgressResource extends JsonResource
         return [
             'id' => $this->id,
             'courseName' => $this->whenLoaded('course')->name,
-            'studentName' => $this->whenLoaded('student')->name,
+            'studentName' => $this->whenLoaded('student')->first_name .
+                $this->whenLoaded('student')->last_name,
             'progress' => $this->progress,
             'modules' => $this->modules,
             'time' => $this->time,

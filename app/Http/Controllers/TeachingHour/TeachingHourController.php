@@ -23,7 +23,7 @@ class TeachingHourController extends Controller
 
     public function index(TeachingHourRequest $request): JsonResponse
     {
-        $data = (object) TeachingHourResource::collection(
+        $data = TeachingHourResource::collection(
             $this->service->index($request),
         );
 

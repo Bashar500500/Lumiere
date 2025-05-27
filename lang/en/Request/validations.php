@@ -89,12 +89,21 @@ return [
         'message' => 'The :attribute field is not correct',
     ],
     'max' => [
-        'message' => 'The :attribute fieldis not correct',
+        'message' => 'The :attribute field is not correct',
     ],
     'uuid' => [
         'message' => 'The :attribute field must be a valid UUID.',
     ],
     'after' => [
         'message' => 'The :attribute field must be a date after previous data.',
+    ],
+    'email' => [
+        'message' => 'The :attribute field must be a valid email address.',
+    ],
+    'unique' => [
+        'message' => 'The :attribute has already been taken.',
+    ],
+    'confirmed' => [
+        'message' => 'The :attribute field confirmation does not match.',
     ],
 ];

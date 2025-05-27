@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Category\Category;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Container\Container;
 use App\Repositories\Message\MessageRepositoryInterface;
@@ -11,9 +10,6 @@ use App\Models\Message\Message;
 use App\Repositories\Reply\ReplyRepositoryInterface;
 use App\Repositories\Reply\ReplyRepository;
 use App\Models\Reply\Reply;
-// use App\Repositories\Course\CourseRepositoryInterface;
-// use App\Repositories\Course\CourseRepository;
-// use App\Models\Course\Course;
 use App\Repositories\Group\GroupRepositoryInterface;
 use App\Repositories\Group\GroupRepository;
 use App\Models\Group\Group;
@@ -23,20 +19,25 @@ use App\Models\LearningActivity\LearningActivity;
 use App\Repositories\Section\SectionRepositoryInterface;
 use App\Repositories\Section\SectionRepository;
 use App\Models\Section\Section;
-use App\Models\SubCategory\SubCategory;
-use App\Models\User\User;
-use App\Models\User\UserProfile;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Models\Category\Category;
 use App\Repositories\Permission\PermissionRepository;
 use App\Repositories\Permission\PermissionRepositoryInterface;
+use Spatie\Permission\Models\Permission;
 use App\Repositories\SubCategory\SubCategoryRepositoryInterface;
 use App\Repositories\SubCategory\SubCategoryRepository;
+use App\Models\SubCategory\SubCategory;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
-use App\Repositories\UserProfile\UserProfileRepository;
-use App\Repositories\UserProfile\UserProfileRepositoryInterface;
-use Spatie\Permission\Models\Permission;
+use App\Repositories\User\AdminRepository;
+use App\Repositories\User\AdminRepositoryInterface;
+use App\Models\User\User;
+use App\Repositories\Profile\UserProfileRepository;
+use App\Repositories\Profile\UserProfileRepositoryInterface;
+use App\Repositories\Profile\AdminProfileRepository;
+use App\Repositories\Profile\AdminProfileRepositoryInterface;
+use App\Models\Profile\Profile;
 use App\Repositories\Holiday\HolidayRepositoryInterface;
 use App\Repositories\Holiday\HolidayRepository;
 use App\Models\Holiday\Holiday;
@@ -64,6 +65,11 @@ use App\Models\Progress\Progress;
 use App\Repositories\Attendance\AttendanceRepositoryInterface;
 use App\Repositories\Attendance\AttendanceRepository;
 use App\Models\Attendance\Attendance;
+use App\Repositories\Auth\RegisterRepositoryInterface;
+use App\Repositories\Auth\RegisterRepository;
+use App\Repositories\Auth\PasswordResetCodeRepositoryInterface;
+use App\Repositories\Auth\PasswordResetCodeRepository;
+use App\Models\Auth\PasswordResetCode;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -81,11 +87,6 @@ class AppServiceProvider extends ServiceProvider
             return new ReplyRepository($app->make(Reply::class),
             );
         });
-
-        // $this->app->bind(CourseRepositoryInterface::class, function (Container $app) {
-        //     return new CourseRepository($app->make(Course::class),
-        //     );
-        // });
 
         $this->app->bind(GroupRepositoryInterface::class, function (Container $app) {
             return new GroupRepository($app->make(Group::class),
@@ -117,8 +118,18 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
+        $this->app->bind(AdminRepositoryInterface::class, function (Container $app) {
+            return new AdminRepository($app->make(User::class),
+            );
+        });
+
         $this->app->bind(UserProfileRepositoryInterface::class, function (Container $app) {
-            return new UserProfileRepository($app->make(UserProfile::class),
+            return new UserProfileRepository($app->make(Profile::class),
+            );
+        });
+
+        $this->app->bind(AdminProfileRepositoryInterface::class, function (Container $app) {
+            return new AdminProfileRepository($app->make(Profile::class),
             );
         });
 
@@ -169,6 +180,16 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(AttendanceRepositoryInterface::class, function (Container $app) {
             return new AttendanceRepository($app->make(Attendance::class),
+            );
+        });
+
+        $this->app->bind(RegisterRepositoryInterface::class, function (Container $app) {
+            return new RegisterRepository($app->make(User::class),
+            );
+        });
+
+        $this->app->bind(PasswordResetCodeRepositoryInterface::class, function (Container $app) {
+            return new PasswordResetCodeRepository($app->make(PasswordResetCode::class),
             );
         });
     }

@@ -8,10 +8,10 @@ use App\Enums\Request\FieldName;
 
 class ImageUploadRequest extends FormRequest
 {
-    // public function authorize(): bool
-    // {
-    //     return false;
-    // }
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     public function rules(): array
     {
@@ -23,30 +23,30 @@ class ImageUploadRequest extends FormRequest
         ];
     }
 
-    public function messages(): array
-    {
-        return [
-            'image.required' => ValidationType::Required->getMessage(),
-            'image.image' => ValidationType::Image->getMessage(),
-            'image.mimes' => ValidationType::ImageMimes->getMessage(),
-            'dz_uuid.required' => ValidationType::Required->getMessage(),
-            'dz_uuid.string' => ValidationType::Integer->getMessage(),
-            'dz_uuid.uuid' => ValidationType::Uuid->getMessage(),
-            'dz_chunk_index.required' => ValidationType::Required->getMessage(),
-            'dz_chunk_index.integer' => ValidationType::Integer->getMessage(),
-            'dz_chunk_index.gte' => ValidationType::GreaterThanOrEqualZero->getMessage(),
-            'dz_total_chunk_count.required' => ValidationType::Required->getMessage(),
-            'dz_total_chunk_count.integer' => ValidationType::Integer->getMessage(),
-            'dz_total_chunk_count.gt' => ValidationType::GreaterThan->getMessage(),
-        ];
-    }
+    // public function messages(): array
+    // {
+    //     return [
+    //         'image.required' => ValidationType::Required->getMessage(),
+    //         'image.image' => ValidationType::Image->getMessage(),
+    //         'image.mimes' => ValidationType::ImageMimes->getMessage(),
+    //         'dz_uuid.required' => ValidationType::Required->getMessage(),
+    //         'dz_uuid.string' => ValidationType::Integer->getMessage(),
+    //         'dz_uuid.uuid' => ValidationType::Uuid->getMessage(),
+    //         'dz_chunk_index.required' => ValidationType::Required->getMessage(),
+    //         'dz_chunk_index.integer' => ValidationType::Integer->getMessage(),
+    //         'dz_chunk_index.gte' => ValidationType::GreaterThanOrEqualZero->getMessage(),
+    //         'dz_total_chunk_count.required' => ValidationType::Required->getMessage(),
+    //         'dz_total_chunk_count.integer' => ValidationType::Integer->getMessage(),
+    //         'dz_total_chunk_count.gt' => ValidationType::GreaterThan->getMessage(),
+    //     ];
+    // }
 
-    public function attributes(): array
-    {
-        return [
-            'image' => FieldName::Image->getMessage(),
-            'dz_chunk_index' => FieldName::DzChunkIndex->getMessage(),
-            'dz_total_chunk_count' => FieldName::DzTotalChunkCount->getMessage(),
-        ];
-    }
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'image' => FieldName::Image->getMessage(),
+    //         'dz_chunk_index' => FieldName::DzChunkIndex->getMessage(),
+    //         'dz_total_chunk_count' => FieldName::DzTotalChunkCount->getMessage(),
+    //     ];
+    // }
 }

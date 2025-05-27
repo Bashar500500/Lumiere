@@ -12,6 +12,7 @@ enum ForbiddenExceptionMessage: string
     case LearningActivity = 'learning_activity';
     case User = 'user';
     case Attendance = 'attendance';
+    case PasswordResetCode = 'password_reset_code';
 
     public function getDescription(): string
     {

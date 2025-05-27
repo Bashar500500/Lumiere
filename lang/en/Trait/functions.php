@@ -40,19 +40,22 @@ return [
     'logout' => [
         'message' => ' logout successfully.'
     ],
-    'sendCode' => [
-        'message' => ' send code to email successfully.'
+    'send_reset_code' => [
+        'message' => ' code sent to user email successfully.'
     ],
-    'verifyCode' => [
-        'message' => ' Chang password successfully.'
+    'verify_reset_code' => [
+        'message' => ' code verifyed successfully.'
     ],
     'assign' => [
-        'message' => ' Assign permission to user successfully.'
+        'message' => ' assigned to user successfully.'
     ],
     'revoke' => [
-        'message' => ' Revoke permission to user successfully.'
+        'message' => ' revoked from user successfully.'
     ],
     'student_added_to_course' => [
         'message' => ' added to course successfully.'
+    ],
+    'remove_added_from_course' => [
+        'message' => ' removed from course successfully.'
     ],
 ];

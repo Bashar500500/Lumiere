@@ -23,7 +23,7 @@ class ScheduleTimingController extends Controller
 
     public function index(ScheduleTimingRequest $request): JsonResponse
     {
-        $data = (object) ScheduleTimingResource::collection(
+        $data = ScheduleTimingResource::collection(
             $this->service->index($request),
         );
 

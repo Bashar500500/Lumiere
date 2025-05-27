@@ -23,7 +23,7 @@ class LeaveController extends Controller
 
     public function index(LeaveRequest $request): JsonResponse
     {
-        $data = (object) LeaveResource::collection(
+        $data = LeaveResource::collection(
             $this->service->index($request),
         );
 

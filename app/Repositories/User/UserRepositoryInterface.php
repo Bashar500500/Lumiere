@@ -2,24 +2,28 @@
 
 namespace App\Repositories\User;
 
-use App\DataTransferObjects\Auth\RegisterDto;
-use App\DataTransferObjects\User\AssignRoleDto;
 use App\DataTransferObjects\User\UserDto;
-use App\Models\User\User;
+use App\DataTransferObjects\Auth\PasswordResetCodeDto;
+use App\DataTransferObjects\User\UserCourseDto;
 use App\Enums\User\UserMessage;
 
 interface UserRepositoryInterface
 {
     public function all(UserDto $dto): object;
 
-    public function create(RegisterDto $dto): User;
-
     public function find(int $id): object;
 
-    public function update(array $data, int $id): object;
+    public function create(UserDto $dto): object;
 
-    public function updatePassword(string $email, string $newPassword): object;
+    public function update(UserDto $dto, int $id): object;
 
-    public function addStudentToCourse(UserDto $dto): UserMessage;
+    public function delete(int $id): object;
+
+    // public function create(RegisterDto $dto): User;
+    public function resetPassword(PasswordResetCodeDto $dto): void;
+
+    public function addStudentToCourse(UserCourseDto $dto): UserMessage;
+
+    public function removeStudentFromCourse(UserCourseDto $dto): void;
 
 }

@@ -36,6 +36,9 @@ enum ValidationType: string
     case Max = 'max';
     case Uuid = 'uuid';
     case After = 'after';
+    case Email = 'email';
+    case Unique = 'unique';
+    case Confirmed = 'confirmed';
 
     public function getMessage(): string
     {

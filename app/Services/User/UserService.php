@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Services\User;
-use App\DataTransferObjects\Auth\RegisterDto;
-use App\DataTransferObjects\User\UserDto;
-use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Requests\User\UserRequest;
-use App\Models\User\User;
-use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Http\Requests\User\UserRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\DataTransferObjects\User\UserDto;
+use App\Http\Requests\User\AddUserToCourseRequest;
+use App\Http\Requests\User\RemoveUserFromCourseRequest;
+use App\DataTransferObjects\Auth\RegisterDto;
+use App\DataTransferObjects\User\UserCourseDto;
 use App\Enums\User\UserMessage;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class UserService
 {
@@ -19,29 +21,35 @@ class UserService
 
     public function index(UserRequest $request): object
     {
-        $dto = UserDto::fromindexRequest($request);
+        $dto = UserDto::fromIndexRequest($request);
         return $this->repository->all($dto);
     }
 
-    public function show(User $user): object
+    public function show(): object
     {
-        return $this->repository->find($user->id);
+        return $this->repository->find(Auth::user()->id);
     }
 
-    public function register(RegisterRequest $request): object
+    public function store(UserRequest $request): object
     {
-        $dto = RegisterDto::fromRegisterRequest($request);
-        $user = $this->repository->create($dto);
-        $user['token'] = $user->createToken('api_token')->accessToken;
-        $user['role']= $user->getRoleNames();
-        return (object)[
-            'user' => $user,
-        ];
+        $dto = UserDto::fromStoreRequest($request);
+        return $this->repository->create($dto);
     }
 
-    public function addStudentToCourse(UserRequest $request): UserMessage
+    public function update(UserRequest $request): object
     {
-        $dto = UserDto::fromAddStudentToCourseRequest($request);
+        $dto = UserDto::fromUpdateRequest($request);
+        return $this->repository->update($dto, Auth::user()->id);
+    }
+
+    public function destroy(): object
+    {
+        return $this->repository->delete(Auth::user()->id);
+    }
+
+    public function addStudentToCourse(AddUserToCourseRequest $request): UserMessage
+    {
+        $dto = UserCourseDto::fromAddStudentToCourseRequest($request);
         $message = $this->repository->addStudentToCourse($dto);
 
         switch ($message)
@@ -49,10 +57,13 @@ class UserService
             case UserMessage::StudentAddedToCourse:
                 return $message;
             default:
-                Mail::raw("Your email is : $dto->email and Your password is: 12345", function ($message) use ($dto) {
-                    $message->to($dto->email)->subject('New Student Account Created');
-                });
                 return $message;
         }
+    }
+
+    public function removeStudentFromCourse(RemoveUserFromCourseRequest $request): void
+    {
+        $dto = UserCourseDto::fromRemoveStudentFromCourseRequest($request);
+        $this->repository->removeStudentFromCourse($dto);
     }
 }

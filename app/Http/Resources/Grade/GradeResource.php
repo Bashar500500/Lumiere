@@ -13,7 +13,8 @@ class GradeResource extends JsonResource
             'id' => $this->id,
             // 'assignmentName' => $this->whenLoaded('assignment')->name,
             'assignmentName' => 'assignment name',
-            'studentName' => $this->whenLoaded('student')->name,
+            'studentName' => $this->whenLoaded('student')->first_name .
+                $this->whenLoaded('student')->last_name,
             'dueDate' => $this->due_date,
             'extendedDueDate' => $this->extended_due_date,
             'status' => $this->status,

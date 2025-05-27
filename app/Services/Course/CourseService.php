@@ -17,8 +17,9 @@ class CourseService
     public function index(CourseRequest $request): object
     {
         $dto = CourseDto::fromIndexRequest($request);
-        $data = $this->prepareIndexAndStoreData('index', 'student');
-        $repository = $this->factory->make('student');
+        $role = Auth::user()->getRoleNames();
+        $data = $this->prepareIndexAndStoreData('index', $role[0]);
+        $repository = $this->factory->make($role[0]);
         return match ($dto->accessType) {
             null => $repository->all($dto, $data),
             default => $repository->allWithFilter($dto, $data),
@@ -27,55 +28,54 @@ class CourseService
 
     public function show(Course $course): object
     {
-        $repository = $this->factory->make('student');
+        $role = Auth::user()->getRoleNames();
+        $repository = $this->factory->make($role[0]);
         return $repository->find($course->id);
     }
 
     public function store(CourseRequest $request): object
     {
         $dto = CourseDto::fromStoreRequest($request);
-        $data = $this->prepareIndexAndStoreData('store', 'student');
-        $repository = $this->factory->make('student');
+        $role = Auth::user()->getRoleNames();
+        $data = $this->prepareIndexAndStoreData('store', $role[0]);
+        $repository = $this->factory->make($role[0]);
         return $repository->create($dto, $data);
     }
 
     public function update(CourseRequest $request, Course $course): object
     {
         $dto = CourseDto::fromUpdateRequest($request);
-        $repository = $this->factory->make('student');
+        $role = Auth::user()->getRoleNames();
+        $repository = $this->factory->make($role[0]);
         return $repository->update($dto, $course->id);
     }
 
     public function destroy(Course $course): object
     {
-        $repository = $this->factory->make('student');
+        $role = Auth::user()->getRoleNames();
+        $repository = $this->factory->make($role[0]);
         return $repository->delete($course->id);
     }
 
     public function view(Course $course): string
     {
-        $repository = $this->factory->make('student');
+        $role = Auth::user()->getRoleNames();
+        $repository = $this->factory->make($role[0]);
         return $repository->view($course->id);
     }
 
     public function download(Course $course): string
     {
-        $repository = $this->factory->make('student');
+        $role = Auth::user()->getRoleNames();
+        $repository = $this->factory->make($role[0]);
         return $repository->download($course->id);
     }
 
     public function destroyAttachment(Course $course): void
     {
-        $repository = $this->factory->make('student');
+        $role = Auth::user()->getRoleNames();
+        $repository = $this->factory->make($role[0]);
         $repository->deleteAttachment($course->id);
-    }
-
-    private function prepareStoreData(): array
-    {
-        return [
-            // 'instructorId' => auth()->user()->id
-            'instructorId' => 1,
-        ];
     }
 
     private function prepareIndexAndStoreData(string $function, string $role): array
@@ -83,11 +83,10 @@ class CourseService
         return match ($function)
         {
             'index' => [
-                "{role}" => Auth::user(),
+                "{$role}" => Auth::user(),
             ],
             'store' => [
-                // 'instructorId' => auth()->user()->id
-                'instructorId' => 1,
+                'instructorId' => Auth::user()->id,
             ],
         };
     }

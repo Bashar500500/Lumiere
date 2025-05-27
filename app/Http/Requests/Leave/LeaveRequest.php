@@ -11,10 +11,10 @@ use App\Enums\Request\FieldName;
 
 class LeaveRequest extends FormRequest
 {
-    // public function authorize(): bool
-    // {
-    //     return false;
-    // }
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     protected function onIndex() {
         return [
@@ -61,45 +61,45 @@ class LeaveRequest extends FormRequest
         }
     }
 
-    public function messages(): array
-    {
-        return [
-            'page.required' => ValidationType::Required->getMessage(),
-            'page.integer' => ValidationType::Integer->getMessage(),
-            'page.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'page_size.integer' => ValidationType::Integer->getMessage(),
-            'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'type.required' => ValidationType::Required->getMessage(),
-            'type.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
-            'from.required' => ValidationType::Required->getMessage(),
-            'from.date' => ValidationType::Date->getMessage(),
-            'from.date_format' => ValidationType::DateFormat->getMessage(),
-            'to.required' => ValidationType::Required->getMessage(),
-            'to.required_with' => ValidationType::RequiredWith->getMessage(),
-            'to.date' => ValidationType::Date->getMessage(),
-            'to.date_format' => ValidationType::DateFormat->getMessage(),
-            'to.after_or_equal' => ValidationType::AfterOrEqual->getMessage(),
-            'number_of_days.required' => ValidationType::Required->getMessage(),
-            'number_of_days.integer' => ValidationType::Integer->getMessage(),
-            'number_of_days.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'reason.required' => ValidationType::Required->getMessage(),
-            'reason.string' => ValidationType::String->getMessage(),
-            'status.required' => ValidationType::Required->getMessage(),
-            'status.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
-        ];
-    }
+    // public function messages(): array
+    // {
+    //     return [
+    //         'page.required' => ValidationType::Required->getMessage(),
+    //         'page.integer' => ValidationType::Integer->getMessage(),
+    //         'page.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'page_size.integer' => ValidationType::Integer->getMessage(),
+    //         'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'type.required' => ValidationType::Required->getMessage(),
+    //         'type.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+    //         'from.required' => ValidationType::Required->getMessage(),
+    //         'from.date' => ValidationType::Date->getMessage(),
+    //         'from.date_format' => ValidationType::DateFormat->getMessage(),
+    //         'to.required' => ValidationType::Required->getMessage(),
+    //         'to.required_with' => ValidationType::RequiredWith->getMessage(),
+    //         'to.date' => ValidationType::Date->getMessage(),
+    //         'to.date_format' => ValidationType::DateFormat->getMessage(),
+    //         'to.after_or_equal' => ValidationType::AfterOrEqual->getMessage(),
+    //         'number_of_days.required' => ValidationType::Required->getMessage(),
+    //         'number_of_days.integer' => ValidationType::Integer->getMessage(),
+    //         'number_of_days.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'reason.required' => ValidationType::Required->getMessage(),
+    //         'reason.string' => ValidationType::String->getMessage(),
+    //         'status.required' => ValidationType::Required->getMessage(),
+    //         'status.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+    //     ];
+    // }
 
-    public function attributes(): array
-    {
-        return [
-            'page' => FieldName::Page->getMessage(),
-            'page_size' => FieldName::PageSize->getMessage(),
-            'type' => FieldName::Type->getMessage(),
-            'from' => FieldName::From->getMessage(),
-            'to' => FieldName::To->getMessage(),
-            'number_of_days' => FieldName::NumberOfDays->getMessage(),
-            'reason' => FieldName::Reason->getMessage(),
-            'status' => FieldName::Status->getMessage(),
-        ];
-    }
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'page' => FieldName::Page->getMessage(),
+    //         'page_size' => FieldName::PageSize->getMessage(),
+    //         'type' => FieldName::Type->getMessage(),
+    //         'from' => FieldName::From->getMessage(),
+    //         'to' => FieldName::To->getMessage(),
+    //         'number_of_days' => FieldName::NumberOfDays->getMessage(),
+    //         'reason' => FieldName::Reason->getMessage(),
+    //         'status' => FieldName::Status->getMessage(),
+    //     ];
+    // }
 }

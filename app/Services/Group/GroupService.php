@@ -6,6 +6,7 @@ use App\Repositories\Group\GroupRepositoryInterface;
 use App\Http\Requests\Group\GroupRequest;
 use App\Models\Group\Group;
 use App\DataTransferObjects\Group\GroupDto;
+use Illuminate\Support\Facades\Auth;
 
 class GroupService
 {
@@ -71,8 +72,7 @@ class GroupService
     private function prepareJoinAndLeaveData(): array
     {
         return [
-            // 'instructorId' => auth()->user()->id
-            'studentId' => 1,
+            'studentId' => Auth::user()->id,
         ];
     }
 }

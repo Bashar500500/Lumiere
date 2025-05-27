@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('sub_categories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->string('name');
             $table->string('status');
-            $table->text('description')->nullable();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade'); // معرف الفئة
+            $table->text('description');
             $table->timestamps();
         });
     }

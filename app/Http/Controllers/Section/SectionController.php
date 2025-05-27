@@ -28,7 +28,7 @@ class SectionController extends Controller
 
     public function index(SectionRequest $request): JsonResponse
     {
-        $data = (object) SectionResource::collection(
+        $data = SectionResource::collection(
             $this->sectionService->index($request),
         );
 

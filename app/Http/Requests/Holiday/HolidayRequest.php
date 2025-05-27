@@ -10,10 +10,10 @@ use App\Enums\Request\FieldName;
 
 class HolidayRequest extends FormRequest
 {
-    // public function authorize(): bool
-    // {
-    //     return false;
-    // }
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     protected function onIndex() {
         return [
@@ -54,32 +54,32 @@ class HolidayRequest extends FormRequest
         }
     }
 
-    public function messages(): array
-    {
-        return [
-            'page.required' => ValidationType::Required->getMessage(),
-            'page.integer' => ValidationType::Integer->getMessage(),
-            'page.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'page_size.integer' => ValidationType::Integer->getMessage(),
-            'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'title.required' => ValidationType::Required->getMessage(),
-            'title.string' => ValidationType::String->getMessage(),
-            'date.required' => ValidationType::Required->getMessage(),
-            'date.date' => ValidationType::Date->getMessage(),
-            'date.date_format' => ValidationType::DateFormat->getMessage(),
-            'day.required' => ValidationType::Required->getMessage(),
-            'day.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
-        ];
-    }
+    // public function messages(): array
+    // {
+    //     return [
+    //         'page.required' => ValidationType::Required->getMessage(),
+    //         'page.integer' => ValidationType::Integer->getMessage(),
+    //         'page.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'page_size.integer' => ValidationType::Integer->getMessage(),
+    //         'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'title.required' => ValidationType::Required->getMessage(),
+    //         'title.string' => ValidationType::String->getMessage(),
+    //         'date.required' => ValidationType::Required->getMessage(),
+    //         'date.date' => ValidationType::Date->getMessage(),
+    //         'date.date_format' => ValidationType::DateFormat->getMessage(),
+    //         'day.required' => ValidationType::Required->getMessage(),
+    //         'day.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+    //     ];
+    // }
 
-    public function attributes(): array
-    {
-        return [
-            'page' => FieldName::Page->getMessage(),
-            'page_size' => FieldName::PageSize->getMessage(),
-            'title' => FieldName::Title->getMessage(),
-            'date' => FieldName::Date->getMessage(),
-            'day' => FieldName::Day->getMessage(),
-        ];
-    }
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'page' => FieldName::Page->getMessage(),
+    //         'page_size' => FieldName::PageSize->getMessage(),
+    //         'title' => FieldName::Title->getMessage(),
+    //         'date' => FieldName::Date->getMessage(),
+    //         'day' => FieldName::Day->getMessage(),
+    //     ];
+    // }
 }

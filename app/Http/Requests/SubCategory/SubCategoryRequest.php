@@ -2,43 +2,42 @@
 
 namespace App\Http\Requests\SubCategory;
 
-use App\Enums\Category\CategoryStatus;
-use App\Enums\Request\FieldName;
-use App\Enums\Request\ValidationType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
+use App\Enums\SubCategory\SubCategoryStatus;
+use App\Enums\Request\ValidationType;
+use App\Enums\Request\FieldName;
 
 class SubCategoryRequest extends FormRequest
 {
-    // public function authorize(): bool
-    // {
-    //     return false;
-    // }
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     protected function onIndex() {
         return [
-            'page' => ['required', 'integer'],
-            'page_size' => ['nullable', 'integer'],
+            'page' => ['required', 'integer', 'gt:0'],
+            'page_size' => ['sometimes', 'integer', 'gt:0'],
         ];
     }
 
     protected function onStore() {
         return [
+            'category_id' => ['required', 'exists:categories,id'],
             'name' => ['required', 'string'],
-            'status' => ['required', new Enum(CategoryStatus::class)],
-            'category_id' => ['required', 'integer'],
+            'status' => ['required', new Enum(SubCategoryStatus::class)],
             'description' => ['required', 'string'],
-            'sub_category_image' => ['nullable', 'image'],
+            'sub_category_image' => ['sometimes', 'image', 'mimes:jpg,jpeg,png,bmp,gif,svg,webp'],
         ];
     }
 
     protected function onUpdate() {
         return [
-            'name' => ['required', 'string'],
-            'status' => ['required', new Enum(CategoryStatus::class)],
-            'category_id' => ['required', 'integer'],
-            'description' => ['required', 'string'],
-            'sub_category_image' => ['nullable', 'image'],
+            'name' => ['sometimes', 'string'],
+            'status' => ['sometimes', new Enum(SubCategoryStatus::class)],
+            'description' => ['sometimes', 'string'],
+            'sub_category_image' => ['sometimes', 'image', 'mimes:jpg,jpeg,png,bmp,gif,svg,webp'],
         ];
     }
 
@@ -58,34 +57,37 @@ class SubCategoryRequest extends FormRequest
         }
     }
 
-    public function messages(): array
-    {
-        return [
-            'page.required' => (ValidationType::Required)->getMessage(),
-            'page.integer' => (ValidationType::Integer)->getMessage(),
-            'page_size.integer' => (ValidationType::Integer)->getMessage(),
-            'name.required' => (ValidationType::Required)->getMessage(),
-            'name.Illuminate\Validation\Rules\Enum' => (ValidationType::Enum)->getMessage(),
-            'category_id.required' => (ValidationType::Required)->getMessage(),
-            'category_id.integer' => (ValidationType::Integer)->getMessage(),
-            'status.required' => (ValidationType::Required)->getMessage(),
-            'status.string' => (ValidationType::String)->getMessage(),
-            'description.required' => (ValidationType::Required)->getMessage(),
-            'description.string' => (ValidationType::String)->getMessage(),
-            'sub_category_image.image' => (ValidationType::Image)->getMessage(),
-        ];
-    }
+    // public function messages(): array
+    // {
+    //     return [
+    //         'page.required' => ValidationType::Required->getMessage(),
+    //         'page.integer' => ValidationType::Integer->getMessage(),
+    //         'page.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'page_size.integer' => ValidationType::Integer->getMessage(),
+    //         'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'category_id.required' => ValidationType::Required->getMessage(),
+    //         'category_id.exists' => ValidationType::Exists->getMessage(),
+    //         'name.required' => ValidationType::Required->getMessage(),
+    //         'name.string' => ValidationType::String->getMessage(),
+    //         'status.required' => ValidationType::Required->getMessage(),
+    //         'status.Illuminate\Validation\Rules\Enum' => (ValidationType::Enum)->getMessage(),
+    //         'description.required' => ValidationType::Required->getMessage(),
+    //         'description.string' => ValidationType::String->getMessage(),
+    //         'sub_category_image.image' => ValidationType::Image->getMessage(),
+    //         'sub_category_image.mimes' => ValidationType::ImageMimes->getMessage(),
+    //     ];
+    // }
 
-    public function attributes(): array
-    {
-        return [
-            'page' => (FieldName::Page)->getMessage(),
-            'page_size' => (FieldName::PageSize)->getMessage(),
-            'name' => (FieldName::Name)->getMessage(),
-            'category_id' => (FieldName::CategoryId)->getMessage(),
-            'status' => (FieldName::Status)->getMessage(),
-            'description' => (FieldName::Description)->getMessage(),
-            'sub_category_image' => (FieldName::SubCategoryImage)->getMessage(),
-        ];
-    }
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'page' => FieldName::Page->getMessage(),
+    //         'page_size' => FieldName::PageSize->getMessage(),
+    //         'category_id' => FieldName::CategoryId->getMessage(),
+    //         'name' => FieldName::Name->getMessage(),
+    //         'status' => FieldName::Status->getMessage(),
+    //         'description' => FieldName::Description->getMessage(),
+    //         'sub_category_image' => FieldName::SubCategoryImage->getMessage(),
+    //     ];
+    // }
 }

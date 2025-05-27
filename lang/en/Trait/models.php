@@ -58,11 +58,11 @@ return [
     'sub_category' => [
         'message' => 'SubCategory'
     ],
-    'Password_Reset' => [
-        'message' => 'PasswordReset'
+    'password_reset' => [
+        'message' => 'Password reset'
     ],
-    'user_profile' => [
-        'message' => 'UserProfile'
+    'profile' => [
+        'message' => 'Profile'
     ],
     'permission' => [
         'message' => 'Permission'
@@ -96,5 +96,17 @@ return [
     ],
     'attendance' => [
         'message' => 'Attendance'
+    ],
+    'user_profile' => [
+        'message' => 'User profile'
+    ],
+    'admin_profile' => [
+        'message' => 'Admin profile'
+    ],
+    'password_reset_code' => [
+        'message' => 'Password reset code'
+    ],
+    'email' => [
+        'message' => 'Email'
     ],
 ];

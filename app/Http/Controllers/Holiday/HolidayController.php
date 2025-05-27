@@ -23,7 +23,7 @@ class HolidayController extends Controller
 
     public function index(HolidayRequest $request): JsonResponse
     {
-        $data = (object) HolidayResource::collection(
+        $data = HolidayResource::collection(
             $this->service->index($request),
         );
 

@@ -28,7 +28,7 @@ class EventController extends Controller
 
     public function index(EventRequest $request): JsonResponse
     {
-        $data = (object) EventResource::collection(
+        $data = EventResource::collection(
             $this->eventService->index($request),
         );
 

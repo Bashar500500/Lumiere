@@ -25,4 +25,7 @@ return [
     'attendance' => [
         'description' => 'The student is registered in the session as a pre-attendee. Try again with correct data.'
     ],
+    'password_reset_code' => [
+        'description' => 'The email and password reset code does not match the values in database. Try again with correct data.'
+    ],
 ];

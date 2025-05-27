@@ -29,7 +29,7 @@ class LearningActivityController extends Controller
 
     public function index(LearningActivityRequest $request): JsonResponse
     {
-        $data = (object) LearningActivityResource::collection(
+        $data = LearningActivityResource::collection(
             $this->learningActivityService->index($request),
         );
 

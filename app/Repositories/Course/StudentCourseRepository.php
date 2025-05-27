@@ -17,7 +17,17 @@ class StudentCourseRepository extends BaseRepository implements CourseRepository
     {
         // $student = Auth::user();
 
-        return (object) $data['student']->courses
+        // return (object) $data['student']->courses
+        //     ->with('attachment', 'students')
+        //     ->latest('created_at')
+        //     ->simplePaginate(
+        //         $dto->pageSize,
+        //         ['*'],
+        //         'page',
+        //         $dto->currentPage,
+        //     );
+
+        return (object) $this->model->whereIn('id', $data['student']->courses->select('id'))
             ->with('attachment', 'students')
             ->latest('created_at')
             ->simplePaginate(
@@ -32,7 +42,18 @@ class StudentCourseRepository extends BaseRepository implements CourseRepository
     {
         // $student = Auth::user();
 
-        return (object) $data['student']->courses->where('access_settings_access_type', $dto->accessType)
+        // return (object) $data['student']->courses->where('access_settings_access_type', $dto->accessType)
+        //     ->with('attachment', 'students')
+        //     ->latest('created_at')
+        //     ->simplePaginate(
+        //         $dto->pageSize,
+        //         ['*'],
+        //         'page',
+        //         $dto->currentPage,
+        //     );
+
+        return (object) $this->model->whereIn('id', $data['student']->courses->select('id'))
+            ->where('access_settings_access_type', $dto->accessType)
             ->with('attachment', 'students')
             ->latest('created_at')
             ->simplePaginate(

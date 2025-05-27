@@ -4,18 +4,20 @@ namespace App\Repositories\User;
 
 use App\Repositories\BaseRepository;
 use App\Models\User\User;
-use App\DataTransferObjects\Auth\RegisterDto;
-use App\DataTransferObjects\User\AssignRoleDto;
 use App\DataTransferObjects\User\UserDto;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
-use App\Enums\Auth\UserRole;
+use App\DataTransferObjects\User\UserCourseDto;
+use App\Enums\User\UserRole;
 use App\Models\UserCourseGroup\UserCourseGroup;
 use Carbon\Carbon;
 use App\Enums\Trait\ModelName;
 use App\Exceptions\CustomException;
 use App\Enums\Exception\ForbiddenExceptionMessage;
 use App\Enums\User\UserMessage;
+use App\DataTransferObjects\Auth\PasswordResetCodeDto;
+use App\Jobs\GlobalServiceHandlerJob;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -26,7 +28,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function all(UserDto $dto): object
     {
-        return (object) $this->model
+        return (object) $this->model->latest('created_at')
             ->simplePaginate(
                 $dto->pageSize,
                 ['*'],
@@ -35,68 +37,74 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             );
     }
 
-    public function create(RegisterDto $dto): User
-    {
-        $user = DB::transaction(function () use ($dto) {
-            $user = $this->model->create([
-                'first_name' => $dto->first_name,
-                'last_name' => $dto->last_name,
-                'email' => $dto->email,
-                'password' => Hash::make($dto->password),
-
-            ]);
-            $user['role'] = $user->assignRole($dto->role);
-            return $user;
-        });
-
-        return $user;
-    }
-
     public function find(int $id): object
     {
         return (object) parent::find($id);
     }
 
-    public function update(array $data, int $id): object
+    public function create(UserDto $dto): object
     {
-        $user = (object) parent::find($id);
+        $user = DB::transaction(function () use ($dto) {
+            $user = $this->model->create([
+                'first_name' => $dto->firstName,
+                'last_name' => $dto->lastName,
+                'email' => $dto->email,
+                'password' => Hash::make($dto->password),
+            ]);
 
-        DB::transaction(function () use ($user, $data) {
-            $user->update($data);
+            $user['role'] = $user->assignRole($dto->role);
+            return $user;
+        });
+
+        $user['role'] = $user->getRoleNames();
+        return (object) $user;
+    }
+
+    public function update(UserDto $dto, int $id): object
+    {
+        $model = (object) parent::find($id);
+
+        $user = DB::transaction(function () use ($dto, $model) {
+            $user = tap($model)->update([
+                'first_name' => $dto->firstName ? $dto->firstName : $model->first_name,
+                'last_name' => $dto->lastName ? $dto->lastName : $model->last_name,
+                'email' => $dto->email ? $dto->email : $model->email,
+                'password' => $dto->password ? Hash::make($dto->password) : $model->password,
+            ]);
+
+            return $user;
         });
 
         return (object) $user;
     }
 
-    public function findByEmail(string $email): ?User
+    public function delete(int $id): object
     {
-        return User::where('email', $email)->first();
-    }
+        $model = (object) parent::find($id);
 
-    public function createFromSocial(array $data): User
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'role' => $data['role'],
-        ]);
-    }
+        $user = DB::transaction(function () use ($id, $model) {
+            $profile = $model->profile;
+            $profile->attachments()->delete();
+            Storage::disk('local')->deleteDirectory('Profile/' . $profile->id);
+            return parent::delete($id);
+        });
 
-    public function updatePassword(string $email, string $newPassword): object
-    {
-        $user = User::where('email', $email)->firstOrFail();
-        $user->update(['password' => Hash::make($newPassword)]);
         return (object) $user;
     }
 
-    public function addStudentToCourse(UserDto $dto): UserMessage
+    public function resetPassword(PasswordResetCodeDto $dto): void
+    {
+        $user = User::where('email', $dto->email)->first();
+        $user->update(['password' => Hash::make($dto->password)]);
+    }
+
+    public function addStudentToCourse(UserCourseDto $dto): UserMessage
     {
         $student = User::where('email', $dto->email)->first();
 
         if (! $student)
         {
-            DB::transaction(function () use ($dto) {
+            $email = DB::transaction(function () use ($dto) {
                 $student = $this->model->create([
                     'first_name' => 'New student',
                     'last_name' => 'NST',
@@ -114,7 +122,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
                     'course_id' => $dto->courseId,
                     'student_code' => $studentCode,
                 ]);
+
+                $email = $student->emails()->create([
+                    'subject' => 'New Student Account Created',
+                    'body' => "Your email is : $dto->email and Your password is: 12345",
+                ]);
+
+                return $email;
             });
+
+            // GlobalServiceHandlerJob::dispatch($email);
 
             return UserMessage::StudentCreatedAccountAndAddedToCourse;
         }
@@ -140,5 +157,19 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         });
 
         return UserMessage::StudentAddedToCourse;
+    }
+
+    public function removeStudentFromCourse(UserCourseDto $dto): void
+    {
+        $exists = UserCourseGroup::where('student_code', $dto->studentCode)->first();
+
+        if (! $exists)
+        {
+            throw CustomException::notFound('Student');
+        }
+
+        DB::transaction(function () use ($exists) {
+            $exists->delete();
+        });
     }
 }

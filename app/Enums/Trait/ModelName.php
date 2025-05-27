@@ -23,8 +23,8 @@ enum ModelName: string
     case User = 'user';
     case Category = 'category';
     case SubCategory = 'sub_category';
-    case PasswordReset = 'password_Reset';
-    case UserProfile = 'user_profile';
+    case PasswordReset = 'password_reset';
+    case Profile = 'profile';
     case Permission = 'permission';
     case Student = 'student';
     case Holiday = 'holiday';
@@ -36,6 +36,10 @@ enum ModelName: string
     case Grade = 'grade';
     case Progress = 'progress';
     case Attendance = 'attendance';
+    case UserProfile = 'user_profile';
+    case AdminProfile = 'admin_profile';
+    case PasswordResetCode = 'password_reset_code';
+    case Email = 'email';
     case NoName = '';
 
     public static function getEnum(string $value): self
@@ -61,7 +65,7 @@ enum ModelName: string
             $value =='Category' => self::Category,
             $value =='SubCategory' => self::SubCategory,
             $value =='PasswordReset' => self::PasswordReset,
-            $value =='UserProfile' => self::UserProfile,
+            $value =='Profile' => self::Profile,
             $value =='Permission' => self::Permission,
             $value =='Student' => self::Student,
             $value =='Holiday' => self::Holiday,
@@ -73,6 +77,10 @@ enum ModelName: string
             $value =='Grade' => self::Grade,
             $value =='Progress' => self::Progress,
             $value =='Attendance' => self::Attendance,
+            $value =='UserProfile' => self::UserProfile,
+            $value =='AdminProfile' => self::AdminProfile,
+            $value =='PasswordResetCode' => self::PasswordResetCode,
+            $value =='Email' => self::Email,
         };
     }
 
@@ -99,7 +107,7 @@ enum ModelName: string
             self::Category => 'Category',
             self::SubCategory => 'SubCategory',
             self::PasswordReset => 'PasswordReset',
-            self::UserProfile => 'UserProfile',
+            self::Profile => 'Profile',
             self::Permission => 'Permission',
             self::Student => 'Student',
             self::Holiday => 'Holiday',
@@ -111,6 +119,10 @@ enum ModelName: string
             self::Grade => 'Grade',
             self::Progress => 'Progress',
             self::Attendance => 'Attendance',
+            self::UserProfile => 'UserProfile',
+            self::AdminProfile => 'AdminProfile',
+            self::PasswordResetCode => 'PasswordResetCode',
+            self::Email => 'Email',
         };
     }
 

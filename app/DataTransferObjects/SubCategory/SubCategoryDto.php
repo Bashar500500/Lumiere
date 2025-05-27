@@ -2,62 +2,63 @@
 
 namespace App\DataTransferObjects\SubCategory;
 
-use App\Enums\Category\CategoryStatus;
 use App\Http\Requests\SubCategory\SubCategoryRequest;
-use GuzzleHttp\Psr7\UploadedFile;
+use App\Enums\SubCategory\SubCategoryStatus;
+use Illuminate\Http\UploadedFile;
 
 class SubCategoryDto
 {
-    /**
-     * Create a new class instance.
-     */
     public function __construct(
-        public readonly ?string $name,
-        public readonly ?CategoryStatus $status,
-        public readonly ?string $description,
-        public readonly ?int $categoryId,
-        public readonly ?UploadedFile $SubCategoryImage,
         public readonly ?int $currentPage,
         public readonly ?int $pageSize,
-       
+        public readonly ?int $categoryId,
+        public readonly ?string $name,
+        public readonly ?SubCategoryStatus $status,
+        public readonly ?string $description,
+        public readonly ?UploadedFile $subCategoryImage,
     ) {}
 
     public static function fromIndexRequest(SubCategoryRequest $request): SubCategoryDto
     {
         return new self(
-            name: null,
-            description: null,
-            categoryId: null,
-            status: null,
-            SubCategoryImage: null,
             currentPage: $request->validated('page'),
             pageSize: $request->validated('page_size') ?? 20,
+            categoryId: null,
+            name: null,
+            description: null,
+            status: null,
+            subCategoryImage: null,
         );
     }
 
     public static function fromStoreRequest(SubCategoryRequest $request): SubCategoryDto
     {
         return new self(
-            name: $request->validated('name'),
-            status: CategoryStatus::from($request->validated('status')),
-            description: $request->validated('description'),
-            categoryId: $request->validated('category_id'),
-            SubCategoryImage: null,
             currentPage: null,
             pageSize: null,
-            
+            categoryId: $request->validated('category_id'),
+            name: $request->validated('name'),
+            status: SubCategoryStatus::from($request->validated('status')),
+            description: $request->validated('description'),
+            subCategoryImage: $request->validated('sub_category_image') ?
+                UploadedFile::createFromBase($request->validated('sub_category_image')) :
+                null,
         );
     }
     public static function fromUpdateRequest(SubCategoryRequest $request): SubCategoryDto
     {
         return new self(
-            name: $request->validated('name'),
-            status: CategoryStatus::from($request->validated('status')),
-            description: $request->validated('description'),
-            categoryId: $request->validated('category_id'),
-            SubCategoryImage: null,
             currentPage: null,
             pageSize: null,
+            categoryId: null,
+            name: $request->validated('name'),
+            status: $request->validated('status') ?
+                SubCategoryStatus::from($request->validated('status')) :
+                null,
+            description: $request->validated('description'),
+            subCategoryImage: $request->validated('sub_category_image') ?
+                UploadedFile::createFromBase($request->validated('sub_category_image')) :
+                null,
         );
     }
 }

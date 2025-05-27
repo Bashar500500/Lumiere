@@ -28,7 +28,7 @@ class CourseController extends Controller
 
     public function index(CourseRequest $request): JsonResponse
     {
-        $data = (object) CourseResource::collection(
+        $data = CourseResource::collection(
             $this->courseService->index($request),
         );
 
