@@ -2,15 +2,16 @@
 
 namespace App\Emails;
 
-use App\Models\User\PasswordResetCode;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Auth\PasswordResetCode;
+use App\Enums\Auth\PasswordResetEmailData;
 
 class PasswordResetEmail
 {
-    public function sendEmail(PasswordResetCode $passwordResetCode): void
+    public function sendPasswordResetCodeEmail(PasswordResetCode $passwordResetCode): void
     {
-        Mail::raw("Your password reset code is: $passwordResetCode->code", function ($message) use ($passwordResetCode) {
-            $message->to($passwordResetCode->email)->subject('Password Reset Code');
+        Mail::raw(PasswordResetEmailData::Body->getMessage() . $passwordResetCode->code, function ($message) use ($passwordResetCode) {
+            $message->to($passwordResetCode->email)->subject(PasswordResetEmailData::Subject->getMessage());
         });
     }
 }

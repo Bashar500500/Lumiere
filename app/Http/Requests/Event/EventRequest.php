@@ -12,10 +12,10 @@ use App\Enums\Request\FieldName;
 
 class EventRequest extends FormRequest
 {
-    // public function authorize(): bool
-    // {
-    //     return false;
-    // }
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     protected function onIndex() {
         return [
@@ -78,65 +78,65 @@ class EventRequest extends FormRequest
         }
     }
 
-    public function messages(): array
-    {
-        return [
-            'page.required' => ValidationType::Required->getMessage(),
-            'page.integer' => ValidationType::Integer->getMessage(),
-            'page.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'page_size.integer' => ValidationType::Integer->getMessage(),
-            'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'course_id.required' => ValidationType::Required->getMessage(),
-            'course_id.exists' => ValidationType::Exists->getMessage(),
-            'name.required' => ValidationType::Required->getMessage(),
-            'name.string' => ValidationType::String->getMessage(),
-            'type.required' => ValidationType::Required->getMessage(),
-            'type.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
-            'date.required' => ValidationType::Required->getMessage(),
-            'date.date' => ValidationType::Date->getMessage(),
-            'date.date_format' => ValidationType::DateFormat->getMessage(),
-            'start_time.required' => ValidationType::Required->getMessage(),
-            'start_time.date_format' => ValidationType::TimeFormat->getMessage(),
-            'end_time.required' => ValidationType::Required->getMessage(),
-            'end_time.required_with' => ValidationType::RequiredWith->getMessage(),
-            'end_time.date_format' => ValidationType::TimeFormat->getMessage(),
-            'end_time.after' => ValidationType::After->getMessage(),
-            'category.required' => ValidationType::Required->getMessage(),
-            'category.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
-            'recurrence.required' => ValidationType::Required->getMessage(),
-            'recurrence.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
-            'description.required' => ValidationType::Required->getMessage(),
-            'description.string' => ValidationType::String->getMessage(),
-            'attachments.required' => ValidationType::Required->getMessage(),
-            'attachments.array' => ValidationType::Array->getMessage(),
-            'attachments.files.array' => ValidationType::Array->getMessage(),
-            'attachments.files.*.required_with' => ValidationType::RequiredWith->getMessage(),
-            'attachments.files.*.file' => ValidationType::File->getMessage(),
-            'attachments.links.array' => ValidationType::Array->getMessage(),
-            'attachments.links.*.required_with' => ValidationType::RequiredWith->getMessage(),
-            'attachments.links.*.url' => ValidationType::Url->getMessage(),
-        ];
-    }
+    // public function messages(): array
+    // {
+    //     return [
+    //         'page.required' => ValidationType::Required->getMessage(),
+    //         'page.integer' => ValidationType::Integer->getMessage(),
+    //         'page.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'page_size.integer' => ValidationType::Integer->getMessage(),
+    //         'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'course_id.required' => ValidationType::Required->getMessage(),
+    //         'course_id.exists' => ValidationType::Exists->getMessage(),
+    //         'name.required' => ValidationType::Required->getMessage(),
+    //         'name.string' => ValidationType::String->getMessage(),
+    //         'type.required' => ValidationType::Required->getMessage(),
+    //         'type.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+    //         'date.required' => ValidationType::Required->getMessage(),
+    //         'date.date' => ValidationType::Date->getMessage(),
+    //         'date.date_format' => ValidationType::DateFormat->getMessage(),
+    //         'start_time.required' => ValidationType::Required->getMessage(),
+    //         'start_time.date_format' => ValidationType::TimeFormat->getMessage(),
+    //         'end_time.required' => ValidationType::Required->getMessage(),
+    //         'end_time.required_with' => ValidationType::RequiredWith->getMessage(),
+    //         'end_time.date_format' => ValidationType::TimeFormat->getMessage(),
+    //         'end_time.after' => ValidationType::After->getMessage(),
+    //         'category.required' => ValidationType::Required->getMessage(),
+    //         'category.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+    //         'recurrence.required' => ValidationType::Required->getMessage(),
+    //         'recurrence.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+    //         'description.required' => ValidationType::Required->getMessage(),
+    //         'description.string' => ValidationType::String->getMessage(),
+    //         'attachments.required' => ValidationType::Required->getMessage(),
+    //         'attachments.array' => ValidationType::Array->getMessage(),
+    //         'attachments.files.array' => ValidationType::Array->getMessage(),
+    //         'attachments.files.*.required_with' => ValidationType::RequiredWith->getMessage(),
+    //         'attachments.files.*.file' => ValidationType::File->getMessage(),
+    //         'attachments.links.array' => ValidationType::Array->getMessage(),
+    //         'attachments.links.*.required_with' => ValidationType::RequiredWith->getMessage(),
+    //         'attachments.links.*.url' => ValidationType::Url->getMessage(),
+    //     ];
+    // }
 
-    public function attributes(): array
-    {
-        return [
-            'page' => FieldName::Page->getMessage(),
-            'page_size' => FieldName::PageSize->getMessage(),
-            'course_id' => FieldName::CourseId->getMessage(),
-            'name' => FieldName::Name->getMessage(),
-            'type' => FieldName::Type->getMessage(),
-            'date' => FieldName::Date->getMessage(),
-            'start_time' => FieldName::StartTime->getMessage(),
-            'end_time' => FieldName::EndTime->getMessage(),
-            'category' => FieldName::Category->getMessage(),
-            'recurrence' => FieldName::Recurrence->getMessage(),
-            'description' => FieldName::Description->getMessage(),
-            'attachments' => FieldName::Attachments->getMessage(),
-            'attachments.files' => FieldName::Files->getMessage(),
-            'attachments.files.*' => FieldName::Files->getMessage(),
-            'attachments.links' => FieldName::Links->getMessage(),
-            'attachments.links.*' => FieldName::Links->getMessage(),
-        ];
-    }
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'page' => FieldName::Page->getMessage(),
+    //         'page_size' => FieldName::PageSize->getMessage(),
+    //         'course_id' => FieldName::CourseId->getMessage(),
+    //         'name' => FieldName::Name->getMessage(),
+    //         'type' => FieldName::Type->getMessage(),
+    //         'date' => FieldName::Date->getMessage(),
+    //         'start_time' => FieldName::StartTime->getMessage(),
+    //         'end_time' => FieldName::EndTime->getMessage(),
+    //         'category' => FieldName::Category->getMessage(),
+    //         'recurrence' => FieldName::Recurrence->getMessage(),
+    //         'description' => FieldName::Description->getMessage(),
+    //         'attachments' => FieldName::Attachments->getMessage(),
+    //         'attachments.files' => FieldName::Files->getMessage(),
+    //         'attachments.files.*' => FieldName::Files->getMessage(),
+    //         'attachments.links' => FieldName::Links->getMessage(),
+    //         'attachments.links.*' => FieldName::Links->getMessage(),
+    //     ];
+    // }
 }

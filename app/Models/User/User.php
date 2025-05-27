@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use App\Models\Profile\Profile;
 use App\Models\Message\Message;
 use App\Models\Reply\Reply;
 use App\Models\Chat\DirectChat;
@@ -23,6 +24,7 @@ use App\Models\ScheduleTiming\ScheduleTiming;
 use App\Models\Grade\Grade;
 use App\Models\Progress\Progress;
 use App\Models\Attendance\Attendance;
+use App\Models\Email\Email;
 use App\Models\Notification\Notification;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -69,10 +71,9 @@ class User extends Authenticatable
         ];
     }
 
-    ////profile
-    public function profile()
+    public function profile(): HasOne
     {
-        return $this->hasOne(UserProfile::class);
+        return $this->hasOne(Profile::class, 'user_id');
     }
 
     public function directChats(): HasMany
@@ -138,6 +139,11 @@ class User extends Authenticatable
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class, 'student_id');
+    }
+
+    public function emails(): HasMany
+    {
+        return $this->hasMany(Email::class, 'user_id');
     }
 
     public function notifications(): MorphMany

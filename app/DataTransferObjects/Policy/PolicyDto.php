@@ -18,7 +18,7 @@ class PolicyDto
     {
         return new self(
             currentPage: $request->validated('page'),
-            pageSize: $request->validated('page_size'),
+            pageSize: $request->validated('page_size') ?? 20,
             name: null,
             category: null,
             description: null,

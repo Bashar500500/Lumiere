@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('status');
-            $table->text('description')->nullable();
-            // $table->string('category_image')->nullable(); // صورة الفئة
+            $table->text('description');
             $table->timestamps();
         });
     }

@@ -30,7 +30,7 @@ class LearningActivityDto
         return new self(
             sectionId: $request->validated('section_id'),
             currentPage: $request->validated('page'),
-            pageSize: $request->validated('page_size'),
+            pageSize: $request->validated('page_size') ?? 20,
             type: null,
             title: null,
             description: null,

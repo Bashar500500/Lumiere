@@ -17,11 +17,12 @@ enum FunctionName: string
     case Register = 'register';
     case Login = 'login';
     case Logout = 'logout';
-    case SendCode = 'sendCode';
-    case VerifyCode = 'verifyCode';
+    case SendResetCode = 'send_reset_code';
+    case VerifyResetCode = 'verify_reset_code';
     case Assign = 'assign';
     case Revoke = 'revoke';
     case AddStudentToCourse = 'student_added_to_course';
+    case RemoveStudentFromCourse = 'remove_added_from_course';
 
     public function getMessage(): string
     {

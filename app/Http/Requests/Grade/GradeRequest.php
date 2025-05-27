@@ -13,10 +13,10 @@ use App\Enums\Request\FieldName;
 
 class GradeRequest extends FormRequest
 {
-    // public function authorize(): bool
-    // {
-    //     return false;
-    // }
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     protected function onIndex() {
         return [
@@ -82,76 +82,76 @@ class GradeRequest extends FormRequest
         }
     }
 
-    public function messages(): array
-    {
-        return [
-            'page.required' => ValidationType::Required->getMessage(),
-            'page.integer' => ValidationType::Integer->getMessage(),
-            'page.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'page_size.integer' => ValidationType::Integer->getMessage(),
-            'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'assignment_id.required' => ValidationType::Required->getMessage(),
-            'assignment_id.exists' => ValidationType::Exists->getMessage(),
-            'student_id.required' => ValidationType::Required->getMessage(),
-            'student_id.exists' => ValidationType::Exists->getMessage(),
-            'due_date.required' => ValidationType::Required->getMessage(),
-            'due_date.date' => ValidationType::Date->getMessage(),
-            'due_date.date_format' => ValidationType::DateFormat->getMessage(),
-            'extended_due_date.required_with' => ValidationType::RequiredWith->getMessage(),
-            'extended_due_date.date' => ValidationType::Date->getMessage(),
-            'extended_due_date.date_format' => ValidationType::DateFormat->getMessage(),
-            'extended_due_date.after_or_equal' => ValidationType::AfterOrEqual->getMessage(),
-            'status.required' => ValidationType::Required->getMessage(),
-            'status.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
-            'points_earned.required' => ValidationType::Required->getMessage(),
-            'points_earned.integer' => ValidationType::Integer->getMessage(),
-            'points_earned.gte' => ValidationType::GreaterThanOrEqualZero->getMessage(),
-            'max_points.required' => ValidationType::Required->getMessage(),
-            'max_points.integer' => ValidationType::Integer->getMessage(),
-            'max_points.min' => ValidationType::Min->getMessage(),
-            'max_points.max' => ValidationType::Max->getMessage(),
-            'percentage.required' => ValidationType::Required->getMessage(),
-            'percentage.integer' => ValidationType::Integer->getMessage(),
-            'percentage.gte' => ValidationType::GreaterThanOrEqualZero->getMessage(),
-            'category.required' => ValidationType::Required->getMessage(),
-            'category.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
-            'class_average.required' => ValidationType::Required->getMessage(),
-            'class_average.decimal' => ValidationType::Decimal->getMessage(),
-            'trend_data.array' => ValidationType::Array->getMessage(),
-            'trend_data.*.required' => ValidationType::Required->getMessage(),
-            'trend_data.*.required_with' => ValidationType::RequiredWith->getMessage(),
-            'trend_data.*.integer' => ValidationType::Integer->getMessage(),
-            'trend_data.*.gte' => ValidationType::GreaterThanOrEqualZero->getMessage(),
-            'feedback.required' => ValidationType::Required->getMessage(),
-            'feedback.string' => ValidationType::String->getMessage(),
-            'resubmission.required' => ValidationType::Required->getMessage(),
-            'resubmission.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
-            'resubmission_due.date' => ValidationType::Date->getMessage(),
-            'resubmission_due.date_format' => ValidationType::DateFormat->getMessage(),
-        ];
-    }
+    // public function messages(): array
+    // {
+    //     return [
+    //         'page.required' => ValidationType::Required->getMessage(),
+    //         'page.integer' => ValidationType::Integer->getMessage(),
+    //         'page.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'page_size.integer' => ValidationType::Integer->getMessage(),
+    //         'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'assignment_id.required' => ValidationType::Required->getMessage(),
+    //         'assignment_id.exists' => ValidationType::Exists->getMessage(),
+    //         'student_id.required' => ValidationType::Required->getMessage(),
+    //         'student_id.exists' => ValidationType::Exists->getMessage(),
+    //         'due_date.required' => ValidationType::Required->getMessage(),
+    //         'due_date.date' => ValidationType::Date->getMessage(),
+    //         'due_date.date_format' => ValidationType::DateFormat->getMessage(),
+    //         'extended_due_date.required_with' => ValidationType::RequiredWith->getMessage(),
+    //         'extended_due_date.date' => ValidationType::Date->getMessage(),
+    //         'extended_due_date.date_format' => ValidationType::DateFormat->getMessage(),
+    //         'extended_due_date.after_or_equal' => ValidationType::AfterOrEqual->getMessage(),
+    //         'status.required' => ValidationType::Required->getMessage(),
+    //         'status.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+    //         'points_earned.required' => ValidationType::Required->getMessage(),
+    //         'points_earned.integer' => ValidationType::Integer->getMessage(),
+    //         'points_earned.gte' => ValidationType::GreaterThanOrEqualZero->getMessage(),
+    //         'max_points.required' => ValidationType::Required->getMessage(),
+    //         'max_points.integer' => ValidationType::Integer->getMessage(),
+    //         'max_points.min' => ValidationType::Min->getMessage(),
+    //         'max_points.max' => ValidationType::Max->getMessage(),
+    //         'percentage.required' => ValidationType::Required->getMessage(),
+    //         'percentage.integer' => ValidationType::Integer->getMessage(),
+    //         'percentage.gte' => ValidationType::GreaterThanOrEqualZero->getMessage(),
+    //         'category.required' => ValidationType::Required->getMessage(),
+    //         'category.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+    //         'class_average.required' => ValidationType::Required->getMessage(),
+    //         'class_average.decimal' => ValidationType::Decimal->getMessage(),
+    //         'trend_data.array' => ValidationType::Array->getMessage(),
+    //         'trend_data.*.required' => ValidationType::Required->getMessage(),
+    //         'trend_data.*.required_with' => ValidationType::RequiredWith->getMessage(),
+    //         'trend_data.*.integer' => ValidationType::Integer->getMessage(),
+    //         'trend_data.*.gte' => ValidationType::GreaterThanOrEqualZero->getMessage(),
+    //         'feedback.required' => ValidationType::Required->getMessage(),
+    //         'feedback.string' => ValidationType::String->getMessage(),
+    //         'resubmission.required' => ValidationType::Required->getMessage(),
+    //         'resubmission.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+    //         'resubmission_due.date' => ValidationType::Date->getMessage(),
+    //         'resubmission_due.date_format' => ValidationType::DateFormat->getMessage(),
+    //     ];
+    // }
 
-    public function attributes(): array
-    {
-        return [
-            'page' => FieldName::Page->getMessage(),
-            'page_size' => FieldName::PageSize->getMessage(),
-            'assignment_id' => FieldName::AssignmentId->getMessage(),
-            'student_id' => FieldName::StudentId->getMessage(),
-            'due_date' => FieldName::DueDate->getMessage(),
-            'extended_due_date' => FieldName::ExtendedDueDate->getMessage(),
-            'status' => FieldName::Status->getMessage(),
-            'points_earned' => FieldName::PointsEarned->getMessage(),
-            'max_points' => FieldName::MaxPoints->getMessage(),
-            'percentage' => FieldName::Percentage->getMessage(),
-            'category' => FieldName::Category->getMessage(),
-            'class_average' => FieldName::ClassAverage->getMessage(),
-            'trend' => FieldName::Trend->getMessage(),
-            'trend_data' => FieldName::TrendData->getMessage(),
-            'trend_data.*' => FieldName::TrendData->getMessage(),
-            'feedback' => FieldName::Feedback->getMessage(),
-            'resubmission' => FieldName::Resubmission->getMessage(),
-            'resubmission_due' => FieldName::ResubmissionDue->getMessage(),
-        ];
-    }
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'page' => FieldName::Page->getMessage(),
+    //         'page_size' => FieldName::PageSize->getMessage(),
+    //         'assignment_id' => FieldName::AssignmentId->getMessage(),
+    //         'student_id' => FieldName::StudentId->getMessage(),
+    //         'due_date' => FieldName::DueDate->getMessage(),
+    //         'extended_due_date' => FieldName::ExtendedDueDate->getMessage(),
+    //         'status' => FieldName::Status->getMessage(),
+    //         'points_earned' => FieldName::PointsEarned->getMessage(),
+    //         'max_points' => FieldName::MaxPoints->getMessage(),
+    //         'percentage' => FieldName::Percentage->getMessage(),
+    //         'category' => FieldName::Category->getMessage(),
+    //         'class_average' => FieldName::ClassAverage->getMessage(),
+    //         'trend' => FieldName::Trend->getMessage(),
+    //         'trend_data' => FieldName::TrendData->getMessage(),
+    //         'trend_data.*' => FieldName::TrendData->getMessage(),
+    //         'feedback' => FieldName::Feedback->getMessage(),
+    //         'resubmission' => FieldName::Resubmission->getMessage(),
+    //         'resubmission_due' => FieldName::ResubmissionDue->getMessage(),
+    //     ];
+    // }
 }

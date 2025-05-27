@@ -132,6 +132,38 @@ enum FieldName: string
     case SkillLevel = 'skill_level';
     case Upcomig = 'upcomig';
     case IsPresent = 'is_present';
+    case UserImage = 'user_image';
+    case DateOfBirth = 'date_of_birth';
+    case Gender = 'gender';
+    case Nationality = 'nationality';
+    case Phone = 'phone';
+    case EmergencyContactName = 'emergency_contact_name';
+    case EmergencyContactRelation = 'emergency_contact_relation';
+    case EmergencyContactPhone = 'emergency_contact_phone';
+    case PermanentAddress = 'permanent_address';
+    case PermanentAddressStreet = 'permanent_address_street';
+    case PermanentAddressCity = 'permanent_address_city';
+    case PermanentAddressState = 'permanent_address_state';
+    case PermanentAddressCountry = 'permanent_address_country';
+    case PermanentAddressZipCode = 'permanent_address_zip_code';
+    case TemporaryAddress = 'temporary_address';
+    case TemporaryAddressStreet = 'temporary_address_street';
+    case TemporaryAddressCity = 'temporary_address_city';
+    case TemporaryAddressState = 'temporary_address_state';
+    case TemporaryAddressCountry = 'temporary_address_country';
+    case TemporaryAddressZipCode = 'temporary_address_zip_code';
+    case EnrollmentDate = 'enrollment_date';
+    case Batch = 'batch';
+    case CurrentSemester = 'current_semester';
+    case StudentCode = 'student_code';
+    case FirstName = 'first_name';
+    case LastName = 'last_name';
+    case Email = 'email';
+    case Role = 'role';
+    case Code = 'code';
+    case GuardName = 'guard_name';
+    case Permission = 'permission';
+    case Subject = 'subject';
 
     public function getMessage(): string
     {

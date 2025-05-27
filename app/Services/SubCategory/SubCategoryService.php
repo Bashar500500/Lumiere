@@ -19,9 +19,9 @@ class SubCategoryService
         return $this->repository->all($dto);
     }
 
-    public function show(SubCategory $sub_category): object
+    public function show(SubCategory $subCategory): object
     {
-        return $this->repository->find($sub_category->id);
+        return $this->repository->find($subCategory->id);
     }
 
     public function store(SubCategoryRequest $request): object
@@ -30,14 +30,29 @@ class SubCategoryService
         return $this->repository->create($dto);
     }
 
-    public function update(SubCategoryRequest $request, SubCategory $sub_category): object
+    public function update(SubCategoryRequest $request, SubCategory $subCategory): object
     {
         $dto = SubCategoryDto::fromUpdateRequest($request);
-        return $this->repository->update($dto, $sub_category->id);
+        return $this->repository->update($dto, $subCategory->id);
     }
 
-    public function destroy(SubCategory $sub_category): object
+    public function destroy(SubCategory $subCategory): object
     {
-        return $this->repository->delete($sub_category->id);
+        return $this->repository->delete($subCategory->id);
+    }
+
+    public function view(SubCategory $subCategory): string
+    {
+        return $this->repository->view($subCategory->id);
+    }
+
+    public function download(SubCategory $subCategory): string
+    {
+        return $this->repository->download($subCategory->id);
+    }
+
+    public function destroyAttachment(SubCategory $subCategory): void
+    {
+        $this->repository->deleteAttachment($subCategory->id);
     }
 }

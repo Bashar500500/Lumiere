@@ -23,7 +23,7 @@ class AttendanceController extends Controller
 
     public function index(AttendanceRequest $request): JsonResponse
     {
-        $data = (object) AttendanceResource::collection(
+        $data = AttendanceResource::collection(
             $this->service->index($request),
         );
 

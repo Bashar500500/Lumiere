@@ -23,7 +23,7 @@ class ProgressController extends Controller
 
     public function index(ProgressRequest $request): JsonResponse
     {
-        $data = (object) ProgressResource::collection(
+        $data = ProgressResource::collection(
             $this->service->index($request),
         );
 

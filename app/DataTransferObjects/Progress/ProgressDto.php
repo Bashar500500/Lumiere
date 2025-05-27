@@ -25,7 +25,7 @@ class ProgressDto
     {
         return new self(
             currentPage: $request->validated('page'),
-            pageSize: $request->validated('page_size'),
+            pageSize: $request->validated('page_size') ?? 20,
             courseId: null,
             studentId: null,
             progress: null,

@@ -39,7 +39,7 @@ class CourseDto
             instructorId: $request->validated('instructor_id'),
             accessType: $request->validated('access_type') ? CourseAccessType::from($request->validated('access_type')) : null,
             currentPage: $request->validated('page'),
-            pageSize: $request->validated('page_size'),
+            pageSize: $request->validated('page_size') ?? 20,
             name: null,
             description: null,
             categoryId: null,

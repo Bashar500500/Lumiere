@@ -28,7 +28,7 @@ class GroupController extends Controller
 
     public function index(GroupRequest $request): JsonResponse
     {
-        $data = (object) GroupResource::collection(
+        $data = GroupResource::collection(
             $this->groupService->index($request),
         );
 

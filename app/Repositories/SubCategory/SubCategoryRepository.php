@@ -2,28 +2,26 @@
 
 namespace App\Repositories\SubCategory;
 
+use App\Repositories\BaseRepository;
+use App\Models\SubCategory\SubCategory;
 use App\DataTransferObjects\SubCategory\SubCategoryDto;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Enums\Attachment\AttachmentReferenceField;
 use App\Enums\Attachment\AttachmentType;
-use App\Models\SubCategory\SubCategory;
-use App\Repositories\BaseRepository;
-use App\Repositories\SubCategory\SubCategoryRepositoryInterface;
-use Illuminate\Support\Facades\DB;
+use App\Exceptions\CustomException;
+use App\Enums\Upload\UploadMessage;
 
 class SubCategoryRepository extends BaseRepository implements SubCategoryRepositoryInterface
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct(SubCategory $sub_category)
-    {
-        parent::__construct($sub_category);
+    public function __construct(SubCategory $subCategory) {
+        parent::__construct($subCategory);
     }
 
     public function all(SubCategoryDto $dto): object
     {
-        return (object) $this->model->get()
-            ->with('attachments')
+        return (object) $this->model->with('category', 'attachment')
+            ->latest('created_at')
             ->simplePaginate(
                 $dto->pageSize,
                 ['*'],
@@ -35,65 +33,146 @@ class SubCategoryRepository extends BaseRepository implements SubCategoryReposit
     public function find(int $id): object
     {
         return (object) parent::find($id)
-        ->load('attachments');
+            ->load('category', 'attachment');
     }
 
     public function create(SubCategoryDto $dto): object
     {
-        $sub_category = DB::transaction(function () use ($dto) {
-            $sub_category = $this->model->create([
+        $subCategory = DB::transaction(function () use ($dto) {
+            $subCategory = $this->model->create([
+                'category_id' => $dto->categoryId,
                 'name' => $dto->name,
                 'status' => $dto->status,
                 'description' => $dto->description,
-                'category_id' => $dto->categoryId,
             ]);
-            if ($dto->SubCategoryImage)
-            {
-                // here the code for storing in firebase
 
-                $sub_category->attachment()->create([
+            if ($dto->subCategoryImage)
+            {
+                $storedFile = Storage::disk('local')->putFileAs('SubCategory/' . $subCategory->id . '/Images',
+                    $dto->subCategoryImage,
+                    str()->uuid() . '.' . $dto->subCategoryImage->extension());
+
+                $subCategory->attachment()->create([
                     'reference_field' => AttachmentReferenceField::SubCategoryImage,
-                    'type' => AttachmentType::Image->getType(),
-                    'url' => 'https:\\firebase.com\storedinfirebase',
+                    'type' => AttachmentType::Image,
+                    'url' => basename($storedFile),
                 ]);
             }
 
-            return $sub_category;
+            return $subCategory;
         });
 
-        return (object) $sub_category->load('attachments');
+        return (object) $subCategory->load('category', 'attachment');
     }
 
     public function update(SubCategoryDto $dto, int $id): object
     {
         $model = (object) parent::find($id);
 
-        $sub_category = DB::transaction(function () use ($dto, $model) {
-            $sub_category = tap($model)->update([
-                'name' => $dto->name,
-                'description' => $dto->description,
-                'status' => $dto->status,
-                'category_id' => $dto->categoryId,
+        $subCategory = DB::transaction(function () use ($dto, $model) {
+            $subCategory = tap($model)->update([
+                'name' => $dto->name ? $dto->name : $model->name,
+                'status' => $dto->status ? $dto->status : $model->status,
+                'description' => $dto->description ? $dto->description : $model->description,
             ]);
 
-            // here the code for updating in firebase
+            if ($dto->subCategoryImage)
+            {
+                $subCategory->attachments()->delete();
+                Storage::disk('local')->deleteDirectory('SubCategory/' . $subCategory->id);
 
-            $sub_category->attachment()->update([
-                'url' => 'updatedhttps:\\firebase.com\storedinfirebase',
-            ]);
+                $storedFile = Storage::disk('local')->putFileAs('SubCategory/' . $subCategory->id . '/Images',
+                    $dto->subCategoryImage,
+                    str()->uuid() . '.' . $dto->subCategoryImage->extension());
 
-            return $sub_category;
+                $subCategory->attachment()->create([
+                    'reference_field' => AttachmentReferenceField::SubCategoryImage,
+                    'type' => AttachmentType::Image,
+                    'url' => basename($storedFile),
+                ]);
+            }
+
+            return $subCategory;
         });
 
-        return (object) $sub_category->load('attachments');
+        return (object) $subCategory->load('category', 'attachment');
     }
 
     public function delete(int $id): object
     {
-        $sub_category = DB::transaction(function () use ($id) {
+        $model = (object) parent::find($id);
+
+        $subCategory = DB::transaction(function () use ($id, $model) {
+            $model->attachments()->delete();
+            Storage::disk('local')->deleteDirectory('SubCategory/' . $model->id);
             return parent::delete($id);
         });
 
-        return (object) $sub_category;
+        return (object) $subCategory;
+    }
+
+    public function view(int $id): string
+    {
+        $model = (object) parent::find($id);
+
+        $file = Storage::disk('local')->path('SubCategory/' . $id . '/Images/' . $model->attachment->url);
+
+        if (!file_exists($file))
+        {
+            throw CustomException::notFound('Image');
+        }
+
+        return $file;
+    }
+
+    public function download(int $id): string
+    {
+        $model = (object) parent::find($id);
+
+        $file = Storage::disk('local')->path('SubCategory/' . $id . '/Images/' . $model->attachment->url);
+
+        if (!file_exists($file))
+        {
+            throw CustomException::notFound('Image');
+        }
+
+        return $file;
+    }
+
+    public function upload(int $id, array $data): UploadMessage
+    {
+        $model = (object) parent::find($id);
+
+        DB::transaction(function () use ($data, $model) {
+            $exists = Storage::disk('local')->exists('SubCategory/' . $model->id);
+
+            if ($exists)
+            {
+                $model->attachments()->delete();
+                Storage::disk('local')->deleteDirectory('SubCategory/' . $model->id);
+            }
+
+            $storedFile = Storage::disk('local')->putFileAs('SubCategory/' . $model->id . '/Images',
+                $data['image'],
+                basename($data['image']));
+
+            array_map('unlink', glob("{$data['finalDir']}/*"));
+            rmdir($data['finalDir']);
+
+            $model->attachment()->create([
+                'reference_field' => AttachmentReferenceField::SubCategoryImage,
+                'type' => AttachmentType::Image,
+                'url' => basename($storedFile),
+            ]);
+        });
+
+        return UploadMessage::Image;
+    }
+
+    public function deleteAttachment(int $id): void
+    {
+        $model = (object) parent::find($id);
+        $model->attachments()->delete();
+        Storage::disk('local')->deleteDirectory('SubCategory/' . $model->id);
     }
 }

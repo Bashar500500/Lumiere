@@ -2,10 +2,10 @@
 
 namespace App\Services\Category;
 
-use App\DataTransferObjects\Category\CategoryDto;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Http\Requests\Category\CategoryRequest;
 use App\Models\Category\Category;
-use App\Repositories\Category\CategoryRepositoryInterface;
+use App\DataTransferObjects\Category\CategoryDto;
 
 class CategoryService
 {
@@ -31,15 +31,29 @@ class CategoryService
         return $this->repository->create($dto);
     }
 
-
-    public function update(CategoryRequest $request, Category $message): object
+    public function update(CategoryRequest $request, Category $category): object
     {
         $dto = CategoryDto::fromUpdateRequest($request);
-        return $this->repository->update($dto, $message->id);
+        return $this->repository->update($dto, $category->id);
     }
 
-    public function destroy(Category $message): object
+    public function destroy(Category $category): object
     {
-        return $this->repository->delete($message->id);
+        return $this->repository->delete($category->id);
+    }
+
+    public function view(Category $category): string
+    {
+        return $this->repository->view($category->id);
+    }
+
+    public function download(Category $category): string
+    {
+        return $this->repository->download($category->id);
+    }
+
+    public function destroyAttachment(Category $category): void
+    {
+        $this->repository->deleteAttachment($category->id);
     }
 }

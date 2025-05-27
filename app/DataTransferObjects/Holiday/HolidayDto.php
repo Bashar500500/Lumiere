@@ -20,7 +20,7 @@ class HolidayDto
     {
         return new self(
             currentPage: $request->validated('page'),
-            pageSize: $request->validated('page_size'),
+            pageSize: $request->validated('page_size') ?? 20,
             title: null,
             date: null,
             day: null,

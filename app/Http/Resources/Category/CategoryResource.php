@@ -2,25 +2,39 @@
 
 namespace App\Http\Resources\Category;
 
-use App\Http\Resources\Attachment\AttachmentResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
+use App\Exceptions\CustomException;
 
 class CategoryResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
             'status' => $this->status,
-            'attachments' => AttachmentResource::collection($this->whenLoaded('attachments')),
+            'description' => $this->description,
+            'categoryImage' => $this->whenLoaded('attachment') ?
+                $this->prepareAttachmentData($this->id, $this->whenLoaded('attachment')->url)
+                : null,
+            'courseCount' => $this->whenLoaded('courses')->count(),
         ];
+    }
+
+    private function prepareAttachmentData(int $id, string $url): string
+    {
+        $file = Storage::disk('local')->path('Category/' . $id . '/Images/' . $url);
+
+        if (!file_exists($file))
+        {
+            throw CustomException::notFound('Image');
+        }
+
+        $data = base64_encode(file_get_contents($file));
+        $metadata = mime_content_type($file);
+
+        return 'data:' . $metadata . ';base64,' . $data;
     }
 }

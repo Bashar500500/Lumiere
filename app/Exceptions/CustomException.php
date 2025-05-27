@@ -69,13 +69,6 @@ class CustomException extends InternalException
         );
     }
 
-    public static function NotFoundEmail(ModelName $model): self
-    {
-        return static::new(
-            ExceptionCode::NotFound,
-            $model,
-        );
-    }
     public static function BadRequest(ModelName $model): self
     {
         return static::new(
@@ -83,5 +76,5 @@ class CustomException extends InternalException
             $model,
         );
     }
-    
+
 }

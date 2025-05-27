@@ -1,40 +1,50 @@
 <?php
 namespace App\DataTransferObjects\Permission;
 
-use App\Enums\Auth\UserRole;
 use App\Http\Requests\Permission\PermissionRequest;
-use Illuminate\Http\Request;
-use Spatie\Permission\Contracts\Permission;
+use App\Enums\User\UserRole;
+use App\Enums\Permission\PermissionGuardName;
 
 class PermissionDto
 {
     public function __construct(
-        public readonly ?string $name,
-        public readonly ?string $guard_name,
-        public readonly ?UserRole $role,
         public readonly ?int $currentPage,
         public readonly ?int $pageSize,
+        public readonly ?string $name,
+        public readonly ?PermissionGuardName $guardName,
+        public readonly ?UserRole $role,
     ) {}
-    
-    public static function frompermissionRequest(PermissionRequest $request): PermissionDto
+
+    public static function fromindexRequest(PermissionRequest $request): PermissionDto
     {
         return new self(
-            name: $request->validated('name'),
-            guard_name: $request->validated('guard_name'),
-            role: UserRole::from($request->validated('role')),
-            currentPage: null,
-            pageSize: null,
+            currentPage: $request->validated('page'),
+            pageSize: $request->validated('page_size') ?? 20,
+            name: null,
+            guardName: null,
+            role: null,
         );
     }
 
-    public static function fromindexPermissionRequest(PermissionRequest $request): PermissionDto
+    public static function fromStoreRequest(PermissionRequest $request): PermissionDto
     {
         return new self(
-            name: null,
-            guard_name: null,
-            role: null,
-            currentPage: $request->validated('page'),
-            pageSize: $request->validated('page_size'),
+            currentPage: null,
+            pageSize: null,
+            name: $request->validated('name'),
+            guardName: PermissionGuardName::from($request->validated('guard_name')),
+            role: UserRole::from($request->validated('role')),
+        );
+    }
+
+    public static function fromUpdateRequest(PermissionRequest $request): PermissionDto
+    {
+        return new self(
+            currentPage: null,
+            pageSize: null,
+            name: $request->validated('name'),
+            guardName: PermissionGuardName::from($request->validated('guard_name')),
+            role: UserRole::from($request->validated('role')),
         );
     }
 }

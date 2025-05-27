@@ -3,6 +3,7 @@
 namespace App\Repositories\SubCategory;
 
 use App\DataTransferObjects\SubCategory\SubCategoryDto;
+use App\Enums\Upload\UploadMessage;
 
 interface SubCategoryRepositoryInterface
 {
@@ -15,4 +16,12 @@ interface SubCategoryRepositoryInterface
     public function update(SubCategoryDto $dto, int $id): object;
 
     public function delete(int $id): object;
+
+    public function view(int $id): string;
+
+    public function download(int $id): string;
+
+    public function upload(int $id, array $data): UploadMessage;
+
+    public function deleteAttachment(int $id): void;
 }

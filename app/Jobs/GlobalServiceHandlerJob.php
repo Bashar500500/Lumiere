@@ -12,9 +12,11 @@ use App\Models\Notification\Notification;
 use App\Services\Global\Realtime\RealtimeService;
 use App\Notifications\Firebase\FirebaseNotification;
 use App\Services\Global\Notification\NotificationService;
-use App\Models\User\PasswordResetCode;
+use App\Models\Auth\PasswordResetCode;
 use App\Services\Global\Email\EmailService;
 use App\Emails\PasswordResetEmail;
+use App\Models\Email\Email;
+use App\Emails\GlobalEmail;
 
 class GlobalServiceHandlerJob implements ShouldQueue
 {
@@ -24,7 +26,7 @@ class GlobalServiceHandlerJob implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        private Message|Reply|Notification|PasswordResetCode $model,
+        private Message|Reply|Notification|PasswordResetCode|Email $model,
     )
     {
         //
@@ -35,21 +37,25 @@ class GlobalServiceHandlerJob implements ShouldQueue
      */
     public function handle(): void
     {
-        if (class_basename($this->model) == ModelName::Message->getModelName())
+        $name = class_basename($this->model);
+
+        switch ($name)
         {
-            $this->getInstance()->handleMessage($this->model);
-        }
-        else if (class_basename($this->model) == ModelName::Reply->getModelName())
-        {
-            $this->getInstance()->handleReply($this->model);
-        }
-        else if (class_basename($this->model) == ModelName::Notification->getModelName())
-        {
-            $this->getInstance()->handleNotification($this->model);
-        }
-        else
-        {
-            $this->getInstance()->handleEmail($this->model);
+            case ModelName::Message->getModelName():
+                $this->getInstance()->handleMessage($this->model);
+                break;
+            case ModelName::Reply->getModelName():
+                $this->getInstance()->handleReply($this->model);
+                break;
+            case ModelName::Notification->getModelName():
+                $this->getInstance()->handleNotification($this->model);
+                break;
+            case ModelName::PasswordResetCode->getModelName():
+                $this->getInstance()->handlePasswordResetCodeEmail($this->model);
+                break;
+            default:
+                $this->getInstance()->handleGlobalEmail($this->model);
+                break;
         }
     }
 
@@ -58,8 +64,9 @@ class GlobalServiceHandlerJob implements ShouldQueue
         $realtimeService = new RealtimeService();
         $firebaseNotification = new FirebaseNotification();
         $notificationService = new NotificationService($firebaseNotification);
-        $email = new PasswordResetEmail();
-        $emailService = new EmailService($email);
+        $passwordResetEmail = new PasswordResetEmail();
+        $globalEmail = new GlobalEmail();
+        $emailService = new EmailService($passwordResetEmail, $globalEmail);
         $globalServiceHandlerService = new GlobalServiceHandlerService(
             $realtimeService,
             $notificationService,

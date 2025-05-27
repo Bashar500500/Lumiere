@@ -382,4 +382,100 @@ return [
     'is_present' => [
         'message' => 'is present',
     ],
+    'user_image' => [
+        'message' => 'user image',
+    ],
+    'date_of_birth' => [
+        'message' => 'date of birth',
+    ],
+    'gender' => [
+        'message' => 'gender',
+    ],
+    'nationality' => [
+        'message' => 'nationality',
+    ],
+    'phone' => [
+        'message' => 'phone',
+    ],
+    'emergency_contact_name' => [
+        'message' => 'emergency contact name',
+    ],
+    'emergency_contact_relation' => [
+        'message' => 'emergency contact relation',
+    ],
+    'emergency_contact_phone' => [
+        'message' => 'emergency contact_ phone',
+    ],
+    'permanent_address' => [
+        'message' => 'permanent address',
+    ],
+    'permanent_address_street' => [
+        'message' => 'permanent address street',
+    ],
+    'permanent_address_city' => [
+        'message' => 'permanent address city',
+    ],
+    'permanent_address_state' => [
+        'message' => 'permanent address state',
+    ],
+    'permanent_address_country' => [
+        'message' => 'permanent address country',
+    ],
+    'permanent_address_zip_code' => [
+        'message' => 'permanent address zip code',
+    ],
+    'temporary_address' => [
+        'message' => 'temporary address',
+    ],
+    'temporary_address_street' => [
+        'message' => 'temporary address street',
+    ],
+    'temporary_address_city' => [
+        'message' => 'temporary address city',
+    ],
+    'temporary_address_state' => [
+        'message' => 'temporary address state',
+    ],
+    'temporary_address_country' => [
+        'message' => 'temporary address country',
+    ],
+    'temporary_address_zip_code' => [
+        'message' => 'temporary address zip code',
+    ],
+    'enrollment_date' => [
+        'message' => 'enrollment date',
+    ],
+    'batch' => [
+        'message' => 'batch',
+    ],
+    'current_semester' => [
+        'message' => 'current semester',
+    ],
+    'student_code' => [
+        'message' => 'student code',
+    ],
+    'first_name' => [
+        'message' => 'first name',
+    ],
+    'last_name' => [
+        'message' => 'last name',
+    ],
+    'email' => [
+        'message' => 'email',
+    ],
+    'role' => [
+        'message' => 'role',
+    ],
+    'code' => [
+        'message' => 'code',
+    ],
+    'guard_name' => [
+        'message' => 'guard name',
+    ],
+    'permission' => [
+        'message' => 'permission',
+    ],
+    'subject' => [
+        'message' => 'subject',
+    ],
 ];

@@ -8,10 +8,10 @@ use App\Enums\Request\FieldName;
 
 class PolicyRequest extends FormRequest
 {
-    // public function authorize(): bool
-    // {
-    //     return false;
-    // }
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     protected function onIndex() {
         return [
@@ -52,31 +52,31 @@ class PolicyRequest extends FormRequest
         }
     }
 
-    public function messages(): array
-    {
-        return [
-            'page.required' => ValidationType::Required->getMessage(),
-            'page.integer' => ValidationType::Integer->getMessage(),
-            'page.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'page_size.integer' => ValidationType::Integer->getMessage(),
-            'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'name.required' => ValidationType::Required->getMessage(),
-            'name.string' => ValidationType::String->getMessage(),
-            'category.required' => ValidationType::Required->getMessage(),
-            'category.string' => ValidationType::String->getMessage(),
-            'description.required' => ValidationType::Required->getMessage(),
-            'description.string' => ValidationType::String->getMessage(),
-        ];
-    }
+    // public function messages(): array
+    // {
+    //     return [
+    //         'page.required' => ValidationType::Required->getMessage(),
+    //         'page.integer' => ValidationType::Integer->getMessage(),
+    //         'page.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'page_size.integer' => ValidationType::Integer->getMessage(),
+    //         'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'name.required' => ValidationType::Required->getMessage(),
+    //         'name.string' => ValidationType::String->getMessage(),
+    //         'category.required' => ValidationType::Required->getMessage(),
+    //         'category.string' => ValidationType::String->getMessage(),
+    //         'description.required' => ValidationType::Required->getMessage(),
+    //         'description.string' => ValidationType::String->getMessage(),
+    //     ];
+    // }
 
-    public function attributes(): array
-    {
-        return [
-            'page' => FieldName::Page->getMessage(),
-            'page_size' => FieldName::PageSize->getMessage(),
-            'name' => FieldName::Name->getMessage(),
-            'category' => FieldName::Category->getMessage(),
-            'description' => FieldName::Description->getMessage(),
-        ];
-    }
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'page' => FieldName::Page->getMessage(),
+    //         'page_size' => FieldName::PageSize->getMessage(),
+    //         'name' => FieldName::Name->getMessage(),
+    //         'category' => FieldName::Category->getMessage(),
+    //         'description' => FieldName::Description->getMessage(),
+    //     ];
+    // }
 }

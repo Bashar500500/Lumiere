@@ -2,15 +2,15 @@
 
 namespace App\Http\Requests\Permission;
 
-use App\Enums\Auth\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
+use App\Enums\User\UserRole;
+use App\Enums\Permission\PermissionGuardName;
+use App\Enums\Request\ValidationType;
+use App\Enums\Request\FieldName;
 
 class PermissionRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
@@ -18,32 +18,26 @@ class PermissionRequest extends FormRequest
 
     protected function onIndex() {
         return [
-            'page' => ['required', 'integer'],
-            'page_size' => ['nullable', 'integer'],
+            'page' => ['required', 'integer', 'gt:0'],
+            'page_size' => ['sometimes', 'integer', 'gt:0'],
         ];
     }
     protected function onStore() {
         return [
-            'name' => 'required|string|unique:permissions,name',
-            'guard_name' => 'nullable|string',
+            'name' => ['required', 'string', 'unique:permissions,name'],
+            'guard_name' => ['sometimes', new Enum(PermissionGuardName::class)],
             'role' => ['required', new Enum(UserRole::class)],
         ];
     }
 
     protected function onUpdate() {
         return [
-            'name' => 'required|string',
-            'guard_name' => 'nullable|string',
-            'role' => ['required', new Enum(UserRole::class)],
+            'name' => ['sometimes', 'string', 'unique:permissions,name'],
+            'guard_name' => ['sometimes', new Enum(PermissionGuardName::class)],
+            'role' => ['sometimes', new Enum(UserRole::class)],
         ];
     }
 
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         if (request()->isMethod('get'))
@@ -59,4 +53,33 @@ class PermissionRequest extends FormRequest
             return $this->onUpdate();
         }
     }
+
+    // public function messages(): array
+    // {
+    //     return [
+    //         'page.required' => ValidationType::Required->getMessage(),
+    //         'page.integer' => ValidationType::Integer->getMessage(),
+    //         'page.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'page_size.integer' => ValidationType::Integer->getMessage(),
+    //         'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'name.required' => ValidationType::Required->getMessage(),
+    //         'name.string' => ValidationType::String->getMessage(),
+    //         'name.unique' => ValidationType::Unique->getMessage(),
+    //         'guard_name.required' => ValidationType::Required->getMessage(),
+    //         'guard_name.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+    //         'role.required' => ValidationType::Required->getMessage(),
+    //         'role.Illuminate\Validation\Rules\Enum' => ValidationType::Enum->getMessage(),
+    //     ];
+    // }
+
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'page' => FieldName::Page->getMessage(),
+    //         'page_size' => FieldName::PageSize->getMessage(),
+    //         'name' => FieldName::Name->getMessage(),
+    //         'guard_name' => FieldName::GuardName->getMessage(),
+    //         'role' => FieldName::Role->getMessage(),
+    //     ];
+    // }
 }

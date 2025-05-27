@@ -23,7 +23,7 @@ class GradeController extends Controller
 
     public function index(GradeRequest $request): JsonResponse
     {
-        $data = (object) GradeResource::collection(
+        $data = GradeResource::collection(
             $this->service->index($request),
         );
 

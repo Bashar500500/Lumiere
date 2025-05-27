@@ -8,10 +8,10 @@ use App\Enums\Request\FieldName;
 
 class ScheduleTimingRequest extends FormRequest
 {
-    // public function authorize(): bool
-    // {
-    //     return false;
-    // }
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     protected function onIndex() {
         return [
@@ -52,35 +52,35 @@ class ScheduleTimingRequest extends FormRequest
         }
     }
 
-    public function messages(): array
-    {
-        return [
-            'page.required' => ValidationType::Required->getMessage(),
-            'page.integer' => ValidationType::Integer->getMessage(),
-            'page.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'page_size.integer' => ValidationType::Integer->getMessage(),
-            'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
-            'instructor_id.required' => ValidationType::Required->getMessage(),
-            'instructor_id.exists' => ValidationType::Exists->getMessage(),
-            'course_id.required' => ValidationType::Required->getMessage(),
-            'course_id.exists' => ValidationType::Exists->getMessage(),
-            'instructor_available_timings.required' => ValidationType::Required->getMessage(),
-            'instructor_available_timings.array' => ValidationType::Array->getMessage(),
-            'instructor_available_timings.*.required' => ValidationType::Required->getMessage(),
-            'instructor_available_timings.*.required_with' => ValidationType::RequiredWith->getMessage(),
-            'instructor_available_timings.*.string' => ValidationType::String->getMessage(),
-        ];
-    }
+    // public function messages(): array
+    // {
+    //     return [
+    //         'page.required' => ValidationType::Required->getMessage(),
+    //         'page.integer' => ValidationType::Integer->getMessage(),
+    //         'page.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'page_size.integer' => ValidationType::Integer->getMessage(),
+    //         'page_size.gt' => ValidationType::GreaterThanZero->getMessage(),
+    //         'instructor_id.required' => ValidationType::Required->getMessage(),
+    //         'instructor_id.exists' => ValidationType::Exists->getMessage(),
+    //         'course_id.required' => ValidationType::Required->getMessage(),
+    //         'course_id.exists' => ValidationType::Exists->getMessage(),
+    //         'instructor_available_timings.required' => ValidationType::Required->getMessage(),
+    //         'instructor_available_timings.array' => ValidationType::Array->getMessage(),
+    //         'instructor_available_timings.*.required' => ValidationType::Required->getMessage(),
+    //         'instructor_available_timings.*.required_with' => ValidationType::RequiredWith->getMessage(),
+    //         'instructor_available_timings.*.string' => ValidationType::String->getMessage(),
+    //     ];
+    // }
 
-    public function attributes(): array
-    {
-        return [
-            'page' => FieldName::Page->getMessage(),
-            'page_size' => FieldName::PageSize->getMessage(),
-            'instructor_id' => FieldName::InstructorId->getMessage(),
-            'course_id' => FieldName::CourseId->getMessage(),
-            'instructor_available_timings' => FieldName::InstructorAvailableTimings->getMessage(),
-            'instructor_available_timings.*' => FieldName::InstructorAvailableTimings->getMessage(),
-        ];
-    }
+    // public function attributes(): array
+    // {
+    //     return [
+    //         'page' => FieldName::Page->getMessage(),
+    //         'page_size' => FieldName::PageSize->getMessage(),
+    //         'instructor_id' => FieldName::InstructorId->getMessage(),
+    //         'course_id' => FieldName::CourseId->getMessage(),
+    //         'instructor_available_timings' => FieldName::InstructorAvailableTimings->getMessage(),
+    //         'instructor_available_timings.*' => FieldName::InstructorAvailableTimings->getMessage(),
+    //     ];
+    // }
 }

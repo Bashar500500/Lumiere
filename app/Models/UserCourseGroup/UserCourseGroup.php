@@ -32,11 +32,11 @@ class UserCourseGroup extends Model
         return $this->belongsTo(Group::class, 'group_id');
     }
 
-    public function getOrder($id): int
+    public static function getOrder($id): int
     {
         return self::where('course_id', $id)
             ->orderBy('created_at')
             ->pluck('id')
-            ->search($this->id) + 1;
+            ->search($id) + 1;
     }
 }
