@@ -7,6 +7,7 @@ use App\Enums\Trait\FunctionName;
 use App\Enums\Trait\ResponseStatus;
 use App\Exceptions\InternalException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+// use Illuminate\Contracts\Routing\ResponseFactory;
 
 trait ResponseTrait
 {
@@ -100,4 +101,36 @@ trait ResponseTrait
             'Content-Disposition' => 'attachment; filename="' . basename($this->zip) . '"',
         ])->deleteFileAfterSend(true);
     }
+
+    // public function viewFileResponse(): BinaryFileResponse
+    // {
+    //     return response()->file($this->file, [
+    //         'X-Accel-Redirect' => "/protected/{$this->file}",
+    //         'Content-Type' => mime_content_type($this->file),
+    //     ]);
+    // }
+
+    // public function downloadFileResponse(): ResponseFactory
+    // {
+    //     return response(
+    //         headers: [
+    //             'X-Accel-Redirect' => "/protected/{$this->file}",
+    //             'Content-Type' => mime_content_type($this->file),
+    //             'Content-Disposition' => 'attachment; filename="' . basename($this->file) . '"',
+    //         ],
+    //         status: 200,
+    //     );
+    // }
+
+    // public function downloadZipResponse(): ResponseFactory
+    // {
+    //     return response(
+    //         headers: [
+    //             'X-Accel-Redirect' => "/protected/{$this->file}",
+    //             'Content-Type' => mime_content_type($this->file),
+    //             'Content-Disposition' => 'attachment; filename="' . basename($this->zip) . '"',
+    //         ],
+    //         status: 200,
+    //     );
+    // }
 }
